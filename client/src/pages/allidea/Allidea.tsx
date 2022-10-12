@@ -50,7 +50,7 @@ const Allidea = () => {
       <Ideapost/>
       <Ideapost/>
       {showbutton && 
-        <div className='rounded-full fixed bottom-20 right-20 h-16 w-16' onClick={scrollToTop}>
+        <div className='rounded-full fixed bottom-16 right-16 h-16 w-16' onClick={scrollToTop}>
           <img src={BacktoTop} alt='back to top'></img>
         </div>
       }
