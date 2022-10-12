@@ -5,7 +5,7 @@ import {useState} from 'react';
 
 const Comment = () => {
   return(
-    <div className='h-14 flex-auto flex-row mt-3 rounded-3xl'>
+    <div className='h-14 flex flex-row mt-3 rounded-3xl'>
       <img className='self-center w-10 h-10 mx-3 rounded-full' src={handsomeboy} alt='profile-pic'></img>
       <div className='ml-3'>
         <p className='text-l font-semibold mt-2'>
@@ -26,7 +26,7 @@ const Ideapost = () => {
 
   return (
     <div className='shadow-lg p-3 rounded-xl border-2 my-4'>
-      <div className='flex-auto flex-row'>
+      <div className='flex flex-row'>
         <img className='w-12 h-12 mr-3 rounded-full' src={handsomeboy} alt='profile-pic'></img>
         <p className='text-xl self-center font-semibold'>
           Meaw Nine
@@ -46,15 +46,15 @@ const Ideapost = () => {
         incidunt, iusto, ducimus molestias provident 
         libero accusamus praesentium doloribus nostrum.
       </p>
-      <div className='flex-auto flex-row mt-2 '>
+      <div className='flex flex-row mt-2 '>
         <div onClick ={() => setShowcomment(!showcomment)}>
           <img className='w-6 h-6 cursor-pointer' src={Commenticon} alt='profile-pic'></img>
         </div>
         <p className='ml-3 self-center text-slate-600'>4</p>
       </div>
       {showcomment && 
-        <div className='flex-auto flex-col mt-2'>
-          <div className='h-14 flex-auto flex-row mt-3 bg-[#F2F2F2] rounded-3xl'>
+        <div className='flex flex-col mt-2'>
+          <div className='h-14 flex flex-row mt-3 bg-[#F2F2F2] rounded-3xl'>
             <img className='self-center w-10 h-10 mx-3 rounded-full' src={handsomeboy} alt='profile-pic'></img>
             <input className='self-center h-3/5 w-4/5 rounded-3xl indent-6' placeholder='Add a comment' />
             <button className='ml-5 mr-3 self-center bg-[#8236FD] hover:bg-blue-700 text-white font-bold h-3/5 w-1/6 rounded-3xl'>Add Comment</button>
