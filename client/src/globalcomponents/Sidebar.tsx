@@ -19,8 +19,8 @@ const SectionLink = ({name,to}:NavProp) => {
 
 const Sidebar = () => {
   return (
-    <div className="flex">    
-      <div className="bg-slate-200 h-96 ml-4 mt-10 p-3 pt-3 w-56 space-y-4 rounded-lg">
+    <div className="flex fixed">    
+      <div className="bg-slate-200 h-96 ml-8 mt-60 p-3 pt-3 w-56 space-y-4 rounded-lg">
         <SectionLink name="Home Page" to='/'/> 
         <SectionLink name="My Profile" to='/profile'/> 
         <SectionLink name="My Portfolio" to='/portfolio'/>
