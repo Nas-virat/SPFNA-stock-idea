@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Homepage/>}/> 
+        <Route path="/home" element={<Homepage/>}/> 
         <Route path="/idea" element={<Allidea/>}/> 
         <Route path="/idea/post" element={<Writeidea/>}/> 
         <Route path="/convertcurrency" element={<ConvertCurrency/>}/> 
