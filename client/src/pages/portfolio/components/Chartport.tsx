@@ -11,7 +11,7 @@ const Chartport = () => {
       data={{
         labels: ['red', 'blue','yellow'],
         datasets: [{ 
-          label: 'colors', 
+          label: 'stock', 
           data: [300,50,100],
           backgroundColor: [
             'rgb(255, 99, 132)',
