@@ -2,9 +2,10 @@ import React from 'react'
 
 import myphoto from '../../assets/handsomeboy.jpg'
 
-
 import Button from '../../globalcomponents/Button'
 import Tableport from './components/Tableport'
+
+import Layout from '../../globalcomponents/Layout'
 
 const myportfolio = () => {
 
@@ -17,7 +18,7 @@ const myportfolio = () => {
 
 
   return (
-    <div>
+    <Layout>
       <div className="m-4 flex items-center">
         <div className="w-60 m-7">
           <img className="rounded-full" src={myphoto} alt='myphoto' width="150" height="200"></img>
@@ -41,7 +42,7 @@ const myportfolio = () => {
         <Tableport/>
       </div>
 
-    </div>
+    </Layout>
   )
 }
 
