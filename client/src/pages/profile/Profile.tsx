@@ -5,6 +5,10 @@ import Button from '../../globalcomponents/Button'
 import Postprofile from './Postprofile'
 
 import myphoto from '../../assets/handsomeboy.jpg'
+
+import Layout from '../../globalcomponents/Layout'
+
+
 const Profile = () => {
 
   const test= () =>{
@@ -15,8 +19,9 @@ const Profile = () => {
   }
 
   return (
-    <>
-		<div className="m-4 flex items-center">
+    
+	<Layout>
+		<div className="flex items-center">
 			<div className="w-60 m-7">
 				<img className="rounded-full" src={myphoto} alt='myphoto' width="150" height="200"></img>
 			</div>
@@ -37,7 +42,8 @@ const Profile = () => {
 			<Postprofile status="draft"/>
 			<Postprofile status="publish"/>
 		</div>
-	</>
+	</Layout>
+
   )
 }
 
