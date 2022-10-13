@@ -9,10 +9,10 @@ interface Props {
 const Layout = ({children}:Props) => {
   return (
     <div className="flex">
-      <div className="mt-32 mr-8">
+      <div className="fixed mt-32">
         <Sidebar/>
       </div>
-      <div>
+      <div className="ml-72">
         {children}
       </div>
     </div>
