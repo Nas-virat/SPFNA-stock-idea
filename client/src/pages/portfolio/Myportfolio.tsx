@@ -7,6 +7,7 @@ import Tableport from './components/Tableport'
 
 import Layout from '../../globalcomponents/Layout'
 import { useNavigate } from "react-router-dom";
+import Chartport from './components/Chartport'
 const Myportfolio = () => {
 
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Myportfolio = () => {
           </div>
         </div>
         <div>
-        
+        <Chartport />
         </div>
 		  </div>
 
