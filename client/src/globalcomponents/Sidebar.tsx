@@ -19,15 +19,14 @@ const SectionLink = ({name,to}:NavProp) => {
 
 const Sidebar = () => {
   return (
-    <div className="flex fixed top-60">    
-      <div className="bg-slate-200 h-96 ml-8 p-3 pt-3 w-56 space-y-4 rounded-lg">
+  
+      <div className="bg-slate-200 h-96 mt-20 ml-8 p-3 pt-3 w-56 space-y-4 rounded-lg">
         <SectionLink name="Home Page" to='/home'/> 
         <SectionLink name="My Profile" to='/profile'/> 
-        <SectionLink name="My Portfolio" to='/portfolio'/>
+        <SectionLink name="My Portfolio" to='/myport'/>
         <SectionLink name="Idea Space" to='/idea'/>
         <SectionLink name="Convert Currency" to='/convertcurrency'/>
       </div>
-    </div>
   )
 }
 
