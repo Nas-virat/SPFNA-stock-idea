@@ -3,7 +3,9 @@ import Ideapost from './Component/Ideapost';
 import Searchicon from './Component/Searchicon.png';
 import BacktoTop from './Component/BacktoTop.jpg';
 import {useState, useEffect} from 'react';
-import Sidebar from '../../globalcomponents/Sidebar';
+
+import Layout from '../../globalcomponents/Layout';
+
 
   // This function will scroll the window to the top 
 
@@ -28,9 +30,8 @@ const Allidea = () => {
   }
 
   return (
-    <div>
-      <Sidebar />
-      <div className='w-4/5 ml-72'>
+    <Layout>
+      <div className="w-4/5 mt-8">
         <p className='text-3xl font-bold mt-3'>Idea Space</p>
         <div className='flex flex-row justify-between h-12 my-4'>
           <div className='flex flex-row border-solid border-8 h-full w-4/5 rounded-3xl mr-4'>
@@ -57,7 +58,7 @@ const Allidea = () => {
           </div>
         }
       </div>
-    </div>
+    </Layout>
   )
 }
 
