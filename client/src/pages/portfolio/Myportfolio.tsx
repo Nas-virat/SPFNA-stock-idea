@@ -5,11 +5,8 @@ import myphoto from '../../assets/handsomeboy.jpg'
 import Tableport from './components/Tableport'
 
 import Layout from '../../globalcomponents/Layout'
-import { useNavigate } from "react-router-dom";
 import Chartport from './components/Chartport'
 const Myportfolio = () => {
-
-  const navigate = useNavigate();
 
   return (
     <Layout>
