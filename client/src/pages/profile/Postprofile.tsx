@@ -1,17 +1,11 @@
 import React from 'react'
-
-import Button from '../../globalcomponents/Button'
-
-interface post{
+interface PostProps{
     status: "draft" | "publish";
 }
 
 
-const Postprofile = ({status} : post) => {
+const Postprofile : React.FC<PostProps>= ({status}) => {
  
-    const test= () =>{
-        console.log("thank you");
-      }
 
     return (
         <div className="w-4/5 m-5 px-4 py-5 rounded-lg bg-white shadow-lg">
@@ -25,8 +19,7 @@ const Postprofile = ({status} : post) => {
                 <h1 className="font-normal m-3">Status : {status}</h1>
                 <div className={`rounded-full w-4 h-4 ${status === 'draft'?`bg-[#FA9C1B]` : `bg-[#008631]`}`}></div>
             </div>
-            <Button fn={test}  text={`${status === 'draft' ? `edit` : `Read More`}`} color="#E56B6F"/>
-            
+            <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-medium h-9 w-36  rounded-3xl'>{status === 'draft' ? `Edit` : `Read More`}</button>
         </div>
     )
 }

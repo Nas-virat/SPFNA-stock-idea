@@ -2,7 +2,6 @@ import React from 'react'
 
 import myphoto from '../../assets/handsomeboy.jpg'
 
-import Button from '../../globalcomponents/Button'
 import Tableport from './components/Tableport'
 
 import Layout from '../../globalcomponents/Layout'
@@ -11,14 +10,6 @@ import Chartport from './components/Chartport'
 const Myportfolio = () => {
 
   const navigate = useNavigate();
-
-  const test= () =>{
-      navigate('/profile');
-  }
-  const test2= () =>{
-    console.log("t");
-    }
-
 
   return (
     <Layout>
@@ -31,11 +22,9 @@ const Myportfolio = () => {
           <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
           <h3 className="mt-3 font-nomral text-xl">Total Balance: 3000 USD</h3>
           <div className="flex">
-            <Button fn={test} text="mypost" color="#8236FD"/>
-            <Button fn={test2} text="cash report" color="#8236FD"/>
           </div>
         </div>
-        <div>
+        <div className="mt-9 ml-36">
         <Chartport />
         </div>
 		  </div>
@@ -43,7 +32,7 @@ const Myportfolio = () => {
       <div className="ml-16">
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
-          <Button fn={test}  text="add" color="#0E0741"/>
+          <button className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Add</button>
         </div>
         <Tableport/>
       </div>

@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Button from '../../globalcomponents/Button'
-
 import Postprofile from './Postprofile'
 
 import myphoto from '../../assets/handsomeboy.jpg'
@@ -9,14 +7,7 @@ import myphoto from '../../assets/handsomeboy.jpg'
 import Layout from '../../globalcomponents/Layout'
 
 
-const Profile = () => {
-
-  const test= () =>{
-	console.log("thank you");
-  }
-  const test2= () =>{
-	console.log("t");
-  }
+const Profile : React.FC = () => {
 
   return (
     
@@ -29,8 +20,7 @@ const Profile = () => {
 				<h1 className="mt-3 font-semibold text-3xl">Nasvirat</h1>
 				<h3 className="mt-3 font-normal text-xl">Rank #30</h3>
 				<div className="flex">
-					<Button fn={test} text="createpost" color="#355070"/>
-					<Button fn={test2} text="mypost" color="#8236FD"/>
+					<button className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
 				</div>
 			</div>
 		</div>

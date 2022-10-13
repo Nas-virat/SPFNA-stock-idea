@@ -6,9 +6,9 @@ interface Props {
   children: JSX.Element[] | JSX.Element
 }
 
-const Layout = ({children}:Props) => {
+const Layout: React.FC<Props> = ({children}) => {
   return (
-    <div className="flex">
+    <div>
       <div className="fixed mt-32">
         <Sidebar/>
       </div>
