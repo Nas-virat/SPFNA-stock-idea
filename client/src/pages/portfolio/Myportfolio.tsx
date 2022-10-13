@@ -6,12 +6,14 @@ import Button from '../../globalcomponents/Button'
 import Tableport from './components/Tableport'
 
 import Layout from '../../globalcomponents/Layout'
+import { useNavigate } from "react-router-dom";
+const Myportfolio = () => {
 
-const myportfolio = () => {
+  const navigate = useNavigate();
 
   const test= () =>{
-    console.log("thank you");
-    }
+      navigate('/profile');
+  }
   const test2= () =>{
     console.log("t");
     }
@@ -32,6 +34,9 @@ const myportfolio = () => {
             <Button fn={test2} text="cash report" color="#8236FD"/>
           </div>
         </div>
+        <div>
+        
+        </div>
 		  </div>
 
       <div className="ml-16">
@@ -41,9 +46,8 @@ const myportfolio = () => {
         </div>
         <Tableport/>
       </div>
-
     </Layout>
   )
 }
 
-export default myportfolio
+export default Myportfolio
