@@ -1,12 +1,15 @@
 import React from 'react'
 
 import myphoto from '../../assets/handsomeboy.jpg'
-
 import Tableport from './components/Tableport'
-
 import Layout from '../../globalcomponents/Layout'
 import Chartport from './components/Chartport'
-const Myportfolio = () => {
+
+import {useState} from 'react'
+
+const Myportfolio : React.FC = () => {
+
+  const [buy,setBuy] = useState([]);
 
   return (
     <Layout>
@@ -29,7 +32,7 @@ const Myportfolio = () => {
       <div className="ml-16">
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
-          <button className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Add</button>
+          <button className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Buy</button>
         </div>
         <Tableport/>
       </div>

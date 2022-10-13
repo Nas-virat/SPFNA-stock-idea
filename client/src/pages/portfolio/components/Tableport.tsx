@@ -30,6 +30,7 @@ const Tableport = () => {
           <th className="px-12 py-6">Market Value</th>
           <th className="px-12 py-6">P/L</th>
           <th className="px-12 py-6">P/L%</th>
+          <th className="px-12 py-6"></th>
         </tr>
       </thead>
       <tbody>  
@@ -42,6 +43,9 @@ const Tableport = () => {
             <td className="px-12 py-6">{(330.7*item.volume).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className={`px-12 py-6 ${(330.7-item.cost) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330-item.cost)*item.volume).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className={`px-12 py-6 ${(330.7-item.cost) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330-item.cost)*100/item.cost).toLocaleString(undefined,{maximumFractionDigits:2})} %</td>
+            <td className="px-12 py-6">
+              <button className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-2xl'>Sell</button>
+            </td>
           </tr>
         ))}
           <tr className="border-b-4 font-medium" >
