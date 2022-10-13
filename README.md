@@ -11,3 +11,12 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 - Portfolio P&L Distribution -> allows any user to view the portfolio profit and loss Distribution of contestants.
 - IDEA sharing -> This feature allows login users to post their stock ideas to the public and Other login users can comment and share  Ideas.
 - Admin Announcement -> This feature allows Admin users to announce activity related to the competition.
+
+## Dev Tools
+### Front-end
+- React Typescript
+- Tailwind CSS
+### Back-end: 
+- node.js
+
+## Features
