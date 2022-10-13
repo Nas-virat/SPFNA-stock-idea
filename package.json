@@ -1,4 +1,25 @@
 {
+  "name": "project",
+  "description": "SPFNA is a stock simulation investment game platform, which allows the user to simulate their stock portfolio and compete with friends who can make the most return on investment and will be the winner of the game. The SPFNA is created as a web-based platform. The rule of the game is that all users have to select the stock they think is going to outperform at the beginning of the year.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start" :"node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "npm start --prefix client",
+    "dev" : "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nas-virat/SPFNA-stock-idea.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nas-virat/SPFNA-stock-idea/issues"
+  },
+  "homepage": "https://github.com/Nas-virat/SPFNA-stock-idea#readme", 
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
