@@ -53,7 +53,7 @@ const ConvertCurrency = () => {
                 <img className='w-10 h-10 ' src='https://cdn-icons-png.flaticon.com/512/555/555526.png' alt='profile-pic'></img>
               </div>
             </div>
-            <img className='ml-auto mr-28 w-10 h-12 ' src={updownarrow} alt='profile-pic'></img>
+            <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic'></img>
             <div className='flex flex-row my-6'>
               <div className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl'>
 
