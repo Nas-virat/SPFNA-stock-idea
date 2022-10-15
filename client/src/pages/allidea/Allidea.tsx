@@ -31,8 +31,8 @@ const Allidea = () => {
 
   return (
     <Layout>
-      <div className="w-4/5 mt-8">
-        <p className='text-3xl font-bold mt-3'>Idea Space</p>
+      <div className="w-4/5">
+        <p className='text-3xl font-bold pt-4'>Idea Space</p>
         <div className='flex flex-row justify-between h-12 my-4'>
           <div className='flex flex-row border-solid border-8 h-full w-4/5 rounded-3xl mr-4'>
             <img className='m-1 ml-2' src={Searchicon} alt='search icon'></img> 
