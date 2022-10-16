@@ -1,7 +1,7 @@
 import React from 'react';
-import Ideapost from './Component/Ideapost';
-import Searchicon from './Component/Searchicon.png';
-import BacktoTop from './Component/BacktoTop.jpg';
+import Ideapost from './components/Ideapost';
+import Searchicon from './components/Searchicon.png';
+import BacktoTop from './components/BacktoTop.jpg';
 import {useState, useEffect} from 'react';
 
 import Layout from '../../globalcomponents/Layout';
