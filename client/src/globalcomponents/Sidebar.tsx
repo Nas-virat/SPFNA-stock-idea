@@ -1,5 +1,8 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom';
+import handsomeboy from '../assets/handsomeboy.jpg'
+import SPFNAlogo from '../assets/SPFNAlogo.png'
+import line from '../assets/line.png'
 
 interface NavProp{
   name:string;
@@ -10,7 +13,7 @@ const SectionLink = ({name,to}:NavProp) => {
   return(
       <NavLink 
           to = {to}
-          className = {({isActive}) => (isActive ? "p-2.5 mt-3 flex justify-center rounded-md duration-300 cursor-pointer bg-slate-400 text-black" : 'p-2.5 mt-3 flex justify-center rounded-md duration-300 cursor-pointer hover:bg-slate-300 text-black')}
+          className = {({isActive}) => (isActive ? "py-3 flex justify-center duration-300 cursor-pointer bg-[#9375a5] text-black" : 'py-3 flex justify-center duration-300 cursor-pointer hover:bg-[#c2a0d6] text-black')}
       > 
           <p className="font-semibold">{name}</p>
       </NavLink>
@@ -19,13 +22,24 @@ const SectionLink = ({name,to}:NavProp) => {
 
 const Sidebar = () => {
   return (
-  
-      <div className="bg-slate-200 h-96 mt-20 ml-8 p-3 pt-3 w-56 space-y-4 rounded-lg">
-        <SectionLink name="Home Page" to='/home'/> 
-        <SectionLink name="My Profile" to='/profile'/> 
-        <SectionLink name="My Portfolio" to='/myport'/>
-        <SectionLink name="Idea Space" to='/idea'/>
-        <SectionLink name="Convert Currency" to='/convertcurrency'/>
+      <div className="bg-[#D6BBE8] h-screen w-56 flex flex-col justify-between">
+        <div className='flex flex-col'>
+          <img src={SPFNAlogo} alt="SPFNAlogo" className="w-40 h-40 mx-auto"/>
+          <img src={line} alt="line" className="w-28 h-4 mx-auto opacity-80"/>
+          <SectionLink name="Home Page" to='/home'/> 
+          <SectionLink name="My Profile" to='/profile'/> 
+          <SectionLink name="My Portfolio" to='/myport'/>
+          <SectionLink name="Idea Space" to='/idea'/>
+          <SectionLink name="Convert Currency" to='/convertcurrency'/>
+          <SectionLink name="Logout" to='/logout'/>
+        </div>
+        <div className='flex flex-row place-content-center mb-8'>
+          <img src={handsomeboy} alt="handsomeboy" className="rounded-full h-20 w-20"/>
+          <div className='flex flex-col place-content-center ml-2'>
+            <p className="text-center font-bold self-center">John Doe</p>
+            <p className="text-center text-sm self-center font-medium">Rank #30</p>
+          </div>
+        </div>
       </div>
   )
 }

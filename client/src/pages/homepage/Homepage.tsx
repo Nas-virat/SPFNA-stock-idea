@@ -1,11 +1,14 @@
 import React from 'react'
+import Layout from '../../globalcomponents/Layout'
 import Sidebar from '../../globalcomponents/Sidebar'
 
 const Homepage = () => {
   return (
-    <div>Homepage
-      <Sidebar/>
-    </div>
+    <Layout>
+      <div>
+        Homepage
+      </div>
+    </Layout>
   )
 }
 

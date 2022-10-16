@@ -9,7 +9,7 @@ interface Props {
 const Layout: React.FC<Props> = ({children}) => {
   return (
     <div>
-      <div className="fixed mt-32">
+      <div className="fixed">
         <Sidebar/>
       </div>
       <div className="ml-72">
