@@ -1,8 +1,8 @@
 import React from 'react'
 import Layout from '../../globalcomponents/Layout'
 import myphoto from '../../assets/handsomeboy.jpg';
-import OneCurrency from './Component/OneCurrency';
-import updownarrow from './Component/updownarrow.png';
+import OneCurrency from './components/OneCurrency';
+import updownarrow from './components/updownarrow.png';
 
 const ConvertCurrency = () => {
   return (
@@ -20,12 +20,10 @@ const ConvertCurrency = () => {
         <div className='w-1/2'>
           <p className="my-3 font-semibold text-2xl">My Currency</p>
           <div className='flex flex-col w-11/12 overflow-y-auto h-80'>
-          <OneCurrency/>
-          <OneCurrency/>
-          <OneCurrency/>
-          <OneCurrency/>
-          <OneCurrency/>
-          <OneCurrency/>
+          <OneCurrency currency=" USD" amount={1000}/>
+          <OneCurrency currency=" CNY" amount={200}/>
+          <OneCurrency currency=" HKD" amount={300}/>
+          <OneCurrency currency=" EUR" amount={400}/>
           </div>
           <div className="flex flex-row w-11/12 mt-8 justify-between">
           <div>
