@@ -12,7 +12,7 @@ const Profile : React.FC = () => {
   return (
     
 	<Layout>
-		<div className="flex items-center">
+		<div className="flex items-center h-56">
 			<div className="w-60 m-7">
 				<img className="rounded-full" src={myphoto} alt='myphoto' width="150" height="200"></img>
 			</div>

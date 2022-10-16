@@ -36,7 +36,7 @@ const Allidea = () => {
         <div className='flex flex-row justify-between h-12 my-4'>
           <div className='flex flex-row border-solid border-8 h-full w-4/5 rounded-3xl mr-4'>
             <img className='m-1 ml-2' src={Searchicon} alt='search icon'></img> 
-            <input className='h-full w-4/5 rounded-3xl indent-11' placeholder='Search by Keyword' />
+            <input className='h-full w-4/5 rounded-3xl pl-4' placeholder='Search by Keyword' />
             <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-full w-1/5 rounded-3xl'>Search</button>
           </div>
           <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-full w-1/6 rounded-3xl border-8 ml-3'>Create Post</button>
