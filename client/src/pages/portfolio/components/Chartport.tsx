@@ -20,6 +20,15 @@ const Chartport = () => {
           ] 
         }],
       }}
+      options={{
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'right',
+          },
+        }
+      }}
     />
   )
 }
