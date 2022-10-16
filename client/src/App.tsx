@@ -12,6 +12,7 @@ import Myportfolio from './pages/portfolio/Myportfolio';
 import Otherportfolio from './pages/portfolio/Otherportfolio';
 import Profile from './pages/profile/Profile';
 import Register from './pages/register/Register';
+import Admincontrol from './pages/admincontrol/Admincontrol';
 // globalcomponent
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/otherport" element={<Otherportfolio/>}/> 
         <Route path="/profile" element={<Profile/>}/> 
         <Route path="/register" element={<Register/>}/> 
+        <Route path="/admincontrol" element={<Admincontrol/>}/>
       </Routes>
     </Router>
   );
