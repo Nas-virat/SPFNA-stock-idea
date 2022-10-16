@@ -5,11 +5,34 @@ import Tableport from './components/Tableport'
 import Layout from '../../globalcomponents/Layout'
 import Chartport from './components/Chartport'
 
+import Select from 'react-select'
+
 import {useState} from 'react'
+
+
+const options = [
+  { value: '', label: '🇺🇸 US' },
+  { value: '.HK', label: '🇭🇰 HK' },
+  { value: '.BK', label: '🇹🇭Thailand' },
+  { value: '.SS', label: '🇨🇳 Shanghai' },
+  { value: '.L', label: '🇬🇧 LSE' },
+  { value: '.IL', label: '󠁧󠁢󠁥󠁮🇬🇧 LSEIOB' },
+  { value: '.AS', label: '🇳🇱Amsterdam' },
+  { value: '.PA', label: '🇫🇷 Paris' },
+  { value: '.DE', label: '🇩🇪German' },
+  { value: '.T', label: '🇯🇵 Japan' },
+  { value: '.SI', label: '🇸🇬Singapore' },
+  { value: '.AX', label: '🇦🇺Austrlia' },
+  { value: '.NZ', label: '🇳🇿 NZ'},
+  { value: '.CN', label: '🇨🇦Canada' },
+  { value: '.KQ', label: '🇰🇷KOSDAQ' },
+];
+
 
 const Myportfolio : React.FC = () => {
 
-  const [buy,setBuy] = useState([]);
+  const [buy,setBuy] = useState(false);
+  const [isMyAccount,setIsMyAccount] = useState(true);
 
   return (
     <Layout>
@@ -32,8 +55,57 @@ const Myportfolio : React.FC = () => {
       <div className="ml-16">
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
-          <button className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Buy</button>
+          {isMyAccount && <button onClick ={() => setBuy(!buy)} className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Buy</button>}
         </div>
+        { buy &&
+          <div className="flex items-center mx-9">
+            <div className="flex items-center">
+              <h4 className="text-xl">Country</h4>
+              <Select className="w-40 ml-3" options={options} />
+            </div>
+            <div className="flex items-center mx-9">
+              <h4 className="text-xl">Symbol</h4>
+              <input type="text" className="form-control
+                ml-3
+                block
+                w-32
+                px-3
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                m-0
+                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput123"
+                aria-describedby="emailHelp123" placeholder="Symbol"></input>
+            </div>
+            <div className="flex items-center mx-9">
+             <h4 className="text-xl">Number of Share</h4>
+             <input type="text" className="form-control
+                ml-3
+                block
+                w-32
+                px-3
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                m-0
+                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput123"
+                aria-describedby="emailHelp123" placeholder="Share"></input>
+            </div>
+            <button className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
+          </div> 
+        }
         <Tableport/>
       </div>
     </Layout>

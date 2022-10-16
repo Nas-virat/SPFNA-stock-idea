@@ -20,7 +20,7 @@ const temp : stock[] = [{
 
 const Tableport = () => {
   return (
-    <table className="mx-4 mt-7 border-collapse min-w-[70%] text-xl">
+    <table className="mx-4 mt-7 border-collapse min-w-[70%] text-xl rounded-xl overflow-hidden">
       <thead>
         <tr className="text-left bg-purple-500 text-white">
           <th className="px-6 py-4">Symbol</th>
