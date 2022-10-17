@@ -18,7 +18,7 @@ const Ranklist: React.FC<RanklistProps> = ({
   image,
 }) => {
   return (
-    <div className="cursor-pointer w-full h-40 border-[#A88DEB] border-2 rounded-2xl flex flex-row p-5 mb-5 items-center ">
+    <div className="cursor-pointer w-full h-40 border-[#A88DEB] border-2 rounded-2xl flex flex-row p-5 mb-5 items-center justify-bewteen">
       <div className="flex flex-row items-center w-[200rem]">
         <p className="font-bold text-5xl text-purple-900 px-12">{rank}</p>
         <Link to="/otherport">
@@ -28,7 +28,7 @@ const Ranklist: React.FC<RanklistProps> = ({
           <Link to="/otherport">{firstname} {lastname}</Link>
         </p>
       </div>
-      <div className="h-4/5">
+      <div className="">
         <Chartport/>
       </div>
       {totalpl > 0 ? (
