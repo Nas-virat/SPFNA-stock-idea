@@ -3,8 +3,29 @@ import Layout from '../../globalcomponents/Layout'
 import myphoto from '../../assets/handsomeboy.jpg';
 import OneCurrency from './components/OneCurrency';
 import updownarrow from './components/updownarrow.png';
+import Swal from 'sweetalert2';
+import { useState, useEffect } from 'react'
 
 const ConvertCurrency = () => {
+
+  const [convert, setConvert] = useState({ 
+    amount1: '', 
+    currency1: '',
+    amount2: '', 
+    currency2: '',
+  });
+
+  const handleSubmit = () => {
+    
+    console.log(convert);
+    Swal.fire({
+      title: 'Successfully Convert!',
+      html: `You have successfully announce the convert`,
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+  }
+
   return (
     <Layout>
       <div className="flex items-center h-56">
@@ -53,14 +74,19 @@ const ConvertCurrency = () => {
             </div>
             <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic'></img>
             <div className='flex flex-row my-6'>
-              <div className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl'>
-
+              <div className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl flex'>
+                <p className='w-full self-center'>37.78</p>
               </div>
               <div className='h-10 bg-slate-50 text-right shadow-lg w-1/6 rounded-2xl ml-12 flex place-content-center'>
                 <img className='w-10 h-10 ' src='https://cdn-icons-png.flaticon.com/512/555/555526.png' alt='profile-pic'></img>
               </div>
             </div>
-            <button className='mt-6 bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-8 w-1/5 rounded-3xl'>Convert</button>
+            <button 
+              className='mt-6 bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-8 w-1/5 rounded-3xl'
+              onClick={handleSubmit}
+            >
+              Convert
+            </button>
           </div>
         </div>
       </div>
