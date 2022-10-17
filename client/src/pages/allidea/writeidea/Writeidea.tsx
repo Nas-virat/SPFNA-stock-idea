@@ -51,11 +51,13 @@ const Writeidea = () => {
           <input 
             className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black'
             placeholder='What is your Topic'
+            required
             onChange={(e) => setPostidea({ ...postidea, title: e.target.value })}
           />
           <textarea 
             className='w-full h-96 rounded-lg border shadow-md p-4 mt-4 resize-none border-black'
             placeholder='Say something...'
+            required
             onChange={(e) => setPostidea({ ...postidea, content: e.target.value })}
           />
         </div>
@@ -63,20 +65,20 @@ const Writeidea = () => {
           <div>
             <button 
               className='bg-cyan-800 hover:bg-cyan-900 text-white text-xl font-bold w-32 h-12 rounded-full mr-3'
-              onClick={handlePost}
+              onClick={() => handlePost()}
             >
               Post
             </button>
             <button 
               className='bg-sky-600 hover:bg-sky-700 text-white text-xl font-bold w-32 h-12 rounded-full mr-3'
-              onClick={handleDraft}
+              onClick={() => handleDraft()}
             >
               Draft
             </button>
           </div>
           <button 
             className='bg-red-400 hover:bg-red-500 text-white text-xl font-bold w-32 h-12 rounded-full mr-3'
-            onClick={handleCancel}
+            onClick={() => handleCancel()}
           >
             Cancel
           </button>

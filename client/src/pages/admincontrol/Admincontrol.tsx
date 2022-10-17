@@ -25,6 +25,16 @@ const Admincontrol = () => {
     });
   }
 
+  const handleDraft = () => {
+    console.log(announment);
+    Swal.fire({
+      title: 'Successfully Draft!',
+      html: `You have successfully draft the news!<br>TOPIC: <b>${announment.title}</b>`,
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+  }
+
   const handleCompetitionstate = () => {
     Swal.fire({
       title: 'Change Competition State',
@@ -57,18 +67,26 @@ const Admincontrol = () => {
           <input 
             className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black'
             placeholder='Enter your Topic'
+            required
             onChange={(e) => setAnnounment({ ...announment, title: e.target.value })}
           />
           <textarea 
             className='w-full h-28 rounded-lg border shadow-md p-4 mt-4 resize-none border-black'
             placeholder='Say something...'
+            required
             onChange={(e) => setAnnounment({ ...announment, content: e.target.value })}
           />
         </div>
         <div className='mt-5 flex justify-end mb-16'>
           <button 
+            className='bg-sky-600 hover:bg-sky-700 text-white font-bold w-28 h-10 rounded-full mr-3'
+            onClick={() => handleDraft()}
+          >
+            Draft
+          </button>
+          <button 
             className='bg-[#E56B6F] hover:bg-[#D75B5F] text-white font-bold w-28 h-10 rounded-full mr-3'
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           >
             Publish
           </button>
@@ -84,14 +102,14 @@ const Admincontrol = () => {
             competitionstate ? (
               <button 
                 className='text-sm text-center text-white font-bold bg-green-600 py-3 px-6 rounded-full mt-3'
-                onClick={handleCompetitionstate}
+                onClick={() => handleCompetitionstate()}
               >
                 ONGOING
               </button>
             ) : (
               <button 
                 className='text-sm text-center text-white font-bold bg-red-600 py-3 px-6 rounded-full mt-3'
-                onClick={handleCompetitionstate}
+                onClick={() => handleCompetitionstate()}
               >
                 CLOSED NOW
               </button>
