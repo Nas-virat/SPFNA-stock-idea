@@ -7,6 +7,8 @@ import Chartport from './components/Chartport'
 
 import Select from 'react-select'
 
+import Swal from 'sweetalert2';
+
 import {useState} from 'react'
 
 
@@ -55,6 +57,27 @@ const Portfolio : React.FC = () => {
 
   const [buy,setBuy] = useState(false);
   const [isMyAccount,setIsMyAccount] = useState(true);
+
+
+  const handleConfirm = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Buy'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Buy',
+          'Your stock has been bought.',
+          'success'
+        )
+      }
+    })
+  }
 
   return (
     <Layout>
@@ -125,7 +148,7 @@ const Portfolio : React.FC = () => {
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInput123"
                 aria-describedby="emailHelp123" placeholder="Share"></input>
             </div>
-            <button className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
+            <button onClick={handleConfirm} className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
           </div> 
         }
         <Tableport data={temp}/>
