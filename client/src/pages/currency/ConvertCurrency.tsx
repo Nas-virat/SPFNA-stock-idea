@@ -15,8 +15,13 @@ const ConvertCurrency = () => {
     currency2: '',
   });
 
+  const [data, setData] = useState();
+
+  const getData = (val: any) => {
+    setData(val.target.value);
+  }
+
   const handleSubmit = () => {
-    
     console.log(convert);
     Swal.fire({
       title: 'Successfully Convert!',
@@ -67,7 +72,11 @@ const ConvertCurrency = () => {
               <p className='font-semibold'>THB</p>
             </div>
             <div className='flex flex-row my-6'>
-              <input className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl' placeholder='Input amount' />
+              <input 
+                className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl' 
+                placeholder='Input amount' 
+                onKeyUp={getData}
+              />
               <div className='h-10 bg-slate-50 text-right shadow-lg w-1/6 rounded-2xl ml-12 flex place-content-center'>
                 <img className='w-10 h-10 ' src='https://cdn-icons-png.flaticon.com/512/555/555526.png' alt='profile-pic'></img>
               </div>
@@ -75,7 +84,7 @@ const ConvertCurrency = () => {
             <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic'></img>
             <div className='flex flex-row my-6'>
               <div className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl flex'>
-                <p className='w-full self-center'>37.78</p>
+                <p className='w-full self-center'>{data}</p>
               </div>
               <div className='h-10 bg-slate-50 text-right shadow-lg w-1/6 rounded-2xl ml-12 flex place-content-center'>
                 <img className='w-10 h-10 ' src='https://cdn-icons-png.flaticon.com/512/555/555526.png' alt='profile-pic'></img>
