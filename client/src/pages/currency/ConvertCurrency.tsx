@@ -8,21 +8,17 @@ import { useState, useEffect } from 'react'
 import CurrencyInput from './components/CurrencyInput';
 
 const currency = [
-  'USD',
-  'HKD',
-  'THB',
-  'EUR',
-  'CNY',
-  'JPY',
-  'KRW',
-  'SGD',
-  'AUD',
-  'CAD',
-  'GBP',
-  'NZD',
-  'MYR',
-  'IDR',
-  'PHP',
+  '🇺🇸 USD',
+  '🇭🇰 HKD',
+  '🇹🇭 THB',
+  '🇪🇺 EUR',
+  '🇨🇳 CNY',
+  '🇯🇵 JPY',
+  '🇰🇷 KRW',
+  '🇸🇬 SGD',
+  '🇳🇿 AUD',
+  '🇨🇦 CAD',
+  '🇬🇧 GBP'
 ];
 
 const ConvertCurrency = () => {
