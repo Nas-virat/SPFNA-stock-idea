@@ -1,5 +1,6 @@
 import React from "react";
 import Chartport from "../../portfolio/components/Chartport";
+import { Link } from "react-router-dom";
 
 interface RanklistProps {
   rank: number;
@@ -17,15 +18,17 @@ const Ranklist: React.FC<RanklistProps> = ({
   image,
 }) => {
   return (
-    <div className="cursor-pointer w-full h-40 border-[#A88DEB] border-2 rounded-2xl flex flex-row p-5 mb-5 items-center justify-between">
-      <div className="flex flex-row items-center">
+    <div className="cursor-pointer w-full h-40 border-[#A88DEB] border-2 rounded-2xl flex flex-row p-5 mb-5 items-center ">
+      <div className="flex flex-row items-center w-[200rem]">
         <p className="font-bold text-5xl text-purple-900 px-12">{rank}</p>
-        <img src={image} alt="profile-img" className="rounded-full w-32 h-32" />
+        <Link to="/otherport">
+          <img src={image} alt="profile-img" className="rounded-full w-32 h-32" />
+        </Link>
         <p className="font-medium text-3xl text-purple-900 px-12">
-          {firstname} {lastname}
+          <Link to="/otherport">{firstname} {lastname}</Link>
         </p>
       </div>
-      <div>
+      <div className="h-4/5">
         <Chartport/>
       </div>
       {totalpl > 0 ? (

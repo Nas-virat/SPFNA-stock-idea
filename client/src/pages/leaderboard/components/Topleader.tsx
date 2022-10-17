@@ -1,5 +1,7 @@
 import React from "react";
 
+import {Link} from "react-router-dom";
+
 interface ToprankProps {
   rank: number;
   firstname: string;
@@ -17,6 +19,7 @@ const Topleader: React.FC<ToprankProps> = ({
 }) => {
   return (
     <div className="cursor-pointer w-fit h-96 bg-[#A88DEB] rounded-2xl flex flex-col p-5 grow mx-3">
+      <Link to="/otherport">
       <img
         src={image}
         alt="profile-img"
@@ -34,6 +37,7 @@ const Topleader: React.FC<ToprankProps> = ({
           )}
         </div>
       </div>
+      </Link>
     </div>
   );
 };
