@@ -51,7 +51,7 @@ const options = [
 ];
 
 
-const Myportfolio : React.FC = () => {
+const Portfolio : React.FC = () => {
 
   const [buy,setBuy] = useState(false);
   const [isMyAccount,setIsMyAccount] = useState(true);
@@ -134,4 +134,4 @@ const Myportfolio : React.FC = () => {
   )
 }
 
-export default Myportfolio
+export default Portfolio

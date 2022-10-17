@@ -46,6 +46,13 @@ const rankingData = [
     lastname: 'Srisawat',
     totalpl: -15,
     image: myphoto,
+  },
+  {
+    rank: 7,
+    firstname: 'Pattarapong',
+    lastname: 'Srisawat',
+    totalpl: -15,
+    image: myphoto,
   }
 ]
 

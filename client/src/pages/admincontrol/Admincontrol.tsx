@@ -91,6 +91,28 @@ const Admincontrol = () => {
             Publish
           </button>
         </div>
+        <p className='font-bold text-3xl pb-7'>Draft</p>
+        <div className="w-full mb-8  px-4 py-5 rounded-lg bg-white shadow-lg">
+            <h3 className="font-bold">Topic</h3>
+            <p className="font-light">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit autem vel ipsum, temporibus 
+            similique quo non asperiores rerum? Architecto iste incidunt quisquam commodi esse mollitia nesciunt ex, 
+            excepturi itaque qui.
+            </p>
+            <div className="flex items-center">
+                <h1 className="font-normal m-3">Draft</h1>
+                <div className="rounded-full w-4 h-4 bg-[#FA9C1B]"></div>
+            </div>
+            <div className='mt-5 flex justify-end '>
+              <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-medium h-10 w-28  rounded-full'>Edit</button>
+              <button 
+                className='bg-[#E56B6F] hover:bg-[#D75B5F] text-white font-bold w-28 h-10 rounded-full mr-3'
+                onClick={() => handleSubmit()}
+              >
+                Publish
+              </button>
+            </div>
+        </div>
 
         <p className='font-bold text-3xl pb-7'>Control</p>
         <div className='w-full rounded-lg border h-auto shadow-md p-6 mb-7 bg-[#FFE1E1] flex justify-between items-center'>

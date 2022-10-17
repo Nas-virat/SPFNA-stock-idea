@@ -10,7 +10,7 @@ import Layout from '../../globalcomponents/Layout';
 
   // This function will scroll the window to the top 
 
-const Allidea = () => {
+const Allidea : React.FC = () => {
   const navigate = useNavigate();
   const [showbutton, setShowbutton] = useState(false)
 

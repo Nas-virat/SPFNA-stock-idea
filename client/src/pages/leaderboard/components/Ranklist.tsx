@@ -1,4 +1,5 @@
 import React from "react";
+import Chartport from "../../portfolio/components/Chartport";
 
 interface RanklistProps {
   rank: number;
@@ -23,6 +24,9 @@ const Ranklist: React.FC<RanklistProps> = ({
         <p className="font-medium text-3xl text-purple-900 px-12">
           {firstname} {lastname}
         </p>
+      </div>
+      <div>
+        <Chartport/>
       </div>
       {totalpl > 0 ? (
         <p className="font-bold text-5xl text-green-600 px-12">+{totalpl}%</p>
