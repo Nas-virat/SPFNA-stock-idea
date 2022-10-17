@@ -9,7 +9,7 @@ interface NavProp{
   to:string;
 }
 
-const SectionLink = ({name,to}:NavProp) => {
+const SectionLink: React.FC<NavProp> = ({name,to}) => {
   return(
       <NavLink 
           to = {to}
@@ -26,11 +26,14 @@ const Sidebar = () => {
         <div className='flex flex-col'>
           <img src={SPFNAlogo} alt="SPFNAlogo" className="w-40 h-40 mx-auto"/>
           <img src={line} alt="line" className="w-28 h-4 mx-auto opacity-80"/>
+          <SectionLink name="Login" to='/login'/>
           <SectionLink name="Home Page" to='/home'/> 
           <SectionLink name="My Profile" to='/profile'/> 
           <SectionLink name="My Portfolio" to='/myport'/>
           <SectionLink name="Idea Space" to='/idea'/>
           <SectionLink name="Convert Currency" to='/convertcurrency'/>
+          <SectionLink name="Leader Board" to='/leaderboard'/>
+          <SectionLink name="Admin" to='/admincontrol'/>
           <SectionLink name="Logout" to='/logout'/>
         </div>
         <div className='flex flex-row place-content-center mb-8'>

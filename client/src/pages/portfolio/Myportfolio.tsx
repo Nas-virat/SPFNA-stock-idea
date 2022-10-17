@@ -10,6 +10,28 @@ import Select from 'react-select'
 import {useState} from 'react'
 
 
+interface stock{
+  symbol: string;
+  cost : number;
+  volume : number;
+}
+
+const temp : stock[] = [{
+  symbol: 'AAPL',
+  cost : 340.9,
+  volume : 4
+},
+{
+  symbol: 'GOOG',
+  cost : 100,
+  volume : 3
+},
+{
+  symbol: 'MSFT',
+  cost : 250,
+  volume : 5
+}];
+
 const options = [
   { value: '', label: '🇺🇸 US' },
   { value: '.HK', label: '🇭🇰 HK' },
@@ -106,7 +128,7 @@ const Myportfolio : React.FC = () => {
             <button className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
           </div> 
         }
-        <Tableport/>
+        <Tableport data={temp}/>
       </div>
     </Layout>
   )
