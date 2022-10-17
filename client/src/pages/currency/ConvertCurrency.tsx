@@ -5,8 +5,57 @@ import OneCurrency from './components/OneCurrency';
 import updownarrow from './components/updownarrow.png';
 import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react'
+import CurrencyInput from './components/CurrencyInput';
+
+const currency = [
+  'USD',
+  'HKD',
+  'THB',
+  'EUR',
+  'CNY',
+  'JPY',
+  'KRW',
+  'SGD',
+  'AUD',
+  'CAD',
+  'GBP',
+  'NZD',
+  'MYR',
+  'IDR',
+  'PHP',
+];
 
 const ConvertCurrency = () => {
+
+  const [amount1, setAmount1] = useState(1);
+  const [amount2, setAmount2] = useState(1);
+  const [currency1, setCurrency1] = useState("USA");
+  const [currency2, setCurrency2] = useState("USA");
+
+  const handleAmountChange1 = (amount1:number) => {
+    setAmount2(amount1 * 123);
+    setAmount1(amount1);
+  }
+
+  const handleAmountChange2 = (amount2:number) => {
+    setAmount1(amount2 * 0.007);
+    setAmount2(amount2);
+  }
+
+  const handleCurrencyChange1 = (currency1:string) => {
+    setCurrency1(currency1);
+  }
+
+  const handleCurrencyChange2 = (currency2:string) => {
+    setCurrency2(currency2);
+  }
+
+  const swapAmount = () => {
+    setAmount1(amount2);
+    setCurrency1(currency2);
+    setAmount2(amount1);
+    setCurrency2(currency1);
+  }
 
   const [convert, setConvert] = useState({ 
     amount1: '', 
@@ -14,12 +63,6 @@ const ConvertCurrency = () => {
     amount2: '', 
     currency2: '',
   });
-
-  const [data, setData] = useState();
-
-  const getData = (val: any) => {
-    setData(val.target.value);
-  }
 
   const handleSubmit = () => {
     console.log(convert);
@@ -72,23 +115,23 @@ const ConvertCurrency = () => {
               <p className='font-semibold'>THB</p>
             </div>
             <div className='flex flex-row my-6'>
-              <input 
-                className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl' 
-                placeholder='Input amount' 
-                onKeyUp={getData}
+              <CurrencyInput 
+                amount={amount1} 
+                onAmountChange={handleAmountChange1} 
+                onCurrencyChange={handleCurrencyChange1} 
+                currencies={currency} 
+                currency={currency1} 
               />
-              <div className='h-10 bg-slate-50 text-right shadow-lg w-1/6 rounded-2xl ml-12 flex place-content-center'>
-                <img className='w-10 h-10 ' src='https://cdn-icons-png.flaticon.com/512/555/555526.png' alt='profile-pic'></img>
-              </div>
             </div>
-            <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic'></img>
+            <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic' onClick={swapAmount}></img>
             <div className='flex flex-row my-6'>
-              <div className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl flex'>
-                <p className='w-full self-center'>{data}</p>
-              </div>
-              <div className='h-10 bg-slate-50 text-right shadow-lg w-1/6 rounded-2xl ml-12 flex place-content-center'>
-                <img className='w-10 h-10 ' src='https://cdn-icons-png.flaticon.com/512/555/555526.png' alt='profile-pic'></img>
-              </div>
+              <CurrencyInput 
+                amount={amount2} 
+                onAmountChange={handleAmountChange2} 
+                onCurrencyChange={handleCurrencyChange2} 
+                currencies={currency} 
+                currency={currency2} 
+              />
             </div>
             <button 
               className='mt-6 bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-8 w-1/5 rounded-3xl'
