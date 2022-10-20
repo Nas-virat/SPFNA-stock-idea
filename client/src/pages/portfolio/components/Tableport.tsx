@@ -4,6 +4,7 @@ import StockProps from '../interface/StockProps';
 
 import Swal from 'sweetalert2';
 
+
 const Tableport: React.FC<StockProps> = ({data}) => {
 
 
@@ -25,7 +26,6 @@ const Tableport: React.FC<StockProps> = ({data}) => {
       }
     });
   }
-
   return (
     <table className="mx-4 mt-7 border-collapse min-w-[70%] text-xl rounded-xl overflow-hidden">
       <thead>

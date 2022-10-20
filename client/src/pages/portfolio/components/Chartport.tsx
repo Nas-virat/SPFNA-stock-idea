@@ -2,22 +2,21 @@ import React from 'react'
 import 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 
+interface ChartProps {
+  labels : string[];
+  data:number[];
+  backgroundColor: string[];
+}
 
-
-
-const Chartport = () => {
+const Chartport : React.FC<ChartProps>= ({labels,data,backgroundColor}) => {
   return (
     <Doughnut
       data={{
-        labels: ['red', 'blue','yellow'],
+        labels: labels,
         datasets: [{ 
           label: 'stock', 
-          data: [300,50,100],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ] 
+          data: data,
+          backgroundColor: backgroundColor
         }],
       }}
       options={{

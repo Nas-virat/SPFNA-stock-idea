@@ -93,7 +93,7 @@ const Portfolio : React.FC = () => {
           </div>
         </div>
         <div className="ml-36 h-56 w-56">
-        <Chartport />
+        <Chartport labels={['red', 'blue','yellow']} data ={[300,50,100]} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)']}/>
         </div>
 		  </div>
 

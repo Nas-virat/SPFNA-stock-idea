@@ -29,7 +29,7 @@ const Ranklist: React.FC<RanklistProps> = ({
         </p>
       </div>
       <div className="">
-        <Chartport/>
+        <Chartport labels={['red', 'blue','yellow']} data ={[300,50,100]} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)']}/>
       </div>
       {totalpl > 0 ? (
         <p className="font-bold text-5xl text-green-600 px-12">+{totalpl}%</p>
