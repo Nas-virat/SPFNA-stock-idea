@@ -12,11 +12,13 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 - IDEA sharing -> This feature allows login users to post their stock ideas to the public and Other login users can comment and share  Ideas.
 - Admin Announcement -> This feature allows Admin users to announce activity related to the competition.
 
-## Dev Tools
+## Dev Tools 🖥️ 
 ### Front-end
-- React Typescript
-- Tailwind CSS
+![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
+![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)&nbsp;
+![tailwindcss](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)&nbsp;
 ### Back-end: 
-- node.js
-
-## Features
+![nodejs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)&nbsp;
+![expressjs](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)&nbsp;
+![mongodb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)&nbsp;
+![jwt](	https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)&nbsp;

@@ -15,8 +15,11 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req,res)=>{
-    res.json({message: "API is working"})
+    res.json({message: "API is working"});
 })
+
+
+app.use('/api/users', require('./routes/user.routes'));
 
 app.use('/api/finance', require('./routes/finance.routes'));
 
