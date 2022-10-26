@@ -14,3 +14,7 @@ const CommentSchema = new mongoose.Schema({
         ref: 'User' 
     }
 });
+
+const Comment = mongoose.model("Comment", CommentSchema);
+
+module.exports = Comment;
