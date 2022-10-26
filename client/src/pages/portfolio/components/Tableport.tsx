@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {useState} from 'react'
 import StockProps from '../interface/StockProps';
 
 import Swal from 'sweetalert2';
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 const Tableport: React.FC<StockProps> = ({data}) => {
 
+  const [allprice,setallprice] = useState([]);
 
   const handleSell = () => {
     console.log("sell");
