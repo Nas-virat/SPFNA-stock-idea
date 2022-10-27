@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const IdeaSchema = new mongoose.Schema({
+
+const AnnounceSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -13,14 +14,14 @@ const IdeaSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-    },
-    comment: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    },   
     date: {
         type: Date,
         default: Date.now
     }
 });
 
-const Idea = mongoose.model("Idea", IdeaSchema);
+const Announce = mongoose.model("Announce", AnnounceSchema);
 
-module.exports = Idea;
+module.exports = Announce;
+

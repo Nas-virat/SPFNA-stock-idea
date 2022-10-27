@@ -37,8 +37,7 @@ const registerUser = async (req, res, next) => {
         email,
         password,
     })
-
-    sendCookie(newUser, 201, res);
+    res.json({success:true,message:"User created successfully"});
 };
 
 
