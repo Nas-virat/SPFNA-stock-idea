@@ -9,15 +9,18 @@ const { getAllUsers,
 
 // // GET all users 
 // // Page: LeaderBoard Page
-router.get('/user',getAllUsers);
+// // GET /api/users
+router.get('/',getAllUsers);
 
 // // Post a new user
 // // Page: Signup Page
+// // POST /api/users/register
 router.post('/register',registerUser);
 
 // // GET user by id
 // // Page: otherport Page
-router.get('/user/:id',getUserById);
+// // GET /api/users/:id
+router.get('/:id',getUserById);
 
 
 
