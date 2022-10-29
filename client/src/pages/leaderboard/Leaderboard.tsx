@@ -77,6 +77,7 @@ const Leaderboard = () => {
           {
             topRank.map((item: any) => (
               <Topleader
+                key={item.rank}
                 rank={item.rank}
                 firstname={item.firstname}
                 lastname={item.lastname}
@@ -90,6 +91,7 @@ const Leaderboard = () => {
           {
             rankList.map((item: any) => (
               <Ranklist
+                key={item.rank}
                 rank={item.rank}
                 firstname={item.firstname}
                 lastname={item.lastname}

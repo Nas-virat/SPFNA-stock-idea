@@ -21,7 +21,5 @@ app.get('/', (req,res)=>{
 
 app.use('/api/users', require('./routes/user.routes'));
 
-app.use('/api/finance', require('./routes/finance.routes'));
-
 
 app.listen(port, () => {console.log(`Server is running on port ${port}`) });
