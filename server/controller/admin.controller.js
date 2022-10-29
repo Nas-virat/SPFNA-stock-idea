@@ -33,3 +33,10 @@ const updateStatus = async (req, res) => {
     await announce.save();
     res.json({ success: true, message: "Announce updated successfully" });
 }
+
+
+module.exports = {
+    getAllAnnounces,
+    addAnnounce,
+    updateStatus
+};
