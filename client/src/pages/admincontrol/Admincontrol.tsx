@@ -103,8 +103,8 @@ const Admincontrol = () => {
                 <h1 className="font-normal m-3">Draft</h1>
                 <div className="rounded-full w-4 h-4 bg-[#FA9C1B]"></div>
             </div>
-            <div className='mt-5 flex justify-end '>
-              <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-medium h-10 w-28  rounded-full'>Edit</button>
+            <div className='mt-5 flex justify-end'>
+              <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-medium h-10 w-28 rounded-full mr-3'>Edit</button>
               <button 
                 className='bg-[#E56B6F] hover:bg-[#D75B5F] text-white font-bold w-28 h-10 rounded-full mr-3'
                 onClick={() => handleSubmit()}
