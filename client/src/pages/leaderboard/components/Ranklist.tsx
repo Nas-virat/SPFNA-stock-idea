@@ -4,16 +4,14 @@ import { Link } from "react-router-dom";
 
 interface RanklistProps {
   rank: number;
-  firstname: string;
-  lastname: string;
+  username: string;
   totalpl: number;
   image: string;
 }
 
 const Ranklist: React.FC<RanklistProps> = ({
   rank,
-  firstname,
-  lastname,
+  username,
   totalpl,
   image,
 }) => {
@@ -22,20 +20,22 @@ const Ranklist: React.FC<RanklistProps> = ({
       <div className="flex flex-row items-center w-[200rem]">
         <p className="font-bold text-5xl text-purple-900 px-12">{rank}</p>
         <Link to="/otherport">
-          <img src={image} alt="profile-img" className="rounded-full w-32 h-32" />
+          <img src={image} alt="profile-img" className="rounded-full w-[128px] h-[128px]" />
         </Link>
         <p className="font-medium text-3xl text-purple-900 px-12">
-          <Link to="/otherport">{firstname} {lastname}</Link>
+          <Link to="/otherport">@{username}</Link>
         </p>
       </div>
-      <div className="">
-        <Chartport labels={['red', 'blue','yellow']} data ={[300,50,100]} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)']}/>
+      <div className="flex items-center">
+        <div className="h-[128px] w-[248px] hidden 2xl:inline-block">
+          <Chartport labels={['red', 'blue','yellow']} data ={[300,50,100]} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)']}/>
+        </div>
+        {totalpl > 0 ? (
+          <p className="font-bold text-5xl text-green-600 px-12 w-[270px] overflow-hidden">+{totalpl}%</p>
+        ) : (
+          <p className="font-bold text-5xl text-red-500 px-12 w-[270px] overflow-hidden">{totalpl}%</p>
+        )}
       </div>
-      {totalpl > 0 ? (
-        <p className="font-bold text-5xl text-green-600 px-12">+{totalpl}%</p>
-      ) : (
-        <p className="font-bold text-5xl text-red-500 px-12">{totalpl}%</p>
-      )}
     </div>
   );
 };

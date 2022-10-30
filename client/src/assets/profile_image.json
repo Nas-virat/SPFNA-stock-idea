@@ -1,32 +1,32 @@
 [
     {
       "id": 1,
-      "src": "/profile_image/handsomeboy.jpg",
+      "src": "/profile_image/avatar-1.png",
       "alt": "profile-1"
     },
     {
       "id": 2,
-      "src": "/profile_image/handsomeboy.jpg",
+      "src": "/profile_image/avatar-2.png",
       "alt": "profile-2"
     },
     {
       "id": 3,
-      "src": "/profile_image/handsomeboy.jpg",
+      "src": "/profile_image/avatar-3.png",
       "alt": "profile-3"
     },
     {
       "id": 4,
-      "src": "/profile_image/handsomeboy.jpg",
+      "src": "/profile_image/avatar-4.png",
       "alt": "profile-4"
     },
     {
       "id": 5,
-      "src": "/profile_image/handsomeboy.jpg",
+      "src": "/profile_image/avatar-5.png",
       "alt": "profile-5"
     },
     {
       "id": 6,
-      "src": "/profile_image/handsomeboy.jpg",
+      "src": "/profile_image/avatar-6.png",
       "alt": "profile-6"
     }
   ]

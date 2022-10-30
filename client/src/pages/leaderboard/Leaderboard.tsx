@@ -7,51 +7,44 @@ import myphoto from '../../assets/handsomeboy.jpg'
 const rankingData = [
   {
     rank: 1,
-    firstname: 'Tunwa',
-    lastname: 'Satianrapapong',
-    totalpl: 10,
+    username: 'james123',
+    totalpl: 10.21,
     image: myphoto,
   },
   {
     rank: 2,
-    firstname: 'Meaw',
-    lastname: 'Chanonkhan',
-    totalpl: 5,
+    username: 'nasvirat',
+    totalpl: 5.52,
     image: myphoto,
   },
   {
     rank: 3,
-    firstname: 'Napas',
-    lastname: 'Vinitnantharat',
-    totalpl: 0.5,
+    username: 'meaw_sean',
+    totalpl: 0.52,
     image: myphoto,
   },
   {
     rank: 4,
-    firstname: 'Petdanaya',
-    lastname: 'Gongkham',
-    totalpl: -5,
+    username: 'tunwa_satian',
+    totalpl: -5.63,
     image: myphoto,
   },
   {
     rank: 5,
-    firstname: 'Aom',
-    lastname: 'Srisawat',
-    totalpl: -10,
+    username: 'petdanayGolet',
+    totalpl: -10.21,
     image: myphoto,
   },
   {
     rank: 6,
-    firstname: 'Pattarapong',
-    lastname: 'Srisawat',
-    totalpl: -15,
+    username: 'chanon.joh',
+    totalpl: -14.84,
     image: myphoto,
   },
   {
     rank: 7,
-    firstname: 'Pattarapong',
-    lastname: 'Srisawat',
-    totalpl: -15,
+    username: 'eiei',
+    totalpl: -15.55,
     image: myphoto,
   }
 ]
@@ -79,8 +72,7 @@ const Leaderboard = () => {
               <Topleader
                 key={item.rank}
                 rank={item.rank}
-                firstname={item.firstname}
-                lastname={item.lastname}
+                username={item.username}
                 totalpl={item.totalpl}
                 image={item.image}
               />
@@ -93,8 +85,7 @@ const Leaderboard = () => {
               <Ranklist
                 key={item.rank}
                 rank={item.rank}
-                firstname={item.firstname}
-                lastname={item.lastname}
+                username={item.username}
                 totalpl={item.totalpl}
                 image={item.image}
               />

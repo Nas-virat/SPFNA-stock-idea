@@ -36,13 +36,14 @@ const Sidebar = () => {
           <SectionLink name="Admin" to='/admincontrol'/>
           <SectionLink name="Logout" to='/logout'/>
         </div>
-        <div className='flex flex-row place-content-center mb-8'>
+        <div className='flex flex-row place-content-center mb-12'>
           <img src={handsomeboy} alt="handsomeboy" className="rounded-full h-20 w-20"/>
           <div className='flex flex-col place-content-center ml-2'>
             <p className="text-center font-bold self-center">John Doe</p>
             <p className="text-center text-sm self-center font-medium">Rank #30</p>
           </div>
         </div>
+        <p className='p-2 absolute bottom-0'>Avatar by <a href="https://www.freepik.com/free-vector/pack-avatars-different-people_7041832.htm#query=avatar&position=0&from_view=keyword">Freepik</a></p>
       </div>
   )
 }
