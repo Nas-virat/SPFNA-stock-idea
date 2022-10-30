@@ -89,6 +89,8 @@ const ConvertCurrency = () => {
           <OneCurrency currency=" CNY" amount={200}/>
           <OneCurrency currency=" HKD" amount={300}/>
           <OneCurrency currency=" EUR" amount={400}/>
+          <OneCurrency currency=" THB" amount={400}/>
+          <OneCurrency currency=" AUD" amount={400}/>
           </div>
           <div className="flex flex-row w-11/12 mt-8 justify-between">
           <div>
@@ -105,10 +107,10 @@ const ConvertCurrency = () => {
           <div className='ml-3 w-11/12'>
             <div className='flex flex-row my-6'>
               <p className='mr-1'>1</p>
-              <p className='font-semibold'>USD</p>
+              <p className='font-semibold'>{currency1}</p>
               <p className='mx-2'>=</p>
               <p className='mr-1'>37.78</p>
-              <p className='font-semibold'>THB</p>
+              <p className='font-semibold'>{currency2}</p>
             </div>
             <div className='flex flex-row my-6'>
               <CurrencyInput 
