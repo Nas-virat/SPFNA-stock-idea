@@ -30,7 +30,10 @@ const registerUser = async (req, res, next) => {
         res.json({success:false,message:"Email already exists"});
         return next(new ErrorHandler("Email already exists", 401));
     }
-
+    else if(password.length() < 6){
+      res.json({sucecess:false,message:"password must be at least 6 characters"});
+      return next(new ErrorHandler("password must be at least 6 characters",401));
+    }
     const newUser = await User.create({
         username,
         image,
