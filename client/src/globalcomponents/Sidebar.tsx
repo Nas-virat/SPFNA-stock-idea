@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import axios from 'axios'
 import Swal from 'sweetalert2';
@@ -24,7 +24,7 @@ const SectionLink: React.FC<NavProp> = ({name,to}) => {
 }
 
 const Sidebar = () => {
-
+  const [islogin, setIslogin] = useState(false);
   const handleLogout = async () => {
     const res = await axios.get('http://localhost:5000/api/users/logout', { withCredentials: true });
     if (res.data.success) {
@@ -38,6 +38,18 @@ const Sidebar = () => {
       })
     }
   }
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/users/', { withCredentials: true });
+        setIslogin(true);
+      } catch (error) {
+        setIslogin(false);
+      }
+    }
+    checkLogin();
+  }, [])
 
   return (
       <div className="bg-[#D6BBE8] h-screen w-56 flex flex-col justify-between">
@@ -53,22 +65,27 @@ const Sidebar = () => {
           <SectionLink name="Leader Board" to='/leaderboard'/>
           <SectionLink name="Admin" to='/admincontrol'/>
         </div>
-        <div className='flex flex-col mb-12'>
-          <div className='flex flex-row place-content-center mb-2'>
-            <img src={handsomeboy} alt="handsomeboy" className="rounded-full h-20 w-20"/>
-            <div className='flex flex-col place-content-center ml-2'>
-              <p className="text-center font-bold self-center">John Doe</p>
-              <p className="text-center text-sm self-center font-medium">Rank #30</p>
+        {
+          islogin ? (
+            <div className='flex flex-col mb-12'>
+              <div className='flex flex-row place-content-center mb-2'>
+                <img src={handsomeboy} alt="handsomeboy" className="rounded-full h-20 w-20"/>
+                <div className='flex flex-col place-content-center ml-2'>
+                  <p className="text-center font-bold self-center">John Doe</p>
+                  <p className="text-center text-sm self-center font-medium">Rank #30</p>
+                </div>
+              </div>
+              <button
+                id='btn-logout'
+                className="bg-[#9375a5] text-white font-semibold py-2 px-4 rounded-full mx-auto mb-4"
+                onClick={() => handleLogout()}
+              >
+                Logout
+              </button>
             </div>
-          </div>
-          <button
-            id='btn-logout'
-            className="bg-[#9375a5] text-white font-semibold py-2 px-4 rounded-full mx-auto mb-4"
-            onClick={() => handleLogout()}
-          >
-            Logout
-          </button>
-        </div>
+          ) : null
+        }
+        
         <p className='p-2 absolute bottom-0'>Avatar by <a href="https://www.freepik.com/free-vector/pack-avatars-different-people_7041832.htm#query=avatar&position=0&from_view=keyword">Freepik</a></p>
       </div>
   )

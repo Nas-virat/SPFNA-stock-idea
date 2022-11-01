@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const router = express();
 
+const verifyToken = require('../middleware/auth');
 
-
-const   {
+const {
     getAllUsers,
     loginUser,
     logoutUser,
@@ -14,27 +14,27 @@ const   {
 // // GET all users 
 // // Page: LeaderBoard Page
 // // GET /api/users
-router.get('/',getAllUsers);
+router.route('/').get(verifyToken, getAllUsers);
 
 // // login users
 // // Page: Login Page
 // // POST /api/users/login
-router.post('/login',loginUser);
+router.route('/login').post(loginUser);
 
 // // logout users
 // // Page: logout Page
 // // GET : /api/users/logout
-router.get('/logout',logoutUser);
+router.route('/logout').get(logoutUser);
 
 // // Post a new user
 // // Page: Signup Page
 // // POST /api/users/register
-router.post('/register',registerUser);
+router.route('/register').post(registerUser);
 
 // // GET user by id
 // // Page: otherport Page
 // // GET /api/users/:id
-router.get('/:id',getUserById);
+router.route('/:id').get(getUserById);
 
 
 

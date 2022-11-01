@@ -26,7 +26,7 @@ const Register = () => {
       })
     } else {
       try {
-        const res = await axios.post('http://localhost:5000/api/users/register', data);
+        const res = await axios.post('http://localhost:5000/api/users/register', data, { withCredentials: true });
         if (res.data.success) {
           Swal.fire({
             title: 'Success!',
