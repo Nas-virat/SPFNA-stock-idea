@@ -28,8 +28,34 @@ const userSchema = new mongoose.Schema({
         unique: [true, "Email already exists"],
     },
     port:{
-        stock: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Stock',default: [] }],
-        cash: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Cash',default: [{currency:"USD",amount:200000}]}],
+        stock: [{
+            symbol: {
+                type: String,
+                required: true
+            },
+            cost_price: {
+                type: Number,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            },
+            country: {
+                type: String,
+                required: true
+            }
+        }],
+        cash: [{
+            currency: {
+                type: String,
+                required: true,
+            },
+            amount: {
+                type: Number,
+                required: true,
+            }
+        }],
     }
 });
 

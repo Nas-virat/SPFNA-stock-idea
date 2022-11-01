@@ -1,5 +1,4 @@
 const User = require("../model/User");
-const Cash = require("../model/Cash");
 const ErrorHandler = require("../utils/errorHandler");
 const sendCookie = require("../utils/sendCookie");
 
@@ -42,13 +41,13 @@ const registerUser = async (req, res, next) => {
         email,
         password,
     })
-    const newCash = await Cash.create({
-        currency:"USD",
-        amount:200000,
-    })
-    await newCash.save();
-    newUser.port.cash.push(newCash);
+   
+    newUser.port.cash.push({
+        currency: "USD",
+        amount: 200000,
+    });
     await newUser.save();
+
 
    sendCookie(newUser,201,res);
 };
