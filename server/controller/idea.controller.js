@@ -45,14 +45,14 @@ const addIdea = async (req, res) => {
 // // Add a new comment to the idea
 // // Page: AllIdea Page
 const addComment = async (req, res) => {
-    const { comment, user, idea } = req.body;
+    const { comment, user, idea_id } = req.body;
     try {
         const newComment = await Comment.create({
             comment,
             user,
             idea
         });
-        const idea = await Idea.findById(idea);
+        const idea = await Idea.findById(idea_id);
         idea.comment.push(newComment);
         await idea.save();
         res.json({ success: true, message: "Comment added successfully" });

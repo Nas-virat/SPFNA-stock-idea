@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         minlength: [6, "Password must be of minimum 6 characters"],
         required: true
     },
+    role:{
+        type: String,
+        require: true,
+    },
     email: {
         type: String,
         required: true,

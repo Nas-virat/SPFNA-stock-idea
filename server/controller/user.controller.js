@@ -17,7 +17,7 @@ const getAllUsers = async (req, res) => {
 // // Page: Register Page
 const registerUser = async (req, res, next) => {
 
-    const { username,image,email,password} = req.body;
+    const { username,image,role,email,password} = req.body;
 
     const user = await User.findOne({
         $or: [{ email }, { username }]
@@ -34,6 +34,7 @@ const registerUser = async (req, res, next) => {
     const newUser = await User.create({
         username,
         image,
+        role, 
         email,
         password,
     })
