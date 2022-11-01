@@ -55,7 +55,7 @@ const Login = () => {
   };
 
   return (
-    <body className = 'flex place-content-center h-screen bg-[#D6BBE8]'>
+    <div className = 'flex place-content-center h-screen bg-[#D6BBE8]'>
       <div className = 'self-center h-1/2 w-1/2 mx-auto flex items-center justify-center p-6 rounded-xl bg-white'>
         <img className = 'mx-auto rounded-full pr-4 ' src={logo} alt='myphoto' width="300" height="300"></img>
         <div className='w-1/2'>
@@ -70,7 +70,7 @@ const Login = () => {
               required
             />
           </div>
-          <div className = 'form-group mb-6 ml-2'>
+          <form className = 'form-group mb-6 ml-2'>
               <label className = 'form-label inline-block font-medium text-2xl'>Password</label>
               <input
                 id='password-form'
@@ -78,9 +78,10 @@ const Login = () => {
                 placeholder = 'Password'
                 type='password'
                 onChange={(e) => setData({ ...data, password: e.target.value })}
+                autoComplete='on'
                 required
               />
-          </div>
+          </form>
           <div className = 'flex flex-row justify-between w-4/5'>
             <button
               id='btn-submit'
@@ -100,7 +101,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   )
 }
 

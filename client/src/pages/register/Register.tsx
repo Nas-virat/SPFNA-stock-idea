@@ -64,13 +64,13 @@ const Register = () => {
   };
 
   return (
-    <body className = 'flex place-content-center h-screen bg-[#D6BBE8]'>
+    <div className = 'flex place-content-center h-screen bg-[#D6BBE8]'>
       <div className = 'flex-col self-center h-auto w-1/2 mx-auto py-2 flex items-center justify-center p-6 rounded-xl bg-white'>
         <img className = 'rounded-full' src={logo} alt='myphoto' width="200" height="200"></img>
         <h1 className = 'text-3xl font-bold pb-6'>REGISTER</h1>
         
         <div className='w-4/5'>
-          <div className = 'form-group mb-4 pt-4 flex flex-col justify-between'>
+          <form className = 'form-group mb-4 pt-4 flex flex-col justify-between'>
             <label className = 'form-label inline-block font-medium text-2xl'>Username</label>
             <input
               id='username-form'
@@ -87,6 +87,7 @@ const Register = () => {
               type='password'
               onChange={(e) => setData({ ...data, password: e.target.value })}
               required
+              autoComplete='on'
             />
             <label className = 'form-label inline-block font-medium text-2xl pt-3'>Email</label>
             <input
@@ -96,7 +97,7 @@ const Register = () => {
               onChange={(e) => setData({ ...data, email: e.target.value })}
               required
             />
-          </div>
+          </form>
         </div>
 
         <div className="pb-3 flex justify-between w-4/5">
@@ -119,7 +120,7 @@ const Register = () => {
           REGISTER
         </button>
       </div>
-    </body>
+    </div>
   )
 }
 
