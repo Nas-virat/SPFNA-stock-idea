@@ -23,3 +23,39 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 ![expressjs](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)&nbsp;
 ![mongodb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)&nbsp;
 ![jwt](	https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)&nbsp;
+
+
+## List feature 
+
+### Authenication
+- [x] Register (QA)
+- [x] Login (QA)
+- [ ] Logout
+### portfolio
+- [ ] display portfolio
+- [ ] buy stock portfolio
+- [ ] sell stock portfolio
+- [ ] display leaderboard
+### leaderboard and P&L
+- [ ] LeaderBoard
+- [ ] P&L
+
+### Convert currency
+- [ ] display cash report
+- [ ] convert currency from one currency to other currency
+
+### idea space
+- [ ] display all idea
+- [ ] write idea
+- [ ] save draft idea
+- [ ] load draft idea
+- [ ] publish idea
+- [ ] comment on idea
+
+### Announcement
+- [ ] Admin write annoucement
+- [ ] display all annoucement
+- [ ] save draft annoucement 
+- [ ] load draft announcement
+- [ ] publish announcement
+
