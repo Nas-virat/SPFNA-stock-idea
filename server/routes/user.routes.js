@@ -18,13 +18,14 @@ router.get('/',getAllUsers);
 
 // // login users
 // // Page: Login Page
-// // POST /api/user/login
+// // POST /api/users/login
 router.post('/login',loginUser);
 
 // // logout users
 // // Page: logout Page
-// // GET : /api/user/logout
+// // GET : /api/users/logout
 router.get('/logout',logoutUser);
+
 // // Post a new user
 // // Page: Signup Page
 // // POST /api/users/register

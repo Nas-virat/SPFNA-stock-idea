@@ -101,7 +101,15 @@ const Register = () => {
         </div>
 
         <div className="pb-3 flex justify-between w-4/5">
-            <p className="font-medium text-2xl">Avatar Image</p>
+            <p className="font-medium text-2xl">
+              Avatar Image 
+              <span className='text-sm font-light ml-2'>
+                Avatar by 
+                <a href="https://www.freepik.com/free-vector/pack-avatars-different-people_7041832.htm#query=avatar&position=0&from_view=keyword">
+                  &nbsp;Freepik
+                </a>
+              </span>
+            </p>
           </div>
           <div className="flex pb-7 h-36">
             {profileImage.map((item : any) => (
