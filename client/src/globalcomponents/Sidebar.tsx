@@ -39,18 +39,6 @@ const Sidebar = () => {
     }
   }
 
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/users/', { withCredentials: true });
-        setIslogin(true);
-      } catch (error) {
-        setIslogin(false);
-      }
-    }
-    checkLogin();
-  }, [])
-
   return (
       <div className="bg-[#D6BBE8] h-screen w-56 flex flex-col justify-between">
         <div className='flex flex-col'>

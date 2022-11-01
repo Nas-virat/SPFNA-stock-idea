@@ -5,8 +5,14 @@ import Swal from 'sweetalert2';
 
 import logo from '../../assets/SPFNAlogo.png'
 
+import {AuthContext} from '../../context/AuthProvider';
+
+
 const Login = () => {
   const navigate = useNavigate();
+  //https://stackoverflow.com/questions/57854111/what-to-set-as-the-providers-value-in-order-to-change-context-from-a-consumer
+  const { loggedIn, role, logIn, logOut } = React.useContext(AuthContext);
+
   const [data, setData] = useState({
     userId: '',
     password: '',
@@ -22,7 +28,10 @@ const Login = () => {
       })
     } else {
       try {
-        const res = await axios.post('http://localhost:5000/api/users/login', data, { withCredentials: true });
+        const res = await axios.post('http://localhost:5000/api/users/login', data, { 
+          headers: {'Content-Type': 'application/json'},
+          withCredentials: true 
+        });
         if (res.data.success) {
           Swal.fire({
             title: 'Success!',
@@ -34,6 +43,9 @@ const Login = () => {
               Swal.showLoading()
             },
           }).then(() => {
+            console.log(res.data.user);
+            logIn();
+            console.log(loggedIn);
             navigate('/home');
           })
         } else {

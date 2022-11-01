@@ -12,6 +12,7 @@ import Portfolio from './pages/portfolio/Portfolio';
 import Profile from './pages/profile/Profile';
 import Register from './pages/register/Register';
 import Admincontrol from './pages/admincontrol/Admincontrol';
+import ProtectRoute from './globalcomponents/ProtectRoute';
 // globalcomponent
 
 function App() {
@@ -19,7 +20,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Homepage/>}/> 
-        <Route path="/home" element={<Homepage/>}/> 
+        <Route path="/home" element={
+          <ProtectRoute>
+            <Homepage/>
+          </ProtectRoute>
+        }/> 
         <Route path="/idea" element={<Allidea/>}/> 
         <Route path="/idea/post" element={<Writeidea/>}/> 
         <Route path="/convertcurrency" element={<ConvertCurrency/>}/> 

@@ -14,7 +14,20 @@ const IdeaSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    comment: [{ type : mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    comment: [{
+        commentBody: {
+            type: String,
+            required: true
+        },
+        commentDate: {
+            type: Date,
+            default: Date.now
+        },
+        commentUser: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    }],
     date: {
         type: Date,
         default: Date.now
