@@ -38,10 +38,39 @@ const registerUser = async (req, res, next) => {
         email,
         password,
     })
-    res.json({success:true,message:"User created successfully"});
+   sendCookie(newUser,201,res);
 };
+// // Post user by id
+// // Page Login Page
+const loginUser = async (req,res,next) =>{
+  const {userId,password} = req.body;
 
-
+  const user = await User.findOne({
+   $or: [{email : userId},{username : userId}]
+  });
+    if(!user){
+        res.json({success:false,message:"User not found"});
+        return next(new ErrorHandler("User not found",401));
+    }
+    const isMatch = await user.comparePassword(password);
+    if(!isMatch){
+        res.json({success:false,message:"Incorrect password"});
+        return next(new ErrorHandler("Incorrect password",401));
+    }
+    sendCookie(user,201,res);
+}
+// // Logout user
+// // logout page
+const logoutUser = async (req,res,next) =>{
+  res.cookie('token',null,{
+    expires : new Date(Date.now()),
+    httpOnly : true, 
+  });
+  res.status(200).json({
+        success: true,
+        message: "Logged Out",
+    });
+}
 // // Get user by id
 // // Page: myport Page
 const getUserById = async (req, res) => {
@@ -55,6 +84,8 @@ const getUserById = async (req, res) => {
 
 module.exports = {
     getAllUsers,
+    loginUser,
+    logoutUser,
     registerUser,
     getUserById
 }

@@ -3,15 +3,28 @@ const router = express.Router();
 
 
 
-const { getAllUsers,
-        registerUser,
-        getUserById } = require('../controller/user.controller');
+const   {
+    getAllUsers,
+    loginUser,
+    logoutUser,
+    registerUser,
+    getUserById
+} = require('../controller/user.controller');
 
 // // GET all users 
 // // Page: LeaderBoard Page
 // // GET /api/users
 router.get('/',getAllUsers);
 
+// // login users
+// // Page: Login Page
+// // POST /api/user/login
+router.post('/login',loginUser);
+
+// // logout users
+// // Page: logout Page
+// // GET : /api/user/logout
+router.get('/logout',logoutUser);
 // // Post a new user
 // // Page: Signup Page
 // // POST /api/users/register
