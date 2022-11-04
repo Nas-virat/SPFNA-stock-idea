@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom';
 import axios from 'axios'
 import Swal from 'sweetalert2';
@@ -29,7 +29,7 @@ const SectionLink: React.FC<NavProp> = ({name,to}) => {
 const Sidebar = () => {
 
   const navigate = useNavigate();
-  const {loggedIn,setAuth} = React.useContext(AuthContext);
+  const {loggedIn,role,setAuth} = React.useContext(AuthContext);
   const handleLogout = async () => {
     const res = await axios.get('http://localhost:5000/api/users/logout', { withCredentials: true });
     setAuth({
@@ -55,14 +55,14 @@ const Sidebar = () => {
         <div className='flex flex-col'>
           <img src={SPFNAlogo} alt="SPFNAlogo" className="w-40 h-40 mx-auto"/>
           <img src={line} alt="line" className="w-28 h-4 mx-auto opacity-80"/>
-          <SectionLink name="Login" to='/login'/>
+          <SectionLink name="Login" to='/login'/> 
           <SectionLink name="Home Page" to='/home'/> 
-          <SectionLink name="My Profile" to='/profile'/> 
-          <SectionLink name="My Portfolio" to='/myport'/>
-          <SectionLink name="Idea Space" to='/idea'/>
-          <SectionLink name="Convert Currency" to='/convertcurrency'/>
+          { loggedIn ? <SectionLink name="My Profile" to='/profile'/> : null}
+          { loggedIn ? <SectionLink name="My Portfolio" to='/myport'/> :null}
+          { loggedIn ? <SectionLink name="Idea Space" to='/idea'/> :null}
+          { loggedIn ? <SectionLink name="Convert Currency" to='/convertcurrency'/> :null}
           <SectionLink name="Leader Board" to='/leaderboard'/>
-          <SectionLink name="Admin" to='/admincontrol'/>
+          { loggedIn && role === 'admin' ? <SectionLink name="Admin" to='/admincontrol'/> : null}
         </div>
         {
           loggedIn ? (
