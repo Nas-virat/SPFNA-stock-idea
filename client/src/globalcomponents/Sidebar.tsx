@@ -56,6 +56,7 @@ const Sidebar = () => {
           <img src={SPFNAlogo} alt="SPFNAlogo" className="w-40 h-40 mx-auto"/>
           <img src={line} alt="line" className="w-28 h-4 mx-auto opacity-80"/>
           <SectionLink name="Login" to='/login'/> 
+          {!loggedIn ? <SectionLink name="Register" to='/register'/> : null}
           <SectionLink name="Home Page" to='/home'/> 
           { loggedIn ? <SectionLink name="My Profile" to='/profile'/> : null}
           { loggedIn ? <SectionLink name="My Portfolio" to='/myport'/> :null}
