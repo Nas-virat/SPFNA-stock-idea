@@ -9,7 +9,7 @@ interface Props {
 
 const ProtectRoute : React.FC<Props> = ({ children }) => {
 
-    const { loggedIn, role, logIn, logOut } = React.useContext(AuthContext);
+    const { loggedIn } = React.useContext(AuthContext);
 
     return (
         <>

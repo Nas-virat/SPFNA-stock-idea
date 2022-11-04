@@ -20,21 +20,37 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Homepage/>}/> 
-        <Route path="/home" element={
-          <ProtectRoute>
-            <Homepage/>
-          </ProtectRoute>
-        }/> 
+        <Route path="/home" element={<Homepage/>}/> 
         <Route path="/idea" element={<Allidea/>}/> 
-        <Route path="/idea/post" element={<Writeidea/>}/> 
-        <Route path="/convertcurrency" element={<ConvertCurrency/>}/> 
+        <Route path="/idea/post" element={
+          <ProtectRoute>
+            <Writeidea/>
+          </ProtectRoute>
+      }/> 
+        <Route path="/convertcurrency" element={
+        <ProtectRoute>
+          <ConvertCurrency/>
+        </ProtectRoute>
+      }/> 
         <Route path="/leaderboard" element={<Leaderboard/>}/> 
         <Route path="/login" element={<Login/>}/> 
-        <Route path="/myport" element={<Portfolio/>}/> 
-        <Route path="/otherport" element={<Portfolio/>}/> 
-        <Route path="/profile" element={<Profile/>}/> 
-        <Route path="/register" element={<Register/>}/> 
-        <Route path="/admincontrol" element={<Admincontrol/>}/>
+        <Route path="/myport" element={
+        <ProtectRoute>
+          <Portfolio/>
+        </ProtectRoute>}/> 
+        <Route path="/otherport" element={
+        <ProtectRoute>
+          <Portfolio/>
+        </ProtectRoute>}/> 
+        <Route path="/profile" element={
+        <ProtectRoute>
+          <Profile/>
+        </ProtectRoute>}/> 
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/admincontrol" element={
+        <ProtectRoute>
+          <Admincontrol/>
+        </ProtectRoute>}/>
       </Routes>
     </Router>
   );

@@ -7,6 +7,9 @@ import handsomeboy from '../assets/handsomeboy.jpg'
 import SPFNAlogo from '../assets/SPFNAlogo.png'
 import line from '../assets/line.png'
 
+import { useNavigate } from 'react-router-dom';
+import {AuthContext} from '../context/AuthProvider';
+
 interface NavProp{
   name:string;
   to:string;
@@ -24,11 +27,19 @@ const SectionLink: React.FC<NavProp> = ({name,to}) => {
 }
 
 const Sidebar = () => {
-  const [islogin, setIslogin] = useState(false);
+
+  const navigate = useNavigate();
+  const {loggedIn,setAuth} = React.useContext(AuthContext);
   const handleLogout = async () => {
     const res = await axios.get('http://localhost:5000/api/users/logout', { withCredentials: true });
+    setAuth({
+      loggedIn: false,
+      role: "",
+      username: "",
+      img: ""
+    });
     if (res.data.success) {
-      window.location.href = '/'
+      navigate('/login');
     } else {
       Swal.fire({
         title: 'Error!',
@@ -54,7 +65,7 @@ const Sidebar = () => {
           <SectionLink name="Admin" to='/admincontrol'/>
         </div>
         {
-          islogin ? (
+          loggedIn ? (
             <div className='flex flex-col mb-12'>
               <div className='flex flex-row place-content-center mb-2'>
                 <img src={handsomeboy} alt="handsomeboy" className="rounded-full h-20 w-20"/>

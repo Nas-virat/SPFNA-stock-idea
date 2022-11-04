@@ -11,7 +11,7 @@ import {AuthContext} from '../../context/AuthProvider';
 const Login = () => {
   const navigate = useNavigate();
   //https://stackoverflow.com/questions/57854111/what-to-set-as-the-providers-value-in-order-to-change-context-from-a-consumer
-  const { loggedIn, role, logIn, logOut } = React.useContext(AuthContext);
+  const {setAuth } = React.useContext(AuthContext);
 
   const [data, setData] = useState({
     userId: '',
@@ -44,8 +44,12 @@ const Login = () => {
             },
           }).then(() => {
             console.log(res.data.user);
-            logIn();
-            console.log(loggedIn);
+            setAuth({
+              loggedIn: true,
+              role: res.data.user.role,
+              username: res.data.user.username,
+              img: res.data.user.img
+            });
             navigate('/home');
           })
         } else {

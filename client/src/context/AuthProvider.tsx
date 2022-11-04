@@ -4,42 +4,35 @@ import React from 'react';
 export interface IAuth {
     loggedIn: boolean;
     role: string;
-    logIn: () => void;
-    logOut: () => void;
+    username : string;
+    img : string;
+    setAuth : React.Dispatch<React.SetStateAction<{
+    loggedIn: boolean;
+    role: string;
+    username: string;
+    img: string;
+    }>>
 }
 
 interface Props {
     children: JSX.Element[] | JSX.Element
   }
 
-export const AuthContext = React.createContext<IAuth>({"loggedIn":false, "role":'', "logIn":() => {}, "logOut":() => {}});
+export const AuthContext = React.createContext<IAuth>({"loggedIn":false, "role":'',"username":'',"img":'',setAuth:()=>{}});
 
 export const AuthProvider:React.FC<Props> = ({ children }) => {
     const [auth, setAuth] = useState({
         loggedIn: false,
-        role: ""
+        role: "",
+        username : "",
+        img:""
     });
-
-    const logIn = () => {
-        setAuth(prevState => ({
-            ...prevState,
-            loggedIn: true
-        }));
-    };
-
-    const logOut = () => {
-        setAuth(prevState => ({
-            ...prevState,
-            loggedIn: false
-        }));
-    };
 
     return (
         <AuthContext.Provider
             value={{ 
                 ...auth,
-                logIn,
-                logOut
+                setAuth,
             }}>
             {children}
         </AuthContext.Provider>
