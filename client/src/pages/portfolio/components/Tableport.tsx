@@ -45,11 +45,11 @@ const Tableport: React.FC<StockProps> = ({data}) => {
           <tr className="border-b-4 font-medium" key={index}>
             <td className="px-6 py-4">{item.symbol}</td>
             <td className="px-6 py-4">{330.7}</td>
-            <td className="px-6 py-4">{item.cost}</td>
+            <td className="px-6 py-4">{item.cost_price}</td>
             <td className="px-6 py-4">{item.quantity}</td>
             <td className="px-6 py-4">{(330.7*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
-            <td className={`px-6 py-4 ${(330.7-item.cost) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330.7-item.cost)*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
-            <td className={`px-6 py-4 ${(330.7-item.cost) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330.7-item.cost)*100/item.cost).toLocaleString(undefined,{maximumFractionDigits:2})} %</td>
+            <td className={`px-6 py-4 ${(330.7-item.cost_price) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330.7-item.cost_price)*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
+            <td className={`px-6 py-4 ${(330.7-item.cost_price) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330.7-item.cost_price)*100/item.cost_price).toLocaleString(undefined,{maximumFractionDigits:2})} %</td>
             <td className="px-6 py-4">
               <button onClick={handleSell} className='bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-2xl'>Sell</button>
             </td>
@@ -64,7 +64,7 @@ const Tableport: React.FC<StockProps> = ({data}) => {
               {(data.reduce((accumulator, object) => {return accumulator + 330.7*object.quantity;},0)).toLocaleString(undefined,{maximumFractionDigits:2})}
             </td>
             <td className="px-6 py-4">
-              {data.reduce((accumulator, object) => {return accumulator +(330.7 - object.cost)*object.quantity;},0)}
+              {data.reduce((accumulator, object) => {return accumulator +(330.7 - object.cost_price)*object.quantity;},0)}
               </td>
             <td className="px-6 py-4">{-30}%</td>
           </tr>

@@ -3,11 +3,13 @@ const Stock = require('../model/Stock');
 const currencyconvert = require("../utils/convert");
 const stockdata = require('../utils/yahoofinance');
 
-
+// // Get stock price
+// // Page: Myport Page
 const getPrice = async (req, res) => {
     try {
         const { symbol,country } = req.body;
-        const stock = await stockdata(symbol+ country);
+        const stockprice = await stockdata(symbol+ country);
+        res.json(stockprice);
     } catch (error) {
         console.log(error);
     }
@@ -23,8 +25,8 @@ const getPort = async (req, res) => {
         for(let i = 0; i < stocks.length; i++){
            symbol = stocks[i].symbol;
            country = stocks[i].country;
-           const data = await stockdata(symbol+country);
-           stocks[i].price = data.price;
+           const price = await stockdata(symbol+country);
+           stocks[i].price = price;
         }
         res.json(stocks);
     }
@@ -42,8 +44,8 @@ const getPortByUserId = async (req, res) => {
         for(let i = 0; i < stocks.length; i++){
            symbol = stocks[i].symbol;
            country = stocks[i].country;
-           const data = await stockdata(symbol+country);
-           stocks[i].price = data.price;
+           const price = await stockdata(symbol+country);
+           stocks[i].price = AudioProcessingEvent;
         }
         console.log(user);
         res.json(user);
@@ -57,17 +59,21 @@ const getPortByUserId = async (req, res) => {
 // // Page: Myport Page
 const buyStock = async (req, res) => {
     const { symbol,country, quantity } = req.body;
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user._id);
+
+    console.log(user);
 
     const cost_price = await stockdata(symbol+country);
     //if the stock is not in the user's portfolio
     if(!user.port.stock.some(stock => stock.symbol === symbol)){
-        const newStock = new Stock({
+        console.log("not in the portfolio");
+        const newStock = {
             symbol,
             cost_price,
             country,
             quantity
-        });
+        }
+        console.log(newStock);
         user.port.stock.push(newStock);
 
         // deduct the cost from the user's cash balance
@@ -222,6 +228,7 @@ const getRate = async (req, res) => {
 
 
 module.exports = {
+    getPrice,
     getPort,
     getPortByUserId,
     buyStock,

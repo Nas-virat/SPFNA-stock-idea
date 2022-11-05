@@ -12,43 +12,33 @@ import axios from 'axios';
 
 interface stock{
   symbol: string;
-  cost : number;
+  cost_price : number;
   quantity : number;
 }
 
-const temp : stock[] = [{
-  symbol: 'AAPL',
-  cost : 340.9,
-  quantity : 4
-},
-{
-  symbol: 'GOOG',
-  cost : 100,
-  quantity : 3
-},
-{
-  symbol: 'MSFT',
-  cost : 250,
-  quantity : 5
-}];
+interface selectOption {
+  value: {
+    prefix: string;
+    currency: string;
+  };
+  label: string;
+}
+
 
 const options = [
-  { value: '', label: 'US' },
-  { value: '.HK', label: 'HK' },
-  { value: '.BK', label: 'Thailand' },
-  { value: '.SS', label: 'Shanghai' },
-  { value: '.L', label: 'LSE' },
-  { value: '.IL', label: '󠁧󠁢󠁥󠁮LSEIOB' },
-  { value: '.AS', label: 'Amsterdam' },
-  { value: '.PA', label: 'Paris' },
-  { value: '.DE', label: 'German' },
-  { value: '.T', label: 'Japan' },
-  { value: '.SI', label: 'Singapore' },
-  { value: '.AX', label: 'Austrlia' },
-  { value: '.NZ', label: 'NZ'},
-  { value: '.CN', label: 'Canada' },
-  { value: '.KQ', label: 'KOSDAQ' },
-];
+  { value: {prefix:'',currency:'USD'}, label: 'US' },
+  { value: {prefix:'.HK',currency:'HKD'}, label: 'HK' },
+  { value: {prefix:'.BK',currency:'THB'}, label: 'Thailand' },
+  { value: {prefix:'.SS', currency:'CNY'}, label: 'Shanghai' },
+  { value: {prefix:'.L', currency:'GBP'}, label: 'LSE' },
+  { value: {prefix:'.IL', currency:'USD'}, label: 'LSEIOB' },
+  { value: {prefix:'.AS', currency:'EUR'}, label: 'Amsterdam' },
+  { value: {prefix:'.PA', currency:'EUR'}, label: 'Paris' },
+  { value: {prefix:'.DE', currency:'EUR'}, label: 'German' },
+  { value: {prefix:'.T', currency:'JPY'}, label: 'Japan' },
+  { value: {prefix:'.SI', currency:'SG'}, label: 'Singapore' },
+  { value: {prefix:'.AX', currency:'AUD'}, label: 'Austrlia' },
+  { value: {prefix:'.NZ', currency:'NZD'}, label: 'New Zealand' },];
 
 
 const Portfolio : React.FC = () => {
@@ -58,11 +48,10 @@ const Portfolio : React.FC = () => {
   
   const [stockList, setStockList] = useState<stock[]>([]);
 
-  const [symbol, setSymbol] = useState('');
-  const [cost, setCost] = useState(0);
-  const [quantity, setQuantity] = useState(0);
-  const [selectedCountry, setSelectedCountry] = useState(options[0]);
-
+  const [symbol, setSymbol] = useState<String>('');
+  const [cost, setCost] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(0);
+  const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
 
   const profileImage = (image: string) => {
     const imageProfile = avatarImage.find((img) => img.alt === image);
@@ -79,28 +68,49 @@ const Portfolio : React.FC = () => {
       console.log(err);
     });
   }
+  
   useEffect(() => {
     getPortfolio();
+
   },[]);
 
+
   const BuyStock = () => {
+    console.log("Buystock",symbol,cost,quantity,);
     axios.post('http://localhost:5000/api/port/buy', {
       symbol: symbol,
       cost: cost,
       quantity: quantity,
-      country: selectedCountry
+      country: selectedOption?.value.prefix,
+      currency: selectedOption?.value.currency 
     },
     { withCredentials: true })
     .then(res => {
       console.log(res.data);
+      Swal.fire(
+        'Buy',
+        'Your stock has been bought.',
+        'success'
+      )
       getPortfolio();
     })
     .catch(err => {
       console.log(err);
     });
   }
-  const handleConfirm = () => {
-    
+  const handleBuy = () => {
+    axios.post('http://localhost:5000/api/port/price', {
+      symbol: symbol,
+      country: selectedOption?.value.prefix,
+  },
+  { withCredentials: true })
+  .then(res => {
+    console.log(res.data);
+    setCost(res.data);
+  })
+  .catch(err => {
+    console.log(err);
+  });
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -110,14 +120,8 @@ const Portfolio : React.FC = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Buy'
     }).then((result) => {
-      if (result.isConfirmed) {
-        setCost(0);
-        cost > 0 && quantity > 0 && BuyStock();
-        Swal.fire(
-          'Buy',
-          'Your stock has been bought.',
-          'success'
-        )
+      if (result.isConfirmed) { 
+        BuyStock();
       }
     })
   }
@@ -149,7 +153,12 @@ const Portfolio : React.FC = () => {
           <div className="flex items-center mx-9">
             <div className="flex items-center">
               <h4 className="text-xl">Country</h4>
-              <Select className="w-40 ml-3" options={options} />
+              <Select
+                className="w-40 ml-3"
+                options={options}
+                defaultValue={options[0]}
+                onChange={setSelectedOption}
+              />
             </div>
             <div className="flex items-center mx-9">
               <h4 className="text-xl">Symbol</h4>
@@ -189,12 +198,12 @@ const Portfolio : React.FC = () => {
                 ease-in-out
                 m-0
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="input-num"
-                aria-describedby="input-num" placeholder="Share"></input>
+                aria-describedby="input-num" placeholder="Share" onChange={(e)=> setQuantity(parseInt(e.target.value))}></input>
             </div>
-            <button onClick={handleConfirm} className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
+            <button onClick={() => handleBuy()} className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
           </div> 
         }
-        <Tableport data={temp}/>
+        <Tableport data={stockList}/>
       </div>
     </Layout>
   )

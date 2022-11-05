@@ -3,7 +3,8 @@ const router = express();
 
 const verifyToken = require('../middleware/auth');
 
-const {getPort,
+const {getPrice,
+       getPort,
        getPortByUserId,
        buyStock,
        sellStock,
@@ -11,10 +12,15 @@ const {getPort,
        updateCurrency,
        getRate} = require('../controller/port.controller');
 
+// // Get stock price
+// // Page : Portfolio
+// // GET : /api/port/price
+router.route('/price').post(verifyToken, getPrice);
+
 // // Get all stocks by login user
 // // Page: Portfolio
 // // GET /api/port/me
-router.get('/me',verifyToken, getPort);
+router.route('/me').get(verifyToken, getPort);
 
 // // Get all stocks by user id
 // // Page: otherport

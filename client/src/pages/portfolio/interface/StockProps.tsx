@@ -3,7 +3,7 @@
 export default interface StockProps{
     data :{
         symbol: string;
-        cost : number;
+        cost_price : number;
         quantity : number;
     }[]
 }
