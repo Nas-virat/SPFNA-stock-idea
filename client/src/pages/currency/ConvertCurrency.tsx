@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../context/AuthProvider';
 import Layout from '../../globalcomponents/Layout'
@@ -8,18 +8,24 @@ import updownarrow from './components/updownarrow.png';
 import CurrencyInput from './components/CurrencyInput';
 import avatarImage from '../../assets/profile_image.json';
 
+import axios from 'axios';
+
+interface currency{
+  currency: string;
+  amount: number;
+}
 const currency = [
-  '🇺🇸 USD',
-  '🇭🇰 HKD',
-  '🇹🇭 THB',
-  '🇪🇺 EUR',
-  '🇨🇳 CNY',
-  '🇯🇵 JPY',
-  '🇰🇷 KRW',
-  '🇸🇬 SGD',
-  '🇳🇿 AUD',
-  '🇨🇦 CAD',
-  '🇬🇧 GBP'
+  'USD',
+  'HKD',
+  'THB',
+  'EUR',
+  'CNY',
+  'JPY',
+  'KRW',
+  'SGD',
+  'AUD',
+  'CAD',
+  'GBP'
 ];
 
 const ConvertCurrency = () => {
@@ -29,10 +35,28 @@ const ConvertCurrency = () => {
   const [currencyFrom, setCurrencyFrom] = useState("USA");
   const [currencyTo, setCurrencyTo] = useState("USA");
 
+  const [ListCash, setListCash] = useState<currency[]>([]);
+
   const profileImage = (image: string) => {
     const imageProfile = avatarImage.find((img) => img.alt === image);
     return imageProfile?.src;
   };
+  
+
+  useEffect(() => {
+  const getBalance = () => {
+    console.log('test');
+    axios.get(`http://localhost:5000/api/port/cash`, { withCredentials: true })
+      .then((res) => {
+        console.log(res.data);
+        setListCash(res.data);
+      })
+      .catch((err) => {
+        console.log(err)
+      }) 
+  }
+    getBalance();
+  },[]);
 
   const handleAmountChange1 = (amountFrom:number) => {
     setAmountTo(amountFrom * 123);
@@ -91,6 +115,14 @@ const ConvertCurrency = () => {
         <div className='w-1/2'>
           <p className="my-3 font-semibold text-2xl">My Currency</p>
           <div className='flex flex-col w-11/12 overflow-y-auto h-80'>
+
+            {ListCash.map((cash,index) => (
+              <OneCurrency
+                key={index}
+                currency={cash.currency}
+                amount={cash.amount}
+              />
+            ))}
           <OneCurrency currency=" USD" amount={1000}/>
           <OneCurrency currency=" CNY" amount={200}/>
           <OneCurrency currency=" HKD" amount={300}/>

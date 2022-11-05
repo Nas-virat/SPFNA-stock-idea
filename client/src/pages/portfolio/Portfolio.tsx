@@ -9,6 +9,7 @@ import avatarImage from '../../assets/profile_image.json';
 import Select from 'react-select'
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { icons } from 'react-icons'
 
 interface stock{
   symbol: string;
@@ -47,9 +48,8 @@ const Portfolio : React.FC = () => {
   const [isMyAccount, setIsMyAccount] = useState(true);
   
   const [stockList, setStockList] = useState<stock[]>([]);
-
+  const [Listprice, setPrice] = useState([]);
   const [symbol, setSymbol] = useState<String>('');
-  const [cost, setCost] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
 
@@ -61,8 +61,9 @@ const Portfolio : React.FC = () => {
   const getPortfolio = () => {
     axios.get('http://localhost:5000/api/port/me', { withCredentials: true })
     .then(res => {
-      console.log(res.data);
-      setStockList(res.data);
+      console.log(res.data.stocks);
+      setStockList(res.data.stocks);
+      setPrice(res.data.priceList);
     })
     .catch(err => {
       console.log(err);
@@ -75,7 +76,7 @@ const Portfolio : React.FC = () => {
   },[]);
 
 
-  const BuyStock = () => {
+  const BuyStock = (cost:number) => {
     console.log("Buystock",symbol,cost,quantity,);
     axios.post('http://localhost:5000/api/port/buy', {
       symbol: symbol,
@@ -96,24 +97,24 @@ const Portfolio : React.FC = () => {
     })
     .catch(err => {
       console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
     });
   }
-  const handleBuy = () => {
-    axios.post('http://localhost:5000/api/port/price', {
+  const handleBuy = async () => {
+  try{
+  const res = await axios.post('http://localhost:5000/api/port/price', {
       symbol: symbol,
       country: selectedOption?.value.prefix,
   },
-  { withCredentials: true })
-  .then(res => {
-    console.log(res.data);
-    setCost(res.data);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  { withCredentials: true });
+  const cost = res.data;
     Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: `You are going to buy ${symbol} at ${cost} ${selectedOption?.value.currency} per share`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -121,9 +122,17 @@ const Portfolio : React.FC = () => {
       confirmButtonText: 'Buy'
     }).then((result) => {
       if (result.isConfirmed) { 
-        BuyStock();
+        BuyStock(cost);
       }
     })
+  }catch(err){
+    console.log(err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+    })
+  }
   }
 
   return (
@@ -203,7 +212,7 @@ const Portfolio : React.FC = () => {
             <button onClick={() => handleBuy()} className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
           </div> 
         }
-        <Tableport data={stockList}/>
+        <Tableport data={stockList} price={Listprice}/>
       </div>
     </Layout>
   )

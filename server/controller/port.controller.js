@@ -22,13 +22,15 @@ const getPort = async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
         const stocks = user.port.stock;
+        const priceList = [];
         for(let i = 0; i < stocks.length; i++){
            symbol = stocks[i].symbol;
            country = stocks[i].country;
            const price = await stockdata(symbol+country);
-           stocks[i].price = price;
+           priceList.push(price);
         }
-        res.json(stocks);
+        console.log(stocks,priceList);
+        res.json({stocks,priceList});
     }
     catch(err){
         res.status(500).json({ message: err.message });
@@ -58,12 +60,17 @@ const getPortByUserId = async (req, res) => {
 // // Add a new stock to the user's portfolio
 // // Page: Myport Page
 const buyStock = async (req, res) => {
-    const { symbol,country, quantity } = req.body;
+    const { symbol,country, quantity ,currency} = req.body;
     const user = await User.findById(req.user._id);
-
-    console.log(user);
-
+    try{
     const cost_price = await stockdata(symbol+country);
+
+    //if user doesn't have enough money to buy the stock
+    if(!user.port.cash.some(cash => cash.currency === currency && cash.amount >= cost_price * quantity))
+    {
+        return res.status(400).json({ message: "You don't have enough money to buy this stock" });
+    }
+    //if user has enough money to buy the stock
     //if the stock is not in the user's portfolio
     if(!user.port.stock.some(stock => stock.symbol === symbol)){
         console.log("not in the portfolio");
@@ -77,9 +84,9 @@ const buyStock = async (req, res) => {
         user.port.stock.push(newStock);
 
         // deduct the cost from the user's cash balance
-        user.port.cash.forEach(currency => {
-            if(currency.currency === country){
-                currency.amount -= cost_price.price * quantity;
+        user.port.cash.forEach(cash => {
+            if(cash.currency === currency){
+                cash.amount -= cost_price * quantity;
             }
         });
 
@@ -98,12 +105,16 @@ const buyStock = async (req, res) => {
             }
         });
         // deduct the cost from the user's cash balance
-        user.port.cash.forEach(currency => {
-            if(currency.currency === country){
-                currency.amount -= cost_price.price * quantity;
+        user.port.cash.forEach(cash => {
+            if(cash.currency === currency){
+                cash.amount -= cost_price * quantity;
             }
         });
         await user.save();
+        res.json({ success: true, message: "Stock added successfully" });
+    }
+    }catch(err){
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -111,7 +122,7 @@ const buyStock = async (req, res) => {
 // // Page: Myport Page
 const sellStock = async (req, res) => {
 
-    const {symbol,quantity} = req.body;
+    const { symbol,country, quantity ,currency} = req.body;
     const user = await User.findById(req.user.id);
 
     try{
@@ -125,9 +136,9 @@ const sellStock = async (req, res) => {
                 }
             });
             // add money to user's cash balance
-            user.port.cash.forEach(currency => {
-                if(currency.currency === country){
-                    currency.amount += cost_price.price * quantity;
+            user.port.cash.forEach(cash => {
+                if(cash.currency === currency){
+                    cash.amount += cost_price * quantity;
                 }
             });
             await user.save();
@@ -138,9 +149,9 @@ const sellStock = async (req, res) => {
             //remove the stock from the portfolio
             user.port.stock = user.port.stock.filter(stock => stock.symbol !== symbol);
             // add money to user's cash balance
-            user.port.cash.forEach(currency => {
-                if(currency.currency === country){
-                    currency.amount += cost_price.price * quantity;
+            user.port.cash.forEach(cash => {
+                if(cash.currency === currency){
+                    cash.amount += cost_price * quantity;
                 }
             });
             await user.save();
@@ -161,8 +172,10 @@ const sellStock = async (req, res) => {
 // // Page: convert currency Page
 const getCashBalance = async (req, res) => {
     try{
-        const user = await User.findById(req.params.id);
+        console.log(req.user._id);
+        const user = await User.findById(req.user._id);
         const cash = user.port.cash;
+        console.log(cash);
         res.json({cash});
     }
     catch(err){
@@ -180,11 +193,11 @@ const updateCurrency = async (req, res) => {
         const user = await User.findById(req.params.id);
         const convertamount = await currencyconvert(from,to,amount);
         //if the "from" currency is not in the user's portfolio
-        if(!user.port.cash.some(currency => currency.currency === from)){
+        if(!user.port.cash.some(cash => cash.currency === from)){
             res.status(500).json({ message: "You don't have this currency" });
         }
         //if the "to" currency isn't already in the user's portfolio
-        else if(!user.port.cash.some(currency => currency.currency === to)){
+        else if(!user.port.cash.some(cash => cash.currency === to)){
             user.port.cash.push({currency:to,amount:convertamount});
             //update the "from" currency
             user.port.cash.forEach(stock => {
@@ -195,14 +208,14 @@ const updateCurrency = async (req, res) => {
         //if the "to" currency is already in the user's portfolio
         else{
             //add the quantity to the existing stock
-            user.port.cash.forEach(currency => {
-                if(currency.currency === to){
-                    currency.amount += convertamount;
+            user.port.cash.forEach(cash => {
+                if(cash.currency === to){
+                    cash.amount += convertamount;
             }});
             //update the "from" currency
-            user.port.cash.forEach(stock => {
-                if(stock.currency === from){
-                    stock.amount -= amount;
+            user.port.cash.forEach(cash => {
+                if(cash.currency === from){
+                    cash.amount -= amount;
             }});
         }
         await user.save();

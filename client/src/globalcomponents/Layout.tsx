@@ -1,12 +1,9 @@
 import React from 'react'
 
 import Sidebar from './Sidebar'
+import { ChildProps } from '../interface/ChildProps'
 
-interface Props {
-  children: JSX.Element[] | JSX.Element
-}
-
-const Layout: React.FC<Props> = ({children}) => {
+const Layout: React.FC<ChildProps> = ({children}) => {
   return (
     <div>
       <div className="fixed">

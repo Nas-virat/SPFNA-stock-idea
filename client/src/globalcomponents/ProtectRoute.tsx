@@ -3,11 +3,10 @@ import { Navigate } from 'react-router-dom';
 
 import { AuthContext } from '../context/AuthProvider';
 
-interface Props {
-    children: JSX.Element[] | JSX.Element
-  }
+import { ChildProps } from '../interface/ChildProps';
 
-const ProtectRoute : React.FC<Props> = ({ children }) => {
+
+const ProtectRoute : React.FC<ChildProps> = ({ children }) => {
 
     const { loggedIn } = React.useContext(AuthContext);
 
