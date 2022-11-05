@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import logo from '../../assets/SPFNAlogo.png'
 
-import {AuthContext} from '../../context/AuthProvider';
+import { AuthContext } from '../../context/AuthProvider';
 
 
 const Login = () => {
@@ -48,7 +48,7 @@ const Login = () => {
               loggedIn: true,
               role: res.data.user.role,
               username: res.data.user.username,
-              img: res.data.user.img
+              img: res.data.user.image
             });
             navigate('/home');
           })
