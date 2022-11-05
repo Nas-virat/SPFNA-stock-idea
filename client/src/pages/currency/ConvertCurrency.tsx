@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../context/AuthProvider';
 import Layout from '../../globalcomponents/Layout'
-import myphoto from '../../assets/handsomeboy.jpg';
+
 import OneCurrency from './components/OneCurrency';
 import updownarrow from './components/updownarrow.png';
-import Swal from 'sweetalert2';
-import { useState, useEffect } from 'react'
 import CurrencyInput from './components/CurrencyInput';
+import avatarImage from '../../assets/profile_image.json';
 
 const currency = [
   '🇺🇸 USD',
@@ -22,42 +23,47 @@ const currency = [
 ];
 
 const ConvertCurrency = () => {
+  const { username, img } = useContext(AuthContext);
+  const [amountFrom, setAmountFrom] = useState(1);
+  const [amountTo, setAmountTo] = useState(1);
+  const [currencyFrom, setCurrencyFrom] = useState("USA");
+  const [currencyTo, setCurrencyTo] = useState("USA");
 
-  const [amount1, setAmount1] = useState(1);
-  const [amount2, setAmount2] = useState(1);
-  const [currency1, setCurrency1] = useState("USA");
-  const [currency2, setCurrency2] = useState("USA");
+  const profileImage = (image: string) => {
+    const imageProfile = avatarImage.find((img) => img.alt === image);
+    return imageProfile?.src;
+  };
 
-  const handleAmountChange1 = (amount1:number) => {
-    setAmount2(amount1 * 123);
-    setAmount1(amount1);
+  const handleAmountChange1 = (amountFrom:number) => {
+    setAmountTo(amountFrom * 123);
+    setAmountFrom(amountFrom);
   }
 
-  const handleAmountChange2 = (amount2:number) => {
-    setAmount1(amount2 * 0.007);
-    setAmount2(amount2);
+  const handleAmountChange2 = (amountTo:number) => {
+    setAmountFrom(amountTo * 0.007);
+    setAmountTo(amountTo);
   }
 
-  const handleCurrencyChange1 = (currency1:string) => {
-    setCurrency1(currency1);
+  const handleCurrencyChange1 = (currencyFrom:string) => {
+    setCurrencyFrom(currencyFrom);
   }
 
-  const handleCurrencyChange2 = (currency2:string) => {
-    setCurrency2(currency2);
+  const handleCurrencyChange2 = (currencyTo:string) => {
+    setCurrencyTo(currencyTo);
   }
 
   const swapAmount = () => {
-    setAmount1(amount2);
-    setCurrency1(currency2);
-    setAmount2(amount1);
-    setCurrency2(currency1);
+    setAmountFrom(amountTo);
+    setCurrencyFrom(currencyTo);
+    setAmountTo(amountFrom);
+    setCurrencyTo(currencyFrom);
   }
 
   const [convert, setConvert] = useState({ 
-    amount1: '', 
-    currency1: '',
-    amount2: '', 
-    currency2: '',
+    amountFrom: '', 
+    currencyFrom: '',
+    amountTo: '', 
+    currencyTo: '',
   });
 
   const handleSubmit = () => {
@@ -74,10 +80,10 @@ const ConvertCurrency = () => {
     <Layout>
       <div className="flex items-center h-56">
         <div className="w-60 m-7">
-          <img className="rounded-full" src={myphoto} alt='myphoto' width="150" height="200"></img>
+          <img className="rounded-full" src={profileImage(img)} alt='myphoto' width="150" height="200"></img>
         </div>
         <div className="m-14">
-          <h1 className="mt-3 font-semibold text-3xl">Nasvirat</h1>
+          <h1 className="mt-3 font-semibold text-3xl">@{username}</h1>
           <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
         </div>
       </div>
@@ -107,28 +113,28 @@ const ConvertCurrency = () => {
           <div className='ml-3 w-11/12'>
             <div className='flex flex-row my-6'>
               <p className='mr-1'>1</p>
-              <p className='font-semibold'>{currency1}</p>
+              <p className='font-semibold'>{currencyFrom}</p>
               <p className='mx-2'>=</p>
               <p className='mr-1'>37.78</p>
-              <p className='font-semibold'>{currency2}</p>
+              <p className='font-semibold'>{currencyTo}</p>
             </div>
             <div className='flex flex-row my-6'>
               <CurrencyInput 
-                amount={amount1} 
+                amount={amountFrom} 
                 onAmountChange={handleAmountChange1} 
                 onCurrencyChange={handleCurrencyChange1} 
                 currencies={currency} 
-                currency={currency1} 
+                currency={currencyFrom} 
               />
             </div>
             <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic' onClick={swapAmount}></img>
             <div className='flex flex-row my-6'>
               <CurrencyInput 
-                amount={amount2} 
+                amount={amountTo} 
                 onAmountChange={handleAmountChange2} 
                 onCurrencyChange={handleCurrencyChange2} 
                 currencies={currency} 
-                currency={currency2} 
+                currency={currencyTo} 
               />
             </div>
             <button 

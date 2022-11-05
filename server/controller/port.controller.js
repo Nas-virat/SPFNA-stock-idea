@@ -4,9 +4,38 @@ const currencyconvert = require("../utils/convert");
 const stockdata = require('../utils/yahoofinance');
 
 
-// // GET all stocks by user id
+const getPrice = async (req, res) => {
+    try {
+        const { symbol,country } = req.body;
+        const stock = await stockdata(symbol+ country);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+// // GET all stocks by login user
 // // Page: Myport Page
-const getStocksByUserId = async (req, res) => {
+const getPort = async (req, res) => {
+    try{
+        const user = await User.findById(req.user._id);
+        const stocks = user.port.stock;
+        for(let i = 0; i < stocks.length; i++){
+           symbol = stocks[i].symbol;
+           country = stocks[i].country;
+           const data = await stockdata(symbol+country);
+           stocks[i].price = data.price;
+        }
+        res.json(stocks);
+    }
+    catch(err){
+        res.status(500).json({ message: err.message });
+    }
+}
+
+// // GET all stocks by user id
+// // Page: Otherport Page
+const getPortByUserId = async (req, res) => {
     try{
         const user = await User.findById(req.params.id);
         const stocks = user.port.stock;
@@ -193,11 +222,11 @@ const getRate = async (req, res) => {
 
 
 module.exports = {
-    getStocksByUserId,
+    getPort,
+    getPortByUserId,
     buyStock,
     sellStock,
     getCashBalance,
     updateCurrency,
     getRate
 }
-

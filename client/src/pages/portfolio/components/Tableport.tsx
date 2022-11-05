@@ -1,5 +1,4 @@
-import React from 'react'
-import {useState} from 'react'
+import React, { useState } from 'react'
 import StockProps from '../interface/StockProps';
 
 import Swal from 'sweetalert2';
@@ -7,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const Tableport: React.FC<StockProps> = ({data}) => {
 
-  const [allprice,setallprice] = useState([]);
+  const [allprice, setallprice] = useState([]);
 
   const handleSell = () => {
     console.log("sell");
@@ -34,7 +33,7 @@ const Tableport: React.FC<StockProps> = ({data}) => {
           <th className="px-6 py-4">Symbol</th>
           <th className="px-6 py-4">Price</th>
           <th className="px-6 py-4">Cost Price</th>
-          <th className="px-6 py-4">Volume</th>
+          <th className="px-6 py-4">quantity</th>
           <th className="px-6 py-4">Market Value</th>
           <th className="px-6 py-4">P/L</th>
           <th className="px-6 py-4">P/L%</th>
@@ -47,9 +46,9 @@ const Tableport: React.FC<StockProps> = ({data}) => {
             <td className="px-6 py-4">{item.symbol}</td>
             <td className="px-6 py-4">{330.7}</td>
             <td className="px-6 py-4">{item.cost}</td>
-            <td className="px-6 py-4">{item.volume}</td>
-            <td className="px-6 py-4">{(330.7*item.volume).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
-            <td className={`px-6 py-4 ${(330.7-item.cost) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330.7-item.cost)*item.volume).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
+            <td className="px-6 py-4">{item.quantity}</td>
+            <td className="px-6 py-4">{(330.7*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
+            <td className={`px-6 py-4 ${(330.7-item.cost) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330.7-item.cost)*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className={`px-6 py-4 ${(330.7-item.cost) > 0 ? `text-green-700` : `text-rose-700`}`}>{((330.7-item.cost)*100/item.cost).toLocaleString(undefined,{maximumFractionDigits:2})} %</td>
             <td className="px-6 py-4">
               <button onClick={handleSell} className='bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-2xl'>Sell</button>
@@ -62,10 +61,10 @@ const Tableport: React.FC<StockProps> = ({data}) => {
             <td className="px-6 py-4"></td>
             <td className="px-6 py-4"></td>
             <td className="px-6 py-4">
-              {(data.reduce((accumulator, object) => {return accumulator + 330.7*object.volume;},0)).toLocaleString(undefined,{maximumFractionDigits:2})}
+              {(data.reduce((accumulator, object) => {return accumulator + 330.7*object.quantity;},0)).toLocaleString(undefined,{maximumFractionDigits:2})}
             </td>
             <td className="px-6 py-4">
-              {data.reduce((accumulator, object) => {return accumulator +(330.7 - object.cost)*object.volume;},0)}
+              {data.reduce((accumulator, object) => {return accumulator +(330.7 - object.cost)*object.quantity;},0)}
               </td>
             <td className="px-6 py-4">{-30}%</td>
           </tr>
