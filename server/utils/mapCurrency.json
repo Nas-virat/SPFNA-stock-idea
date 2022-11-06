@@ -1,0 +1,15 @@
+{
+  "":"USD", 
+  ".HK":"HKD", 
+  ".BK":"THB", 
+  ".SS" :"CNY",
+  ".L" :"GBP" ,
+  ".IL" :"USD",
+  ".AS" :"EUR",
+  ".PA" :"EUR",
+  ".DE" :"EUR",
+  ".T" :"JPY", 
+  ".SI" :"SG", 
+  ".AX" :"AUD",
+  ".NZ" :"NZD"
+}

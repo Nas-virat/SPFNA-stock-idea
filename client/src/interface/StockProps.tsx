@@ -1,10 +1,13 @@
 
+
+interface stock{
+    symbol: string;
+    price : number;
+    cost_price : number;
+    quantity : number;
+    rate : number;
+  }
 export default interface StockProps{
-    data :{
-        symbol: string;
-        cost_price : number;
-        quantity : number;
-    }[]
-    price:number[];
+    data :stock[];
 }
 

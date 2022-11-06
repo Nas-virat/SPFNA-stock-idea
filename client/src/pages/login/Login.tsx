@@ -10,7 +10,6 @@ import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
   const navigate = useNavigate();
-  //https://stackoverflow.com/questions/57854111/what-to-set-as-the-providers-value-in-order-to-change-context-from-a-consumer
   const {setAuth } = React.useContext(AuthContext);
 
   const [data, setData] = useState({
@@ -50,6 +49,7 @@ const Login = () => {
               username: res.data.user.username,
               img: res.data.user.image
             });
+            localStorage.setItem('user', JSON.stringify(res.data.user));
             navigate('/home');
           })
         } else {

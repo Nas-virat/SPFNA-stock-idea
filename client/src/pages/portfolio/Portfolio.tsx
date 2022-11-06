@@ -9,12 +9,13 @@ import avatarImage from '../../assets/profile_image.json';
 import Select from 'react-select'
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { icons } from 'react-icons'
 
 interface stock{
   symbol: string;
+  price : number;
   cost_price : number;
   quantity : number;
+  rate : number;
 }
 
 interface selectOption {
@@ -48,7 +49,6 @@ const Portfolio : React.FC = () => {
   const [isMyAccount, setIsMyAccount] = useState(true);
   
   const [stockList, setStockList] = useState<stock[]>([]);
-  const [Listprice, setPrice] = useState([]);
   const [symbol, setSymbol] = useState<String>('');
   const [quantity, setQuantity] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
@@ -61,9 +61,8 @@ const Portfolio : React.FC = () => {
   const getPortfolio = () => {
     axios.get('http://localhost:5000/api/port/me', { withCredentials: true })
     .then(res => {
-      console.log(res.data.stocks);
-      setStockList(res.data.stocks);
-      setPrice(res.data.priceList);
+      console.log(res.data.stocklist);
+      setStockList(res.data.stocklist);
     })
     .catch(err => {
       console.log(err);
@@ -212,7 +211,7 @@ const Portfolio : React.FC = () => {
             <button onClick={() => handleBuy()} className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
           </div> 
         }
-        <Tableport data={stockList} price={Listprice}/>
+        <Tableport data={stockList}/>
       </div>
     </Layout>
   )

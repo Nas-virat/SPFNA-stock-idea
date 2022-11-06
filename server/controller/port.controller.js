@@ -2,6 +2,7 @@ const User = require("../model/User");
 const Stock = require('../model/Stock');
 const currencyconvert = require("../utils/convert");
 const stockdata = require('../utils/yahoofinance');
+const mapCurrency = require("../utils/mapCurrency");
 
 // // Get stock price
 // // Page: Myport Page
@@ -22,15 +23,20 @@ const getPort = async (req, res) => {
     try{
         const user = await User.findById(req.user._id);
         const stocks = user.port.stock;
-        const priceList = [];
+        const stocklist = [];
         for(let i = 0; i < stocks.length; i++){
            symbol = stocks[i].symbol;
+           cost_price = stocks[i].cost_price;
            country = stocks[i].country;
+           quantity = stocks[i].quantity;
            const price = await stockdata(symbol+country);
-           priceList.push(price);
+           
+           const rate = 1;
+
+           stocklist.push({symbol,price,cost_price,quantity,rate});
         }
-        console.log(stocks,priceList);
-        res.json({stocks,priceList});
+        console.log(stocklist);
+        res.json({stocklist});
     }
     catch(err){
         res.status(500).json({ message: err.message });
@@ -47,7 +53,7 @@ const getPortByUserId = async (req, res) => {
            symbol = stocks[i].symbol;
            country = stocks[i].country;
            const price = await stockdata(symbol+country);
-           stocks[i].price = AudioProcessingEvent;
+           stocks[i].price = price;
         }
         console.log(user);
         res.json(user);
