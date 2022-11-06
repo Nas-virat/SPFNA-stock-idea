@@ -1,6 +1,7 @@
 const Idea = require("../model/Idea");
 const User = require("../model/User");
 const Comment = require("../model/Comment");
+const ErrorHandler = require("../utils/errorHandler");
 
 
 // // GET all ideas
@@ -27,17 +28,29 @@ const getIdeasByUserId = async (req, res) => {
 
 // // Add a new idea
 // // Page: Writeidea Page
-const addIdea = async (req, res) => {
-    const { title, details, status } = req.body;
-    const user = await User.findById(req.user.id);
+const addIdea = async (req, res, next) => {
+    const { title, details, status} = req.body;
+    console.log(title, details, status);
+    const user = await User.findById(req.user._id);
+    const idea = await Idea.findOne({ title });
+    if (idea && idea.title === title) {
+        res.json({success:false,message: "Title already exists"});
+        return next(new ErrorHandler("Title already exists", 401));
+    }
+    else if(title.length < 6){
+        res.json({sucecess:false,message:"Title must be at least 6 characters"});
+        return next(new ErrorHandler("Title must be at least 6 characters",401));
+    }
+    else if(details.length < 6){
+        res.json({sucecess:false,message:"Details must be at least 6 characters"});
+        return next(new ErrorHandler("Details must be at least 6 characters",401));
+    }
     const newIdea = await Idea.create({
         title,
         details,
         status,
         user: user._id
     });
-    user.idea.push(newIdea._id);
-    await user.save();
     res.json({ success: true, message: "Idea created successfully" });
 }
 

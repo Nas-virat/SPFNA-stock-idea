@@ -32,5 +32,6 @@ app.use('/api/users',require('./routes/user.routes'));
 
 app.use('/api/port',require('./routes/port.routes'));
 
+app.use('/api/idea',require('./routes/idea.routes'));
 
 app.listen(port, () => {console.log(`Server is running on port ${port}`) });
