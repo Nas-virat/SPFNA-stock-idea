@@ -2,7 +2,6 @@ const User = require("../model/User");
 const Stock = require('../model/Stock');
 const currencyconvert = require("../utils/convert");
 const stockdata = require('../utils/yahoofinance');
-const mapCurrency = require("../utils/mapCurrency");
 
 // // Get stock price
 // // Page: Myport Page
@@ -29,6 +28,7 @@ const getPort = async (req, res) => {
            cost_price = stocks[i].cost_price;
            country = stocks[i].country;
            quantity = stocks[i].quantity;
+           currency = stocks[i].currency;
            const price = await stockdata(symbol+country);
            
            const rate = 1;
@@ -84,7 +84,8 @@ const buyStock = async (req, res) => {
             symbol,
             cost_price,
             country,
-            quantity
+            quantity,
+            currency
         }
         console.log(newStock);
         user.port.stock.push(newStock);
