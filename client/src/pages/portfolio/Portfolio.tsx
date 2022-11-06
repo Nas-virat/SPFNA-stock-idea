@@ -9,7 +9,10 @@ import avatarImage from '../../assets/profile_image.json';
 import Select from 'react-select'
 import Swal from 'sweetalert2';
 import axios from 'axios';
+
 import chartFunction from '../../function/chartfunction'
+import backgroundColor from '../../config/chartconfig'
+
 
 interface stock{
   symbol: string;
@@ -86,7 +89,7 @@ const Portfolio : React.FC = () => {
   const BuyStock = (cost:number) => {
     console.log("Buystock",symbol,cost,quantity,);
     axios.post('http://localhost:5000/api/port/buy', {
-      symbol: symbol,
+      symbol: symbol.toLocaleUpperCase(),
       cost: cost,
       quantity: quantity,
       country: selectedOption?.value.prefix,
@@ -162,8 +165,7 @@ const Portfolio : React.FC = () => {
           </div>
         </div>
         <div className="ml-36 h-56 w-56">
-        <Chartport labels={labels} data ={datachart} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)'
-      ,'rgb(60, 62, 25)','rgb(25, 45, 86)']}/>
+          <Chartport labels={labels} data ={datachart} backgroundColor={backgroundColor}/>
         </div>
 		  </div>
 
