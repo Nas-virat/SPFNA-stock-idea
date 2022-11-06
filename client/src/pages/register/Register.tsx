@@ -63,12 +63,37 @@ const Register = () => {
     return 'w-[80px] h-[80px] ml-5 rounded-full ease-in-out duration-200';
   };
 
+  const handleKeypress = (e:any) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className = 'flex place-content-center h-screen bg-[#D6BBE8]'>
-      <div className = 'flex-col self-center h-auto w-1/2 mx-auto py-2 flex items-center justify-center p-6 rounded-xl bg-white'>
+      <div className = 'flex-col self-center h-auto w-1/2 mx-auto py-2 flex items-center justify-center p-6 rounded-xl bg-white min-w-max'>
         <img className = 'rounded-full' src={logo} alt='myphoto' width="200" height="200"></img>
         <h1 className = 'text-3xl font-bold pb-6'>REGISTER</h1>
         
+        <div className="pb-3 flex justify-between w-4/5">
+          <p className="font-medium text-2xl">
+            Avatar Image 
+            <span className='text-sm font-light ml-2'>
+              Avatar by 
+              <a href="https://www.freepik.com/free-vector/pack-avatars-different-people_7041832.htm#query=avatar&position=0&from_view=keyword">
+                &nbsp;Freepik
+              </a>
+            </span>
+          </p>
+        </div>
+        <div className="flex pb-7 h-36">
+          {profileImage.map((item : any) => (
+            <button id={`btn-img-${item.id}`} key={item.id} className="flex flex-row items-center" type="button" onClick={() => setData({ ...data, image: item.alt })}>
+              <img src={item.src} alt={item.alt} className={`${handleProfileImageStyle(item.alt)}`} />
+            </button>
+          ))}
+        </div>
+
         <div className='w-4/5'>
           <form className = 'form-group mb-4 pt-4 flex flex-col justify-between'>
             <label className = 'form-label inline-block font-medium text-2xl'>Username</label>
@@ -96,28 +121,10 @@ const Register = () => {
               placeholder = 'Email'
               onChange={(e) => setData({ ...data, email: e.target.value })}
               required
+              onKeyPress={handleKeypress}
             />
           </form>
         </div>
-
-        <div className="pb-3 flex justify-between w-4/5">
-            <p className="font-medium text-2xl">
-              Avatar Image 
-              <span className='text-sm font-light ml-2'>
-                Avatar by 
-                <a href="https://www.freepik.com/free-vector/pack-avatars-different-people_7041832.htm#query=avatar&position=0&from_view=keyword">
-                  &nbsp;Freepik
-                </a>
-              </span>
-            </p>
-          </div>
-          <div className="flex pb-7 h-36">
-            {profileImage.map((item : any) => (
-              <button id={`btn-img-${item.id}`} key={item.id} className="flex flex-row items-center" type="button" onClick={() => setData({ ...data, image: item.alt })}>
-                <img src={item.src} alt={item.alt} className={`${handleProfileImageStyle(item.alt)}`} />
-              </button>
-            ))}
-          </div>
 
         <button
           id='btn-submit'
