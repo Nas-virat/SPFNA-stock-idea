@@ -9,6 +9,7 @@ import avatarImage from '../../assets/profile_image.json';
 import Select from 'react-select'
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import chartFunction from '../../function/chartfunction'
 
 interface stock{
   symbol: string;
@@ -46,11 +47,16 @@ const options = [
 const Portfolio : React.FC = () => {
   const { username, img } = React.useContext(AuthContext)
   const [buy,setBuy] = useState(false);
+  const [sell,setSell] = useState(false);
   const [isMyAccount, setIsMyAccount] = useState(true);
   
   const [stockList, setStockList] = useState<stock[]>([]);
   const [symbol, setSymbol] = useState<String>('');
   const [quantity, setQuantity] = useState<number>(0);
+
+  const [datachart , setDatachart] = useState<number[]>([]);
+  const [labels, setLabels] = useState<string[]>([]);
+
   const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
 
   const profileImage = (image: string) => {
@@ -63,6 +69,9 @@ const Portfolio : React.FC = () => {
     .then(res => {
       console.log(res.data.stocklist);
       setStockList(res.data.stocklist);
+      const {labels,data} = chartFunction(res.data.stocklist);
+      setLabels(labels);
+      setDatachart(data);
     })
     .catch(err => {
       console.log(err);
@@ -71,7 +80,6 @@ const Portfolio : React.FC = () => {
   
   useEffect(() => {
     getPortfolio();
-
   },[]);
 
 
@@ -104,35 +112,41 @@ const Portfolio : React.FC = () => {
     });
   }
   const handleBuy = async () => {
-  try{
-  const res = await axios.post('http://localhost:5000/api/port/price', {
-      symbol: symbol,
-      country: selectedOption?.value.prefix,
-  },
-  { withCredentials: true });
-  const cost = res.data;
-    Swal.fire({
-      title: 'Are you sure?',
-      text: `You are going to buy ${symbol} at ${cost} ${selectedOption?.value.currency} per share`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Buy'
-    }).then((result) => {
-      if (result.isConfirmed) { 
-        BuyStock(cost);
-      }
-    })
-  }catch(err){
-    console.log(err);
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Something went wrong!',
-    })
+    try{
+    const res = await axios.post('http://localhost:5000/api/port/price', {
+        symbol: symbol,
+        country: selectedOption?.value.prefix,
+    },
+    { withCredentials: true });
+    const cost = res.data;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `You are going to buy ${symbol} at ${cost} ${selectedOption?.value.currency} per share`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Buy'
+      }).then((result) => {
+        if (result.isConfirmed) { 
+          BuyStock(cost);
+        }
+      })
+    }catch(err){
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    }
   }
+
+  const handleSell = async () => {
+
   }
+    
+
 
   return (
     <Layout>
@@ -148,7 +162,8 @@ const Portfolio : React.FC = () => {
           </div>
         </div>
         <div className="ml-36 h-56 w-56">
-        <Chartport labels={['red', 'blue','yellow']} data ={[300,50,100]} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)']}/>
+        <Chartport labels={labels} data ={datachart} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)'
+      ,'rgb(60, 62, 25)','rgb(25, 45, 86)']}/>
         </div>
 		  </div>
 
@@ -156,6 +171,7 @@ const Portfolio : React.FC = () => {
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
           {isMyAccount && <button onClick ={() => setBuy(!buy)} className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Buy</button>}
+          {isMyAccount && <button onClick ={() => setSell(!sell)} className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Sell</button>}
         </div>
         { buy &&
           <div className="flex items-center mx-9">
@@ -211,6 +227,7 @@ const Portfolio : React.FC = () => {
             <button onClick={() => handleBuy()} className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
           </div> 
         }
+        
         <Tableport data={stockList}/>
       </div>
     </Layout>

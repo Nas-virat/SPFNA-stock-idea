@@ -1,38 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import StockProps from "../../../interface/StockProps";
-import Swal from 'sweetalert2';
 
 
-interface stock{
-  symbol: string;
-  price : number;
-  cost_price : number;
-  quantity : number;
-  rate : number;
-}
+
+
 
 const Tableport: React.FC<StockProps> = ({data}) => {
 
-  const [allprice, setallprice] = useState([]);
-
-  const handleSell = () => {
-    console.log("sell");
-    Swal.fire({
-      title: 'Sell Stock',
-      html: `Do you want to sell this stock?`,
-      icon: 'warning',
-      confirmButtonText: 'OK',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Successfully Sell!',
-          html: `You have successfully sell this stock!`,
-          icon: 'success',
-          confirmButtonText: 'OK',
-        });
-      }
-    });
-  }
   return (
     <table className="mx-4 mt-7 border-collapse min-w-[70%] text-xl rounded-xl overflow-hidden">
       <thead>
@@ -57,9 +31,6 @@ const Tableport: React.FC<StockProps> = ({data}) => {
             <td className="px-6 py-4">{(item.price*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className={`px-6 py-4 ${(item.price-item.cost_price) > 0 ? `text-green-700` : `text-rose-700`}`}>{((item.price-item.cost_price)*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className={`px-6 py-4 ${(item.price-item.cost_price) > 0 ? `text-green-700` : `text-rose-700`}`}>{((item.price-item.cost_price)*100/item.cost_price).toLocaleString(undefined,{maximumFractionDigits:2})} %</td>
-            <td className="px-6 py-4">
-              <button onClick={handleSell} className='bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-2xl'>Sell</button>
-            </td>
           </tr>
         ))}
           <tr className="border-b-4 font-medium" >

@@ -1,8 +1,19 @@
 const CC = require("currency-converter-lt");
 
+
+
 const currencyconvert = async (from, to, amount) => {
-  const rate = await CC.getRate(from, to);
-  return rate * amount;
+
+  let currencyConverter = new CC(
+    {
+      from: from,
+      to: to,
+      amount: amount
+    }
+  );
+  
+ const result = await currencyConverter.convert();
+  return result;
 }
 
 module.exports = currencyconvert;

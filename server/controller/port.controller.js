@@ -68,6 +68,9 @@ const getPortByUserId = async (req, res) => {
 const buyStock = async (req, res) => {
     const { symbol,country, quantity ,currency} = req.body;
     const user = await User.findById(req.user._id);
+
+    console.log(symbol,country,quantity,currency);
+
     try{
     const cost_price = await stockdata(symbol+country);
 
