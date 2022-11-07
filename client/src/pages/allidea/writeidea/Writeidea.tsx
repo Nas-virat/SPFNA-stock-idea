@@ -3,40 +3,105 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Layout from '../../../globalcomponents/Layout'
+import axios from 'axios'; 
+import { wait } from '@testing-library/user-event/dist/utils';
 
 
 const Writeidea = () => {
   const navigate = useNavigate();
   const [postidea, setPostidea] = useState({ 
     title: '', 
-    content: '',
-    date: Date.now(), 
+    details: '',
   });
 
-  const handlePost = () => {
-    Swal.fire({
-      title: 'Successfully Post!',
-      html: `You have successfully post the idea!<br>TOPIC: <b>${postidea.title}</b>`,
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate('/idea', { replace: true });
+  const handlePost = async () => {
+    if (postidea.title === '' || postidea.details === '') {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all the fields',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    } else {
+      try {
+        const res = await axios.post('http://localhost:5000/api/idea/add', {
+          title: postidea.title,
+          details: postidea.details,
+        }, { withCredentials: true });
+        if (res.data.success) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'You have successfully post Idea!',
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+            },
+          }).then(() => {
+            navigate('/idea');
+          })
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: res.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      } catch(err){
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
       }
-    });
+    }
   }
 
-  const handleDraft = () => {
-    Swal.fire({
-      title: 'Successfully Save!',
-      html: `You have successfully save the idea as draft!<br>TOPIC: <b>${postidea.title}</b>`,
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate('/idea', { replace: true });
+  const handleDraft = async () => {
+    if (postidea.title === '' || postidea.details === '') {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in some of the fields',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    } else {
+      try {
+        const res = await axios.post('http://localhost:5000/api/idea/add/draft', {
+          title: postidea.title,
+          details: postidea.details,
+        }, { withCredentials: true });
+        if (res.data.success) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'You have successfully Drafted Idea!',
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+            },
+          })
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: res.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      } catch(err){
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
       }
-    });
+    }
   }
 
   const handleCancel = () => {
@@ -47,7 +112,7 @@ const Writeidea = () => {
     <Layout>
       <div className='pt-4 pr-20'>
         <p className='font-bold text-3xl pb-7'>Write Your Idea</p>
-        <div className='w-full rounded-lg border h-auto shadow-md p-6'>
+        <form className='w-full rounded-lg border h-auto shadow-md p-6'>
           <input 
             className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black'
             placeholder='What is your Topic'
@@ -58,9 +123,9 @@ const Writeidea = () => {
             className='w-full h-96 rounded-lg border shadow-md p-4 mt-4 resize-none border-black'
             placeholder='Say something...'
             required
-            onChange={(e) => setPostidea({ ...postidea, content: e.target.value })}
+            onChange={(e) => setPostidea({ ...postidea, details: e.target.value })}
           />
-        </div>
+        </form>
         <div className='mt-5 flex justify-between mb-16'>
           <div>
             <button 
