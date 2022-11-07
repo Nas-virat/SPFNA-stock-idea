@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Layout from '../../../globalcomponents/Layout'
 import axios from 'axios'; 
+import { wait } from '@testing-library/user-event/dist/utils';
 
 
 const Writeidea = () => {
@@ -11,7 +12,6 @@ const Writeidea = () => {
   const [postidea, setPostidea] = useState({ 
     title: '', 
     details: '',
-    status: 'posted',
   });
 
   const handlePost = async () => {
@@ -27,7 +27,6 @@ const Writeidea = () => {
         const res = await axios.post('http://localhost:5000/api/idea/add', {
           title: postidea.title,
           details: postidea.details,
-          status: postidea.status,
         }, { withCredentials: true });
         if (res.data.success) {
           Swal.fire({
@@ -61,17 +60,48 @@ const Writeidea = () => {
     }
   }
 
-  const handleDraft = () => {
-    Swal.fire({
-      title: 'Successfully Save!',
-      html: `You have successfully save the idea as draft!<br>TOPIC: <b>${postidea.title}</b>`,
-      icon: 'success',
-      confirmButtonText: 'OK',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate('/idea', { replace: true });
+  const handleDraft = async () => {
+    if (postidea.title === '' || postidea.details === '') {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in some of the fields',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    } else {
+      try {
+        const res = await axios.post('http://localhost:5000/api/idea/add/draft', {
+          title: postidea.title,
+          details: postidea.details,
+        }, { withCredentials: true });
+        if (res.data.success) {
+          Swal.fire({
+            title: 'Success!',
+            text: 'You have successfully Drafted Idea!',
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+            },
+          })
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: res.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      } catch(err){
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
       }
-    });
+    }
   }
 
   const handleCancel = () => {
