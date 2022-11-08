@@ -4,10 +4,12 @@ import Commenticon from './Commenticon.png';
 import {useState} from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { AuthContext } from '../../../context/AuthProvider'
 
 
 const Ideapost = ({ideas}:any) => {
 
+  const { img } = React.useContext(AuthContext)
   const [showcomment, setShowcomment] = useState(false);
   const [newComment, setNewComment] = useState('');
   const date = new Date(ideas.date);
@@ -88,7 +90,7 @@ const Ideapost = ({ideas}:any) => {
       {showcomment && 
         <div className='flex flex-col mt-2'>
           <div className='h-14 flex flex-row mt-3 bg-[#F2F2F2] rounded-3xl'>
-            <img className='self-center w-10 h-10 mx-3 rounded-full' src={profileImage(ideas.user.image)} alt='profile-pic'></img>
+            <img className='self-center w-10 h-10 mx-3 rounded-full' src={profileImage(img)} alt='profile-pic'></img>
             <form className='flex flex-row w-full'>
              <input 
               className='self-center h-3/5 w-full rounded-3xl indent-6' 
