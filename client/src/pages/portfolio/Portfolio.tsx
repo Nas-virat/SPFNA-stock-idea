@@ -191,6 +191,18 @@ const Portfolio : React.FC = () => {
         })
         return;
       }
+      // if sell stock more than you have
+      stockList.forEach((stock) => {
+        if(stock.symbol === symbol.toLocaleUpperCase() && stock.quantity < quantity){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You do not have enough stock',
+          })
+          return;
+        }
+      })
+
       const res = await axios.post(config.API_URL +'/port/price', {
           symbol: symbol.toLocaleUpperCase(),
           country: selectedOption?.value.prefix,

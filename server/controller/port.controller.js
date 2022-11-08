@@ -48,7 +48,13 @@ const getPort = async (req, res) => {
             balance += cash.amount;
         });
 
-        plpercent = pl/costTotal * 100;
+        //check is stocklist is empty or not
+        if(stocklist.length > 0){
+            plpercent = pl / costTotal * 100;
+        }
+        else{
+            plpercent = 0;
+        }
 
         console.log(stocklist,balance,totalvalue,pl);
         res.json({stocklist,balance,totalvalue,pl,plpercent});

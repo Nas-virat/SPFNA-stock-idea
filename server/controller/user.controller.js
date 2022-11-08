@@ -15,7 +15,6 @@ const getAllUsers = async (req, res) => {
 
 // // GET Current logged in user
 // // Global 
-
 const getUser = async (req,res) => {
     try {
         if (req.user == undefined || req.user == null) {
