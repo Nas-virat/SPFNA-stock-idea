@@ -4,17 +4,27 @@ import Ideapost from './components/Ideapost';
 import Searchicon from './components/Searchicon.png';
 import BacktoTop from './components/BacktoTop.jpg';
 import {useState, useEffect} from 'react';
-
+import axios from 'axios';
 import Layout from '../../globalcomponents/Layout';
 
 
-  // This function will scroll the window to the top 
-
-const Allidea : React.FC = () => {
+const Allidea = () => {
   const navigate = useNavigate();
   const [showbutton, setShowbutton] = useState(false)
+  const [ideas, setIdeas] = useState([]);
 
-  useEffect(() => {
+  const getAllIdeas = () => {
+    axios.get('http://localhost:5000/api/idea/all', { withCredentials: true })
+    .then(res => {
+      console.log(res.data);
+      setIdeas(res.data.ideas);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  useEffect(() => { 
     window.addEventListener("scroll", () => {
       if (window.pageYOffset > 100) {
         setShowbutton(true);
@@ -22,8 +32,10 @@ const Allidea : React.FC = () => {
         setShowbutton(false);
       }
     });
+    getAllIdeas();
   }, []);
 
+  // This function will scroll the window to the top of the page
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -52,17 +64,13 @@ const Allidea : React.FC = () => {
             Create Post
           </button>
         </div>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
-        <Ideapost/>
+        {
+          ideas && ideas.map( (ideas, index) => {
+            return(
+              <Ideapost ideas={ideas} key={index}/>
+            )
+          })
+        }
         {showbutton && 
           <div className='rounded-full fixed bottom-16 right-16 h-16 w-16' onClick={scrollToTop}>
             <img src={BacktoTop} alt='back to top'></img>

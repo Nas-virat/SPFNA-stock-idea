@@ -21,10 +21,6 @@ router.route('/:id').get(verifyToken, getIdeasByUserId);
 // // Page: Writeidea Page
 router.route('/add').post(verifyToken, addIdea);
 
-// // Add a Draft idea
-// // Page: Writeidea Page
-router.route('/add/draft').post(verifyToken, draftIdea);
-
 // // Add a new comment to the idea
 // // Page: AllIdea Page
 router.route('/addcomment').post(verifyToken, addComment);
