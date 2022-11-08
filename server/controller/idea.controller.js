@@ -8,6 +8,10 @@ const ErrorHandler = require("../utils/errorHandler");
 const getAllIdeas = async (req, res) => {
     try {
         const ideas = await Idea.find({ status: "posted" });
+        for(let i = 0; i < ideas.length; i++) {
+            const user = await User.findOne({ _id: ideas[i].user });
+            ideas[i].user = user;
+        }
         res.status(200).json({
             success: true,
             count: ideas.length,

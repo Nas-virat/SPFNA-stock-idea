@@ -1,39 +1,14 @@
 import React from 'react';
-import handsomeboy from '../../../assets/handsomeboy.jpg';
+import avatarImage from '../../../assets/profile_image.json';
 import Commenticon from './Commenticon.png';
 import {useState} from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const Comment = ({comment}:any) => {
-  const date = new Date(comment.commentDate);
-  return(
-    <div className='h-14 flex flex-row mt-3 rounded-3xl'>
-      <img className='self-center w-10 h-10 mx-3 rounded-full' src={handsomeboy} alt='profile-pic'></img>
-      <div className='ml-3'>
-        <div className='flex flex-row items-center'>
-          <p className='text-l font-semibold mt-2'>
-            {comment.commentUser}
-          </p>
-          <p className='text-sm text-gray-500'>
-            {date.toLocaleDateString()}
-          </p>
-        </div>
-        <p className='-mt-1'>
-          {comment.commentBody}
-        </p>
-      </div>
-    </div>
-  )
-}
 
 const Ideapost = ({ideas}:any) => {
 
-  const navigate = useNavigate();
   const [showcomment, setShowcomment] = useState(false);
-  const [morecomment, setMorecomment] = useState(false);
-  const [comment, setComment] = useState(ideas.comment);
   const [newComment, setNewComment] = useState('');
   const date = new Date(ideas.date);
 
@@ -82,13 +57,17 @@ const Ideapost = ({ideas}:any) => {
     }
   }
 
+  const profileImage = (image: string) => {
+    const imageProfile = avatarImage.find((img) => img.alt === image);
+    return imageProfile?.src;
+  };
 
   return (
     <div className='shadow-lg p-3 rounded-xl border-2 my-4'>
       <div className='flex flex-row'>
-        <img className='w-12 h-12 mr-3 rounded-full' src={handsomeboy} alt='profile-pic'></img>
+        <img className='w-12 h-12 mr-3 rounded-full' src={profileImage(ideas.user.image)} alt='profile-pic'></img>
         <p className='text-xl self-center font-semibold'>
-          {ideas.user}
+          {ideas.user.username}
         </p>
         <p className='self-center text-slate-600 ml-1'>
           {date.toLocaleDateString()}
@@ -109,7 +88,7 @@ const Ideapost = ({ideas}:any) => {
       {showcomment && 
         <div className='flex flex-col mt-2'>
           <div className='h-14 flex flex-row mt-3 bg-[#F2F2F2] rounded-3xl'>
-            <img className='self-center w-10 h-10 mx-3 rounded-full' src={handsomeboy} alt='profile-pic'></img>
+            <img className='self-center w-10 h-10 mx-3 rounded-full' src={profileImage(ideas.user.image)} alt='profile-pic'></img>
             <form className='flex flex-row w-full'>
              <input 
               className='self-center h-3/5 w-full rounded-3xl indent-6' 
@@ -124,26 +103,8 @@ const Ideapost = ({ideas}:any) => {
               Add Comment
             </button>
           </div>
-          <div>
-          {!morecomment &&
-            <div className='mt-2 border-2 border-[#B0B0B0] rounded-3xl'>
-              <button className='text-black font-bold h-12 w-full rounded-3xl self-center' onClick ={() => setMorecomment(!morecomment)}>View Comment</button>
-            </div>
-          }
-          {morecomment &&
-            <div>
-              {
-                comment && comment.map((comment: any, index: any) => {
-                  return(
-                    <Comment comment={comment} key={index} />
-                  )
-                })
-              }
-              <div className='mt-2 border-2 border-[#B0B0B0] rounded-3xl'>
-                <button className='text-black font-bold h-12 w-full rounded-3xl self-center' onClick ={() => setMorecomment(!morecomment)}>Close</button>
-              </div>
-            </div>
-          }
+          <div className='mt-2 border-2 border-[#B0B0B0] rounded-3xl'>
+            <button className='text-black font-bold h-12 w-full rounded-3xl self-center'>View Post</button>
           </div>
         </div>
       }
