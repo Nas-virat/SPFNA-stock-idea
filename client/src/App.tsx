@@ -4,6 +4,7 @@ import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
 // page
 import Allidea from './pages/allidea/Allidea';
 import Writeidea from './pages/allidea/writeidea/Writeidea';
+import Viewpost from './pages/viewpost/Viewpost';
 import ConvertCurrency from './pages/currency/ConvertCurrency';
 import Homepage from './pages/homepage/Homepage';
 import Leaderboard from './pages/leaderboard/Leaderboard';
@@ -27,6 +28,7 @@ function App() {
             <Writeidea/>
           </ProtectRoute>
       }/> 
+        <Route path="/idea/post/:id" element={<Viewpost/>}/>
         <Route path="/convertcurrency" element={
         <ProtectRoute>
           <ConvertCurrency/>

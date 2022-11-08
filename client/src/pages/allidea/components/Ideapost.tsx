@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import Commenticon from './Commenticon.png';
+import Commenticon from '../../../assets/Commenticon.png';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { AuthContext } from '../../../context/AuthProvider'
 import profileImage from '../../../function/profileImage';
 
 import config from '../../../config/config.json';
+import { useNavigate } from 'react-router-dom';
 
 const Ideapost  = ({ideas}:any) => {
+  const navigate = useNavigate();
   const { img } = React.useContext(AuthContext)
   const [showcomment, setShowcomment] = useState(false);
   const [newComment, setNewComment] = useState('');
@@ -54,19 +56,22 @@ const Ideapost  = ({ideas}:any) => {
           text: 'Something went wrong!',
         })
       }
-      //window.location.reload(); uncomment when reload bug is fixed
     }
+  }
+  
+  const viewPost = () => {
+    navigate('/idea/post/' + ideas._id);
   }
 
   return (
-    <div className='shadow-lg p-3 rounded-xl border-2 my-4'>
+    <div className='shadow-lg p-3 rounded-xl border-2 my-4' /*onClick={viewPost}*/>
       <div className='flex flex-row'>
         <img className='w-12 h-12 mr-3 rounded-full' src={profileImage(ideas.user.image)} alt='profile-pic'></img>
         <p className='text-xl self-center font-semibold'>
           {ideas.user.username}
         </p>
-        <p className='self-center text-slate-600 ml-1'>
-          {date.toLocaleDateString()}
+        <p className='self-center text-slate-600 ml-2'>
+          {date.toLocaleString()}
         </p>
       </div>
       <p className='text-l font-bold mt-2'>
@@ -100,7 +105,12 @@ const Ideapost  = ({ideas}:any) => {
             </button>
           </div>
           <div className='mt-2 border-2 border-[#B0B0B0] rounded-3xl'>
-            <button className='text-black font-bold h-12 w-full rounded-3xl self-center'>View Post</button>
+            <button 
+              className='text-black font-bold h-12 w-full rounded-3xl self-center'
+              onClick={viewPost}
+            >
+              View Post
+            </button>
           </div>
         </div>
       }

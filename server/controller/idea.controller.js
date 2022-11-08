@@ -25,6 +25,32 @@ const getAllIdeas = async (req, res) => {
     }
 };
 
+// // GET a single idea
+// // Page: Viewpost Page
+const getSingleIdea = async (req, res) => {
+    try {
+        
+        console.log(req.params.id);
+        const idea = await Idea.findById(req.params.id);
+        const user = await User.findOne({ _id: idea.user });
+        idea.user = user;
+        for(let i = 0; i < idea.comment.length; i++) {
+            const commentuser = await User.findOne({ _id: idea.comment[i].commentUser });
+            idea.comment[i].commentUser = commentuser;
+        }
+        console.log(idea);
+        res.status(200).json({
+            success: true,
+            idea: idea,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: "Server Error",
+        });
+    }
+};
+
 // // GET all ideas by user id
 // // Page: Profile Page
 const getIdeasByUserId = async (req, res) => {
@@ -78,6 +104,7 @@ const addComment = async (req, res) => {
 
 module.exports = {
     getAllIdeas,
+    getSingleIdea,
     getIdeasByUserId,
     addIdea,
     addComment

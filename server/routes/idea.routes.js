@@ -4,18 +4,23 @@ const router = express();
 const verifyToken = require('../middleware/auth');
 
 const {getAllIdeas,
+       getSingleIdea,
        getIdeasByUserId,
        addIdea,
-       draftIdea,
        addComment} = require('../controller/idea.controller');
 
 // // GET all ideas
 // // Page: Allideas Page
 router.route('/all').get(verifyToken, getAllIdeas);
 
+// // GET a single idea
+// // Page: Viewpost Page
+router.route('/post/:id').get(verifyToken, getSingleIdea);
+
 // // GET all ideas by user id
 // // Page: Profile Page
-router.route('/:id').get(verifyToken, getIdeasByUserId);
+router.route('/userpost/:id').get(verifyToken, getIdeasByUserId);
+
 
 // // Add a new idea
 // // Page: Writeidea Page
