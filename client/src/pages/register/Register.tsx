@@ -72,7 +72,14 @@ const Register = () => {
   return (
     <div className = 'flex place-content-center h-screen bg-[#D6BBE8]'>
       <div className = 'flex-col self-center h-auto w-1/2 mx-auto py-2 flex items-center justify-center p-6 rounded-xl bg-white min-w-max'>
-        <img className = 'rounded-full' src={logo} alt='myphoto' width="200" height="200"></img>
+        <img 
+          className='rounded-full cursor-pointer'
+          src={logo}
+          alt='spfna-logo'
+          width="200"
+          height="200"
+          onClick={() => navigate('/home')}
+        ></img>
         <h1 className = 'text-3xl font-bold pb-6'>REGISTER</h1>
         
         <div className="pb-3 flex justify-between w-4/5">

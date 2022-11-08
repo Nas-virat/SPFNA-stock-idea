@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Layout from '../../../globalcomponents/Layout'
 import axios from 'axios'; 
-import { wait } from '@testing-library/user-event/dist/utils';
-
 
 const Writeidea = () => {
   const navigate = useNavigate();

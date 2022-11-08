@@ -6,14 +6,15 @@ import Layout from '../../globalcomponents/Layout'
 import OneCurrency from './components/OneCurrency';
 import updownarrow from './components/updownarrow.png';
 import CurrencyInput from './components/CurrencyInput';
-import avatarImage from '../../assets/profile_image.json';
+import profileImage from '../../function/profileImage';
 
 import axios from 'axios';
 
-interface currency{
+interface currencyProps {
   currency: string;
   amount: number;
 }
+
 const currency = [
   'USD',
   'HKD',
@@ -35,14 +36,8 @@ const ConvertCurrency = () => {
   const [currencyFrom, setCurrencyFrom] = useState("USA");
   const [currencyTo, setCurrencyTo] = useState("USA");
 
-  const [ListCash, setListCash] = useState<currency[]>([]);
-
-  const profileImage = (image: string) => {
-    const imageProfile = avatarImage.find((img) => img.alt === image);
-    return imageProfile?.src;
-  };
+  const [ListCash, setListCash] = useState<currencyProps[]>([]);
   
-
   useEffect(() => {
   const getBalance = () => {
     console.log('test');

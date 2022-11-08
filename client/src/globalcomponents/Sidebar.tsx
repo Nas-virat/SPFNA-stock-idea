@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 
 import SPFNAlogo from '../assets/SPFNAlogo.png'
 import line from '../assets/line.png'
-import avatarImage from '../assets/profile_image.json';
 
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 
+import profileImage from '../function/profileImage';
+
+import config from '../config/config.json'
+
 interface NavProp{
-  name:string;
-  to:string;
+  name: string;
+  to: string;
 }
 
 const SectionLink: React.FC<NavProp> = ({name,to}) => {
@@ -30,21 +33,17 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { loggedIn, role, username, img, setAuth } = React.useContext(AuthContext);
 
-  const profileImage = (image: string) => {
-    const imageProfile = avatarImage.find((img) => img.alt === image);
-    return imageProfile?.src;
-  };
-
   const handleLogout = async () => {
-    const res = await axios.get('http://localhost:5000/api/users/logout', { withCredentials: true });
-    setAuth({
-      loggedIn: false,
-      role: "",
-      username: "",
-      img: ""
-    });
+    const res = await axios.get(config.API_URL + '/users/logout', { withCredentials: true });
     if (res.data.success) {
-      navigate('/login');
+      setAuth({
+        loggedIn: false,
+        role: "",
+        username: "",
+        img: ""
+      });
+      localStorage.removeItem('user');
+      navigate('/home');
     } else {
       Swal.fire({
         title: 'Error!',
@@ -54,6 +53,41 @@ const Sidebar = () => {
       })
     }
   }
+
+  const fetchCurrentUser = async () => {
+    const user = await axios.get('http://localhost:5000/api/users/user', { withCredentials: true });
+    if (user.data) {
+      setAuth({
+        loggedIn: true,
+        role: user.data.role,
+        username: user.data.username,
+        img: user.data.image
+      });
+    } else {
+      setAuth({
+        loggedIn: false,
+        role: "",
+        username: "",
+        img: ""
+      });
+    }
+  }
+  
+  useEffect(() => {
+    fetchCurrentUser();
+  }, [])
+
+   /*useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user) {
+      setAuth({
+        loggedIn: true,
+        role: user.role,
+        username: user.username,
+        img: user.image
+      });
+    }
+  }, [setAuth])*/
 
   return (
       <div className="bg-[#D6BBE8] h-screen w-56 flex flex-col justify-between">

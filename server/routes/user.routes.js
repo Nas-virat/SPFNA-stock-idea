@@ -5,6 +5,7 @@ const verifyToken = require('../middleware/auth');
 
 const {
     getAllUsers,
+    getUser,
     loginUser,
     logoutUser,
     registerUser,
@@ -25,6 +26,11 @@ router.route('/login').post(loginUser);
 // // Page: logout Page
 // // GET : /api/users/logout
 router.route('/logout').get(logoutUser);
+
+// // current user
+// // GLOBAL
+// // GET: /api/users/user
+router.route('/user').get(verifyToken, getUser);
 
 // // Post a new user
 // // Page: Signup Page

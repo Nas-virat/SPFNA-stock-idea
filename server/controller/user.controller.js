@@ -13,6 +13,24 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+// // GET Current logged in user
+// // Global 
+
+const getUser = async (req,res) => {
+    try {
+        if (req.user == undefined || req.user == null) {
+            res.json({ success: false, message: "User not found" });
+        }
+        const user = await User.findById(req.user._id);
+        if (user == null) {
+            return res.status(404).json({message: "No user found"});
+        }
+        res.json(user);
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
+};
+
 // // Post a new user
 // // Page: Register Page
 const registerUser = async (req, res, next) => {
@@ -95,6 +113,7 @@ const getUserById = async (req, res) => {
 
 module.exports = {
     getAllUsers,
+    getUser,
     loginUser,
     logoutUser,
     registerUser,

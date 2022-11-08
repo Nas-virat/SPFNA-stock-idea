@@ -133,7 +133,7 @@ const buyStock = async (req, res) => {
 const sellStock = async (req, res) => {
 
     const { symbol,country, quantity ,currency} = req.body;
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user._id);
 
     try{
         //quantity to be sold is less than the quantity in the portfolio

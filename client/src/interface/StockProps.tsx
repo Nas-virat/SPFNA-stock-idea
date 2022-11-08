@@ -1,6 +1,4 @@
-
-
-interface stock{
+interface stock {
     symbol: string;
     price : number;
     cost_price : number;
@@ -10,4 +8,3 @@ interface stock{
 export default interface StockProps{
     data :stock[];
 }
-

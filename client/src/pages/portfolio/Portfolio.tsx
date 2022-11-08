@@ -4,7 +4,6 @@ import { AuthContext } from '../../context/AuthProvider'
 import Tableport from './components/Tableport'
 import Layout from '../../globalcomponents/Layout'
 import Chartport from './components/Chartport'
-import avatarImage from '../../assets/profile_image.json';
 
 import Select from 'react-select'
 import Swal from 'sweetalert2';
@@ -12,7 +11,9 @@ import axios from 'axios';
 
 import chartFunction from '../../function/chartfunction'
 import backgroundColor from '../../config/chartconfig'
+import profileImage from '../../function/profileImage'
 
+import config from '../../config/config.json'
 
 interface stock{
   symbol: string;
@@ -51,7 +52,6 @@ const Portfolio : React.FC = () => {
   const { username, img } = React.useContext(AuthContext)
   const [buy,setBuy] = useState(false);
   const [sell,setSell] = useState(false);
-  const [isMyAccount, setIsMyAccount] = useState(true);
   
   const [stockList, setStockList] = useState<stock[]>([]);
   const [symbol, setSymbol] = useState<String>('');
@@ -62,13 +62,8 @@ const Portfolio : React.FC = () => {
 
   const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
 
-  const profileImage = (image: string) => {
-    const imageProfile = avatarImage.find((img) => img.alt === image);
-    return imageProfile?.src;
-  };
-
   const getPortfolio = () => {
-    axios.get('http://localhost:5000/api/port/me', { withCredentials: true })
+    axios.get(config.API_URL +'/port/me', { withCredentials: true })
     .then(res => {
       console.log(res.data.stocklist);
       setStockList(res.data.stocklist);
@@ -88,7 +83,7 @@ const Portfolio : React.FC = () => {
 
   const BuyStock = (cost:number) => {
     console.log("Buystock",symbol,cost,quantity,);
-    axios.post('http://localhost:5000/api/port/buy', {
+    axios.post(config.API_URL + '/port/buy', {
       symbol: symbol.toLocaleUpperCase(),
       cost: cost,
       quantity: quantity,
@@ -114,9 +109,41 @@ const Portfolio : React.FC = () => {
       })
     });
   }
+
+  const SellStock = (cost:number) => {
+    console.log("Buystock",symbol,cost,quantity,);
+    axios.post(config.API_URL + '/port/sell', {
+      symbol: symbol.toLocaleUpperCase(),
+      cost: cost,
+      quantity: quantity,
+      country: selectedOption?.value.prefix,
+      currency: selectedOption?.value.currency 
+    },
+    { withCredentials: true })
+    .then(res => {
+      console.log(res.data);
+      Swal.fire(
+        'Sell',
+        'Your stock has been Sold',
+        'success'
+      )
+      getPortfolio();
+    })
+    .catch(err => {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        html : err.response.data.message,
+      })
+    });
+  }
+
+
+
   const handleBuy = async () => {
     try{
-    const res = await axios.post('http://localhost:5000/api/port/price', {
+      const res = await axios.post(config.API_URL + '/port/price', {
         symbol: symbol,
         country: selectedOption?.value.prefix,
     },
@@ -140,13 +167,40 @@ const Portfolio : React.FC = () => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!',
+        text: 'Please check input',
       })
     }
   }
 
   const handleSell = async () => {
-
+    try{
+      const res = await axios.post(config.API_URL +'/port/price', {
+          symbol: symbol,
+          country: selectedOption?.value.prefix,
+      },
+      { withCredentials: true });
+      const cost = res.data;
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `You are going to Sell ${symbol} at ${cost} ${selectedOption?.value.currency} per share`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sell'
+        }).then((result) => {
+          if (result.isConfirmed) { 
+            SellStock(cost);
+          }
+        })
+      }catch(err){
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please check input',
+        })
+      }
   }
     
 
@@ -172,10 +226,26 @@ const Portfolio : React.FC = () => {
       <div className="ml-16">
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
-          {isMyAccount && <button onClick ={() => setBuy(!buy)} className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Buy</button>}
-          {isMyAccount && <button onClick ={() => setSell(!sell)} className='m-3 bg-[#0E0741] hover:bg-[#2614ac] text-white font-bold h-9 w-20 rounded-3xl'>Sell</button>}
+          <button
+            onClick={() => {
+              setBuy(!buy);
+              setSell(false);
+            }}
+            className={`m-3 ${buy ? 'bg-[#0E0741]' : 'bg-[#2614ac]'} text-white font-bold h-9 w-20 rounded-3xl`}
+          >
+            Buy
+          </button>
+          <button 
+            onClick = {() => {
+              setSell(!sell);
+              setBuy(false);
+            }} 
+            className={`m-3 ${sell ? 'bg-[#0E0741]' : 'bg-[#2614ac]'} text-white font-bold h-9 w-20 rounded-3xl`}
+          >
+            Sell
+          </button>
         </div>
-        { buy &&
+        { (buy || sell) &&
           <div className="flex items-center mx-9">
             <div className="flex items-center">
               <h4 className="text-xl">Country</h4>
@@ -226,7 +296,20 @@ const Portfolio : React.FC = () => {
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="input-num"
                 aria-describedby="input-num" placeholder="Share" onChange={(e)=> setQuantity(parseInt(e.target.value))}></input>
             </div>
-            <button onClick={() => handleBuy()} className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>Confirm</button>
+            <button 
+              onClick={() => {
+                if(buy)
+                {
+                  handleBuy();
+                }
+                else if(sell)
+                {
+                  handleSell();
+                }
+              }}
+              className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>
+                Confirm
+            </button>
           </div> 
         }
         
