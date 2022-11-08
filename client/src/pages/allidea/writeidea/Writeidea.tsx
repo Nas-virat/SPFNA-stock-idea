@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Layout from '../../../globalcomponents/Layout'
 import axios from 'axios'; 
-import { wait } from '@testing-library/user-event/dist/utils';
-
 
 const Writeidea = () => {
   const navigate = useNavigate();
@@ -14,7 +12,7 @@ const Writeidea = () => {
     details: '',
   });
 
-  const handlePost = async () => {
+  const handlePost = async (status : string) => {
     if (postidea.title === '' || postidea.details === '') {
       Swal.fire({
         title: 'Error!',
@@ -27,11 +25,12 @@ const Writeidea = () => {
         const res = await axios.post('http://localhost:5000/api/idea/add', {
           title: postidea.title,
           details: postidea.details,
+          status:  status
         }, { withCredentials: true });
         if (res.data.success) {
           Swal.fire({
             title: 'Success!',
-            text: 'You have successfully post Idea!',
+            text: `You have successfully ${status} Idea`,
             icon: 'success',
             timer: 2000,
             timerProgressBar: true,
@@ -40,50 +39,6 @@ const Writeidea = () => {
             },
           }).then(() => {
             navigate('/idea');
-          })
-        } else {
-          Swal.fire({
-            title: 'Error!',
-            text: res.data.message,
-            icon: 'error',
-            confirmButtonText: 'OK'
-          })
-        }
-      } catch(err){
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
-        })
-      }
-    }
-  }
-
-  const handleDraft = async () => {
-    if (postidea.title === '' || postidea.details === '') {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Please fill in some of the fields',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      })
-    } else {
-      try {
-        const res = await axios.post('http://localhost:5000/api/idea/add/draft', {
-          title: postidea.title,
-          details: postidea.details,
-        }, { withCredentials: true });
-        if (res.data.success) {
-          Swal.fire({
-            title: 'Success!',
-            text: 'You have successfully Drafted Idea!',
-            icon: 'success',
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: () => {
-              Swal.showLoading()
-            },
           })
         } else {
           Swal.fire({
@@ -130,13 +85,13 @@ const Writeidea = () => {
           <div>
             <button 
               className='bg-cyan-800 hover:bg-cyan-900 text-white text-xl font-bold w-32 h-12 rounded-full mr-3'
-              onClick={() => handlePost()}
+              onClick={() => handlePost('publish')}
             >
               Post
             </button>
             <button 
               className='bg-sky-600 hover:bg-sky-700 text-white text-xl font-bold w-32 h-12 rounded-full mr-3'
-              onClick={() => handleDraft()}
+              onClick={() => handlePost('draft')}
             >
               Draft
             </button>
