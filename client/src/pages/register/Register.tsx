@@ -6,6 +6,8 @@ import Swal from 'sweetalert2'
 import logo from '../../assets/SPFNAlogo.png'
 import profileImage from '../../assets/profile_image.json'
 
+import config from '../../config/config.json'
+
 const Register = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -26,7 +28,7 @@ const Register = () => {
       })
     } else {
       try {
-        const res = await axios.post('http://localhost:5000/api/users/register', data, { withCredentials: true });
+        const res = await axios.post(config.API_URL +'/users/register', data, { withCredentials: true });
         if (res.data.success) {
           Swal.fire({
             title: 'Success!',

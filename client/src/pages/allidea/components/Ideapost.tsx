@@ -1,14 +1,13 @@
-import React from 'react';
-import avatarImage from '../../../assets/profile_image.json';
+import React, { useState } from 'react';
 import Commenticon from './Commenticon.png';
-import {useState} from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { AuthContext } from '../../../context/AuthProvider'
+import profileImage from '../../../function/profileImage';
 
+import config from '../../../config/config.json';
 
-const Ideapost = ({ideas}:any) => {
-
+const Ideapost  = ({ideas}:any) => {
   const { img } = React.useContext(AuthContext)
   const [showcomment, setShowcomment] = useState(false);
   const [newComment, setNewComment] = useState('');
@@ -24,7 +23,7 @@ const Ideapost = ({ideas}:any) => {
       })
     } else {
       try {
-        const res = await axios.post('http://localhost:5000/api/idea/addcomment', {
+        const res = await axios.post(config.API_URL +'/idea/addcomment', {
           commentBody: newComment,
           ideaId: ideas._id,
         }, { withCredentials: true });
@@ -58,11 +57,6 @@ const Ideapost = ({ideas}:any) => {
       //window.location.reload(); uncomment when reload bug is fixed
     }
   }
-
-  const profileImage = (image: string) => {
-    const imageProfile = avatarImage.find((img) => img.alt === image);
-    return imageProfile?.src;
-  };
 
   return (
     <div className='shadow-lg p-3 rounded-xl border-2 my-4'>

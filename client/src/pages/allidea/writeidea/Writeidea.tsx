@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import Layout from '../../../globalcomponents/Layout'
 import axios from 'axios'; 
 
+import config from '../../../config/config.json';
+
 const Writeidea = () => {
   const navigate = useNavigate();
   const [postidea, setPostidea] = useState({ 
@@ -22,7 +24,7 @@ const Writeidea = () => {
       })
     } else {
       try {
-        const res = await axios.post('http://localhost:5000/api/idea/add', {
+        const res = await axios.post(config.API_URL +'/idea/add', {
           title: postidea.title,
           details: postidea.details,
           status:  status

@@ -13,6 +13,8 @@ import profileImage from '../function/profileImage';
 
 import config from '../config/config.json'
 
+
+
 interface NavProp{
   name: string;
   to: string;
@@ -54,8 +56,8 @@ const Sidebar = () => {
     }
   }
 
-  const fetchCurrentUser = async () => {
-    const user = await axios.get('http://localhost:5000/api/users/user', { withCredentials: true });
+  /*const fetchCurrentUser = async () => {
+    const user = await axios.get(config.API_URL + '/users/user', { withCredentials: true });
     if (user.data) {
       setAuth({
         loggedIn: true,
@@ -63,23 +65,16 @@ const Sidebar = () => {
         username: user.data.username,
         img: user.data.image
       });
-    } else {
-      setAuth({
-        loggedIn: false,
-        role: "",
-        username: "",
-        img: ""
-      });
     }
   }
-  
+
   useEffect(() => {
     fetchCurrentUser();
-  }, [])
+  }, [])*/
 
-   /*useEffect(() => {
+   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user) {
+    if (Object.keys(user).length !== 0) {
       setAuth({
         loggedIn: true,
         role: user.role,
@@ -87,7 +82,7 @@ const Sidebar = () => {
         img: user.image
       });
     }
-  }, [setAuth])*/
+  }, [setAuth])
 
   return (
       <div className="bg-[#D6BBE8] h-screen w-56 flex flex-col justify-between">

@@ -31,7 +31,6 @@ interface selectOption {
   label: string;
 }
 
-
 const options = [
   { value: {prefix:'',currency:'USD'}, label: 'US' },
   { value: {prefix:'.HK',currency:'HKD'}, label: 'HK' },
@@ -45,8 +44,8 @@ const options = [
   { value: {prefix:'.T', currency:'JPY'}, label: 'Japan' },
   { value: {prefix:'.SI', currency:'SG'}, label: 'Singapore' },
   { value: {prefix:'.AX', currency:'AUD'}, label: 'Austrlia' },
-  { value: {prefix:'.NZ', currency:'NZD'}, label: 'New Zealand' },];
-
+  { value: {prefix:'.NZ', currency:'NZD'}, label: 'New Zealand' },
+];
 
 const Portfolio : React.FC = () => {
   const { username, img } = React.useContext(AuthContext)
@@ -60,6 +59,11 @@ const Portfolio : React.FC = () => {
   const [datachart , setDatachart] = useState<number[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
 
+  const [balance, setBalance] = useState<number>(0);
+  const [totalValue, setTotalValue] = useState<number>(0);
+  const [pl, setPl] = useState<number>(0);
+  const [plPercent, setPlPercent] = useState<number>(0);
+
   const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
 
   const getPortfolio = () => {
@@ -70,6 +74,10 @@ const Portfolio : React.FC = () => {
       const {labels,data} = chartFunction(res.data.stocklist);
       setLabels(labels);
       setDatachart(data);
+      setBalance(res.data.balance);
+      setTotalValue(res.data.totalvalue);
+      setPl(res.data.pl);
+      setPlPercent(res.data.plpercent);
     })
     .catch(err => {
       console.log(err);
@@ -174,8 +182,17 @@ const Portfolio : React.FC = () => {
 
   const handleSell = async () => {
     try{
+      // if stock is not in stocklist
+      if(!stockList.find((stock) => stock.symbol === symbol.toLocaleUpperCase())){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'You do not have this stock',
+        })
+        return;
+      }
       const res = await axios.post(config.API_URL +'/port/price', {
-          symbol: symbol,
+          symbol: symbol.toLocaleUpperCase(),
           country: selectedOption?.value.prefix,
       },
       { withCredentials: true });
@@ -203,8 +220,6 @@ const Portfolio : React.FC = () => {
       }
   }
     
-
-
   return (
     <Layout>
       <div className="flex items-center h-56">
@@ -214,9 +229,7 @@ const Portfolio : React.FC = () => {
         <div className="m-14">
           <h1 className="mt-3 font-semibold text-3xl">@{username}</h1>
           <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
-          <h3 className="mt-3 font-nomral text-xl">Total Balance: 3000 USD</h3>
-          <div className="flex">
-          </div>
+          <h3 className="mt-3 font-nomral text-xl">Total Balance: {balance.toLocaleString(undefined,{maximumFractionDigits:2})} USD</h3>
         </div>
         <div className="ml-36 h-56 w-56">
           <Chartport labels={labels} data ={datachart} backgroundColor={backgroundColor}/>
@@ -312,8 +325,7 @@ const Portfolio : React.FC = () => {
             </button>
           </div> 
         }
-        
-        <Tableport data={stockList}/>
+        <Tableport data={stockList} totalvalue={totalValue} pl={pl} plpercent={plPercent} />
       </div>
     </Layout>
   )

@@ -7,6 +7,7 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Layout from '../../globalcomponents/Layout';
 
+import config from '../../config/config.json';
 
 const Allidea = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Allidea = () => {
   const [ideas, setIdeas] = useState([]);
 
   const getAllIdeas = () => {
-    axios.get('http://localhost:5000/api/idea/all', { withCredentials: true })
+    axios.get(config.API_URL + '/idea/all', { withCredentials: true })
     .then(res => {
       console.log(res.data);
       setIdeas(res.data.ideas);
@@ -65,7 +66,7 @@ const Allidea = () => {
           </button>
         </div>
         {
-          ideas && ideas.map( (ideas, index) => {
+          ideas && ideas.map((ideas, index) => {
             return(
               <Ideapost ideas={ideas} key={index}/>
             )

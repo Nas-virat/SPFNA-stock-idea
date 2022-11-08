@@ -7,6 +7,8 @@ import logo from '../../assets/SPFNAlogo.png'
 
 import { AuthContext } from '../../context/AuthProvider';
 
+import config from '../../config/config.json';
+
 const Login = () => {
   const navigate = useNavigate();
   const { setAuth } = React.useContext(AuthContext);
@@ -27,7 +29,7 @@ const Login = () => {
       })
     } else {
       try {
-        const res = await axios.post('http://localhost:5000/api/users/login', data, { 
+        const res = await axios.post(config.API_URL +'/users/login', data, { 
           headers: {'Content-Type': 'application/json'},
           withCredentials: true 
         });

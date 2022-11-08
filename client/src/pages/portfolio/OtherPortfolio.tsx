@@ -68,7 +68,7 @@ const OtherPortfolio : React.FC = () => {
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
         </div>
-        <Tableport data={stockList}/>
+        <Tableport data={stockList} totalvalue={0} pl={0} plpercent={0} />
       </div>
     </Layout>
   )

@@ -7,7 +7,7 @@ const ErrorHandler = require("../utils/errorHandler");
 // // Page: Allideas Page
 const getAllIdeas = async (req, res) => {
     try {
-        const ideas = await Idea.find({ status: "posted" });
+        const ideas = await Idea.find({ status: "publish" }).sort({ date: -1 });
         for(let i = 0; i < ideas.length; i++) {
             const user = await User.findOne({ _id: ideas[i].user });
             ideas[i].user = user;

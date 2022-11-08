@@ -7,4 +7,7 @@ interface stock {
   }
 export default interface StockProps{
     data :stock[];
+    totalvalue : number;
+    pl : number;
+    plpercent : number;
 }

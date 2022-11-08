@@ -5,7 +5,7 @@ import StockProps from "../../../interface/StockProps";
 
 
 
-const Tableport: React.FC<StockProps> = ({data}) => {
+const Tableport: React.FC<StockProps> = ({data,totalvalue,pl,plpercent}) => {
 
   return (
     <table className="mx-4 mt-7 border-collapse min-w-[70%] text-xl rounded-xl overflow-hidden">
@@ -14,7 +14,7 @@ const Tableport: React.FC<StockProps> = ({data}) => {
           <th className="px-6 py-4">Symbol</th>
           <th className="px-6 py-4">Price</th>
           <th className="px-6 py-4">Cost Price</th>
-          <th className="px-6 py-4">quantity</th>
+          <th className="px-6 py-4">Quantity</th>
           <th className="px-6 py-4">Market Value</th>
           <th className="px-6 py-4">P/L</th>
           <th className="px-6 py-4">P/L%</th>
@@ -39,12 +39,14 @@ const Tableport: React.FC<StockProps> = ({data}) => {
             <td className="px-6 py-4"></td>
             <td className="px-6 py-4"></td>
             <td className="px-6 py-4">
-              {100}
+              {totalvalue.toLocaleString(undefined,{maximumFractionDigits:2})}
             </td>
-            <td className="px-6 py-4">
-              {100}
+            <td className={`px-6 py-4 ${pl > 0 ? 'text-green-700' : 'text-rose-700'}`}>
+              {pl.toLocaleString(undefined,{maximumFractionDigits:2})}
             </td>
-            <td className="px-6 py-4">{-30}%</td>
+            <td className={`px-6 py-4 ${plpercent > 0 ? 'text-green-700' : 'text-rose-700'}`}>
+              {plpercent.toLocaleString(undefined,{maximumFractionDigits:2})}%
+            </td>
           </tr>
       </tbody>
     </table>
