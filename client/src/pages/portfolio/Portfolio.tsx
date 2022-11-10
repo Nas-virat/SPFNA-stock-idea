@@ -15,12 +15,12 @@ import profileImage from '../../function/profileImage'
 
 import config from '../../config/config.json'
 
-interface stock{
+interface stock {
   symbol: string;
-  price : number;
-  cost_price : number;
-  quantity : number;
-  rate : number;
+  price: number;
+  cost_price: number;
+  quantity: number;
+  rate: number;
 }
 
 interface selectOption {
@@ -32,31 +32,31 @@ interface selectOption {
 }
 
 const options = [
-  { value: {prefix:'',currency:'USD'}, label: 'US' },
-  { value: {prefix:'.HK',currency:'HKD'}, label: 'HK' },
-  { value: {prefix:'.BK',currency:'THB'}, label: 'Thailand' },
-  { value: {prefix:'.SS', currency:'CNY'}, label: 'Shanghai' },
-  { value: {prefix:'.L', currency:'GBP'}, label: 'LSE' },
-  { value: {prefix:'.IL', currency:'USD'}, label: 'LSEIOB' },
-  { value: {prefix:'.AS', currency:'EUR'}, label: 'Amsterdam' },
-  { value: {prefix:'.PA', currency:'EUR'}, label: 'Paris' },
-  { value: {prefix:'.DE', currency:'EUR'}, label: 'German' },
-  { value: {prefix:'.T', currency:'JPY'}, label: 'Japan' },
-  { value: {prefix:'.SI', currency:'SG'}, label: 'Singapore' },
-  { value: {prefix:'.AX', currency:'AUD'}, label: 'Austrlia' },
-  { value: {prefix:'.NZ', currency:'NZD'}, label: 'New Zealand' },
+  { value: { prefix: '', currency: 'USD' }, label: 'US' },
+  { value: { prefix: '.HK', currency: 'HKD' }, label: 'HK' },
+  { value: { prefix: '.BK', currency: 'THB' }, label: 'Thailand' },
+  { value: { prefix: '.SS', currency: 'CNY' }, label: 'Shanghai' },
+  { value: { prefix: '.L', currency: 'GBP' }, label: 'LSE' },
+  { value: { prefix: '.IL', currency: 'USD' }, label: 'LSEIOB' },
+  { value: { prefix: '.AS', currency: 'EUR' }, label: 'Amsterdam' },
+  { value: { prefix: '.PA', currency: 'EUR' }, label: 'Paris' },
+  { value: { prefix: '.DE', currency: 'EUR' }, label: 'German' },
+  { value: { prefix: '.T', currency: 'JPY' }, label: 'Japan' },
+  { value: { prefix: '.SI', currency: 'SG' }, label: 'Singapore' },
+  { value: { prefix: '.AX', currency: 'AUD' }, label: 'Austrlia' },
+  { value: { prefix: '.NZ', currency: 'NZD' }, label: 'New Zealand' },
 ];
 
-const Portfolio : React.FC = () => {
+const Portfolio: React.FC = () => {
   const { username, img } = React.useContext(AuthContext)
-  const [buy,setBuy] = useState(false);
-  const [sell,setSell] = useState(false);
-  
+  const [buy, setBuy] = useState(false);
+  const [sell, setSell] = useState(false);
+
   const [stockList, setStockList] = useState<stock[]>([]);
   const [symbol, setSymbol] = useState<String>('');
   const [quantity, setQuantity] = useState<number>(0);
 
-  const [datachart , setDatachart] = useState<number[]>([]);
+  const [datachart, setDatachart] = useState<number[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
 
   const [balance, setBalance] = useState<number>(0);
@@ -67,96 +67,96 @@ const Portfolio : React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
 
   const getPortfolio = () => {
-    axios.get(config.API_URL +'/port/me', { withCredentials: true })
-    .then(res => {
-      console.log(res.data.stocklist);
-      setStockList(res.data.stocklist);
-      const {labels,data} = chartFunction(res.data.stocklist);
-      setLabels(labels);
-      setDatachart(data);
-      setBalance(res.data.balance);
-      setTotalValue(res.data.totalvalue);
-      setPl(res.data.pl);
-      setPlPercent(res.data.plpercent);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    axios.get(config.API_URL + '/port/me', { withCredentials: true })
+      .then(res => {
+        console.log(res.data.stocklist);
+        setStockList(res.data.stocklist);
+        const { labels, data } = chartFunction(res.data.stocklist);
+        setLabels(labels);
+        setDatachart(data);
+        setBalance(res.data.balance);
+        setTotalValue(res.data.totalvalue);
+        setPl(res.data.pl);
+        setPlPercent(res.data.plpercent);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
-  
+
   useEffect(() => {
     getPortfolio();
-  },[]);
+  }, []);
 
 
-  const BuyStock = (cost:number) => {
-    console.log("Buystock",symbol,cost,quantity,);
+  const BuyStock = (cost: number) => {
+    console.log("Buystock", symbol, cost, quantity,);
     axios.post(config.API_URL + '/port/buy', {
       symbol: symbol.toLocaleUpperCase(),
       cost: cost,
       quantity: quantity,
       country: selectedOption?.value.prefix,
-      currency: selectedOption?.value.currency 
+      currency: selectedOption?.value.currency
     },
-    { withCredentials: true })
-    .then(res => {
-      console.log(res.data);
-      Swal.fire(
-        'Buy',
-        'Your stock has been bought.',
-        'success'
-      )
-      getPortfolio();
-    })
-    .catch(err => {
-      console.log(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
+      { withCredentials: true })
+      .then(res => {
+        console.log(res.data);
+        Swal.fire(
+          'Buy',
+          'Your stock has been bought.',
+          'success'
+        )
+        getPortfolio();
       })
-    });
+      .catch(err => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      });
   }
 
-  const SellStock = (cost:number) => {
-    console.log("Buystock",symbol,cost,quantity,);
+  const SellStock = (cost: number) => {
+    console.log("Buystock", symbol, cost, quantity,);
     axios.post(config.API_URL + '/port/sell', {
       symbol: symbol.toLocaleUpperCase(),
       cost: cost,
       quantity: quantity,
       country: selectedOption?.value.prefix,
-      currency: selectedOption?.value.currency 
+      currency: selectedOption?.value.currency
     },
-    { withCredentials: true })
-    .then(res => {
-      console.log(res.data);
-      Swal.fire(
-        'Sell',
-        'Your stock has been Sold',
-        'success'
-      )
-      getPortfolio();
-    })
-    .catch(err => {
-      console.log(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        html : err.response.data.message,
+      { withCredentials: true })
+      .then(res => {
+        console.log(res.data);
+        Swal.fire(
+          'Sell',
+          'Your stock has been Sold',
+          'success'
+        )
+        getPortfolio();
       })
-    });
+      .catch(err => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          html: err.response.data.message,
+        })
+      });
   }
 
 
 
   const handleBuy = async () => {
-    try{
+    try {
       const res = await axios.post(config.API_URL + '/port/price', {
         symbol: symbol,
         country: selectedOption?.value.prefix,
-    },
-    { withCredentials: true });
-    const cost = res.data;
+      },
+        { withCredentials: true });
+      const cost = res.data;
       Swal.fire({
         title: 'Are you sure?',
         text: `You are going to buy ${symbol} at ${cost} ${selectedOption?.value.currency} per share`,
@@ -166,11 +166,11 @@ const Portfolio : React.FC = () => {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Buy'
       }).then((result) => {
-        if (result.isConfirmed) { 
+        if (result.isConfirmed) {
           BuyStock(cost);
         }
       })
-    }catch(err){
+    } catch (err) {
       console.log(err);
       Swal.fire({
         icon: 'error',
@@ -181,9 +181,10 @@ const Portfolio : React.FC = () => {
   }
 
   const handleSell = async () => {
-    try{
+    let flag = true;
+    try {
       // if stock is not in stocklist
-      if(!stockList.find((stock) => stock.symbol === symbol.toLocaleUpperCase())){
+      if (!stockList.find((stock) => stock.symbol === symbol.toLocaleUpperCase())) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -193,22 +194,22 @@ const Portfolio : React.FC = () => {
       }
       // if sell stock more than you have
       stockList.forEach((stock) => {
-        if(stock.symbol === symbol.toLocaleUpperCase() && stock.quantity < quantity){
+        if (stock.symbol === symbol.toLocaleUpperCase() && stock.quantity < quantity) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'You do not have enough stock',
           })
-          return;
+          flag = false;
         }
       })
-
-      const res = await axios.post(config.API_URL +'/port/price', {
+      if (flag) {
+        const res = await axios.post(config.API_URL + '/port/price', {
           symbol: symbol.toLocaleUpperCase(),
           country: selectedOption?.value.prefix,
-      },
-      { withCredentials: true });
-      const cost = res.data;
+        },
+          { withCredentials: true });
+        const cost = res.data;
         Swal.fire({
           title: 'Are you sure?',
           text: `You are going to Sell ${symbol} at ${cost} ${selectedOption?.value.currency} per share`,
@@ -218,11 +219,12 @@ const Portfolio : React.FC = () => {
           cancelButtonColor: '#d33',
           confirmButtonText: 'Sell'
         }).then((result) => {
-          if (result.isConfirmed) { 
+          if (result.isConfirmed) {
             SellStock(cost);
           }
         })
-      }catch(err){
+      }
+      }catch (err) {
         console.log(err);
         Swal.fire({
           icon: 'error',
@@ -231,7 +233,7 @@ const Portfolio : React.FC = () => {
         })
       }
   }
-    
+
   return (
     <Layout>
       <div className="flex items-center h-56">
@@ -241,12 +243,12 @@ const Portfolio : React.FC = () => {
         <div className="m-14">
           <h1 className="mt-3 font-semibold text-3xl">@{username}</h1>
           <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
-          <h3 className="mt-3 font-nomral text-xl">Total Balance: {balance.toLocaleString(undefined,{maximumFractionDigits:2})} USD</h3>
+          <h3 className="mt-3 font-nomral text-xl">Total Balance: {balance.toLocaleString(undefined, { maximumFractionDigits: 2 })} USD</h3>
         </div>
         <div className="ml-36 h-56 w-56">
-          <Chartport labels={labels} data ={datachart} backgroundColor={backgroundColor}/>
+          <Chartport labels={labels} data={datachart} backgroundColor={backgroundColor} />
         </div>
-		  </div>
+      </div>
 
       <div className="ml-16">
         <div className="flex items-center">
@@ -260,17 +262,17 @@ const Portfolio : React.FC = () => {
           >
             Buy
           </button>
-          <button 
-            onClick = {() => {
+          <button
+            onClick={() => {
               setSell(!sell);
               setBuy(false);
-            }} 
+            }}
             className={`m-3 ${sell ? 'bg-[#0E0741]' : 'bg-[#2614ac]'} text-white font-bold h-9 w-20 rounded-3xl`}
           >
             Sell
           </button>
         </div>
-        { (buy || sell) &&
+        {(buy || sell) &&
           <div className="flex items-center mx-9">
             <div className="flex items-center">
               <h4 className="text-xl">Country</h4>
@@ -299,11 +301,11 @@ const Portfolio : React.FC = () => {
                 ease-in-out
                 m-0
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="input-symbol"
-                aria-describedby="input-symbol" placeholder="Symbol" onChange={(e)=> setSymbol(e.target.value)} ></input>
+                aria-describedby="input-symbol" placeholder="Symbol" onChange={(e) => setSymbol(e.target.value)} ></input>
             </div>
             <div className="flex items-center mx-9">
-             <h4 className="text-xl">Number of Share</h4>
-             <input type="text" className="form-control
+              <h4 className="text-xl">Number of Share</h4>
+              <input type="text" className="form-control
                 ml-3
                 block
                 w-32
@@ -319,23 +321,21 @@ const Portfolio : React.FC = () => {
                 ease-in-out
                 m-0
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="input-num"
-                aria-describedby="input-num" placeholder="Share" onChange={(e)=> setQuantity(parseInt(e.target.value))}></input>
+                aria-describedby="input-num" placeholder="Share" onChange={(e) => setQuantity(parseInt(e.target.value))}></input>
             </div>
-            <button 
+            <button
               onClick={() => {
-                if(buy)
-                {
+                if (buy) {
                   handleBuy();
                 }
-                else if(sell)
-                {
+                else if (sell) {
                   handleSell();
                 }
               }}
               className='m-3 bg-[#008631] hover:bg-[#009c39] text-white font-bold h-9 w-20 rounded-3xl'>
-                Confirm
+              Confirm
             </button>
-          </div> 
+          </div>
         }
         <Tableport data={stockList} totalvalue={totalValue} pl={pl} plpercent={plPercent} />
       </div>
