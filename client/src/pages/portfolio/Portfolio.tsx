@@ -13,6 +13,8 @@ import chartFunction from '../../function/chartfunction'
 import backgroundColor from '../../config/chartconfig'
 import profileImage from '../../function/profileImage'
 
+import LoadingPage from '../../globalcomponents/waiting'
+
 import config from '../../config/config.json'
 
 interface stock {
@@ -65,6 +67,7 @@ const Portfolio: React.FC = () => {
   const [plPercent, setPlPercent] = useState<number>(0);
 
   const [selectedOption, setSelectedOption] = useState<selectOption | null>(options[0]);
+  const [loading,setloading] = useState<boolean>(true);
 
   const getPortfolio = () => {
     axios.get(config.API_URL + '/port/me', { withCredentials: true })
@@ -86,6 +89,11 @@ const Portfolio: React.FC = () => {
 
   useEffect(() => {
     getPortfolio();
+    console.log("set false");
+    
+    setTimeout(() => {
+      setloading(false);
+      }, 5000);
   }, []);
 
 
@@ -246,8 +254,9 @@ const Portfolio: React.FC = () => {
           <h3 className="mt-3 font-nomral text-xl">Total Balance: {balance.toLocaleString(undefined, { maximumFractionDigits: 2 })} USD</h3>
         </div>
         <div className="ml-36 h-56 w-56">
-          <Chartport labels={labels} data={datachart} backgroundColor={backgroundColor} />
+         <Chartport labels={labels} data={datachart} backgroundColor={backgroundColor} /> 
         </div>
+        
       </div>
 
       <div className="ml-16">
@@ -337,7 +346,9 @@ const Portfolio: React.FC = () => {
             </button>
           </div>
         }
-        <Tableport data={stockList} totalvalue={totalValue} pl={pl} plpercent={plPercent} />
+        { loading ? <LoadingPage />
+        : 
+        <Tableport data={stockList} totalvalue={totalValue} pl={pl} plpercent={plPercent} /> }
       </div>
     </Layout>
   )

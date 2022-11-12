@@ -40,7 +40,7 @@ function App() {
         <ProtectRoute>
           <Portfolio/>
         </ProtectRoute>}/> 
-        <Route path="/otherport" element={
+        <Route path="/otherport/:id" element={
         <ProtectRoute>
           <Portfolio/>
         </ProtectRoute>}/> 
