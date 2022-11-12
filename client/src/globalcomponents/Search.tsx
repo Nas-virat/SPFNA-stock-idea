@@ -11,7 +11,16 @@ const Search = ({placeholder,options,link}:any) => {
   const handleSubmit = (e:any) => {
     e.preventDefault();
     if(selectedOption){
-      navigate(link+selectedOption.value);
+      if(selectedOption.value === null){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'No Post Found!',
+        })
+      }
+      else{
+        navigate(link+selectedOption.value);
+      }
     }
     else{
       Swal.fire({

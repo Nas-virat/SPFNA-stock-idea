@@ -8,12 +8,13 @@ import axios from 'axios';
 import Layout from '../../globalcomponents/Layout';
 import Search from '../../globalcomponents/Search';
 import config from '../../config/config.json';
-import { link } from 'fs';
+import LoadingPage from '../../globalcomponents/waiting';
 
 const Allidea = () => {
   const navigate = useNavigate();
   const [showbutton, setShowbutton] = useState(false)
   const [ideas, setIdeas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getAllIdeas = () => {
     axios.get(config.API_URL + '/idea/all', { withCredentials: true })
@@ -35,6 +36,10 @@ const Allidea = () => {
       }
     });
     getAllIdeas();
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
 
   // This function will scroll the window to the top of the page
@@ -76,12 +81,16 @@ const Allidea = () => {
             Create Post
           </button>
         </div>
-        {
-          ideas && ideas.map((ideas, index) => {
-            return(
-              <Ideapost ideas={ideas} key={index}/>
-            )
-          })
+        {loading ? <LoadingPage /> 
+          : 
+          <div>{
+            ideas && ideas.map((ideas, index) => {
+              return(
+                <Ideapost ideas={ideas} key={index}/>
+              )
+            })
+          }
+          </div>
         }
         {showbutton && 
           <div className='rounded-full fixed bottom-16 right-16 h-16 w-16' onClick={scrollToTop}>

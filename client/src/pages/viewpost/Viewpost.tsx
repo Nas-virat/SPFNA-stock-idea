@@ -7,6 +7,7 @@ import axios from 'axios';
 import config from '../../config/config.json';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import LoadingPage from '../../globalcomponents/waiting';
 
 const Comment = ({comment}:any) => {
 
@@ -59,6 +60,7 @@ const Viewpost = () => {
   );
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState<any>();
+  const [loading, setLoading] = useState(true);
   const date = new Date(idea.date);
 
   const getSingleIdea = () => {
@@ -120,12 +122,26 @@ const Viewpost = () => {
 
   useEffect(() => {
     getSingleIdea();
+
+    setTimeout(() => {
+      setLoading(false);
+    }
+    , 500);
+    
   }, []);
+
+  const handleKeypress = (e:any) => {
+    if (e.key === "Enter") {
+      handleComment();
+    }
+  };
 
   return (
     <Layout>
       <div className="w-11/12">
       <p className='text-3xl font-bold pt-4 mb-4'>View Post</p>
+      {loading ? <LoadingPage /> 
+      :
         <div className='shadow-lg p-3 rounded-xl border-2'>
           <div className='flex flex-row '>
             <img className='w-12 h-12 mr-3 rounded-full' src={profileImage(idea.user.image)} alt='profile-pic'></img>
@@ -154,6 +170,7 @@ const Viewpost = () => {
                   className='self-center h-3/5 w-full rounded-3xl indent-6' 
                   placeholder='Add a comment' 
                   onChange={(e) => setNewComment(e.target.value)}
+                  onKeyPress={handleKeypress}
                   />
                 </form>
                 <button 
@@ -172,6 +189,7 @@ const Viewpost = () => {
               }
             </div>
         </div>
+      }
       </div>
     </Layout>
   )
