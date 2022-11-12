@@ -6,8 +6,9 @@ import BacktoTop from './components/BacktoTop.jpg';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Layout from '../../globalcomponents/Layout';
-
+import Search from '../../globalcomponents/Search';
 import config from '../../config/config.json';
+import { link } from 'fs';
 
 const Allidea = () => {
   const navigate = useNavigate();
@@ -52,11 +53,21 @@ const Allidea = () => {
     <Layout>
       <div className="w-4/5">
         <p className='text-3xl font-bold pt-4'>Idea Space</p>
-        <div className='flex flex-row justify-between h-12 my-4'>
+        <div className='flex flex-row justify-between h-[3.25rem] my-4'>
           <div className='flex flex-row border-solid border-8 h-full w-4/5 rounded-3xl mr-4'>
             <img className='m-1 ml-2' src={Searchicon} alt='search icon'></img> 
-            <input className='h-full w-4/5 rounded-3xl pl-4' placeholder='Search by Keyword' />
-            <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-full w-1/5 rounded-3xl'>Search</button>
+            <Search 
+              placeholder='Enter your Keyword' 
+              options={
+                        ideas.map((ideas:any) => 
+                          ({
+                            label: ideas.title,
+                            value: ideas._id
+                         })
+                      )
+                      }
+              link='/idea/post/'
+            />
           </div>
           <button 
             className='bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-full w-1/6 rounded-3xl border-8 ml-3'
