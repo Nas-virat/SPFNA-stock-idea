@@ -59,7 +59,7 @@ const Allidea = () => {
       <div className="w-4/5">
         <p className='text-3xl font-bold pt-4'>Idea Space</p>
         <div className='flex flex-row justify-between h-[3.25rem] my-4'>
-          <div className='flex flex-row border-solid border-8 h-full w-4/5 rounded-3xl mr-4'>
+          <div className='flex flex-row border-solid border-8 h-full w-4/5 rounded-3xl mr-4 bg-gray-200'>
             <img className='m-1 ml-2' src={Searchicon} alt='search icon'></img> 
             <Search 
               placeholder='Enter your Keyword' 

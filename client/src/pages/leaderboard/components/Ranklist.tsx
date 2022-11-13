@@ -1,29 +1,43 @@
 import React from "react";
 import Chartport from "../../portfolio/components/Chartport";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import profileImage from "../../../function/profileImage";
+import { AuthContext } from '../../../context/AuthProvider'
 
 interface RanklistProps {
+  id: string;
   rank: number;
-  username: string;
+  user: string;
   totalpl: number;
   image: string;
 }
 
 const Ranklist: React.FC<RanklistProps> = ({
+  id,
   rank,
-  username,
+  user,
   totalpl,
   image,
 }) => {
+  const navigate = useNavigate();
+  const { username }  = React.useContext(AuthContext)
+
+  const viewPort = () => {
+    if (user === username) {
+      navigate(`/myport`);
+    }
+    else {
+      navigate(`/otherport/` + id);
+    }
+  }
+  
   return (
-    <div className="cursor-pointer w-full h-40 border-[#A88DEB] border-2 rounded-2xl flex flex-row p-5 mb-5 items-center justify-bewteen">
+    <div className="cursor-pointer w-full h-40 border-[#A88DEB] border-2 rounded-2xl flex flex-row p-5 mb-5 items-center justify-bewteen" onClick={viewPort}>
       <div className="flex flex-row items-center w-[200rem]">
         <p className="font-bold text-5xl text-purple-900 px-12">{rank}</p>
-        <Link to="/otherport">
-          <img src={image} alt="profile-img" className="rounded-full w-[128px] h-[128px]" />
-        </Link>
+        <img src={profileImage(image)} alt="profile-img" className="rounded-full w-[128px] h-[128px]" />
         <p className="font-medium text-3xl text-purple-900 px-12">
-          <Link to="/otherport">@{username}</Link>
+          @{user}
         </p>
       </div>
       <div className="flex items-center">

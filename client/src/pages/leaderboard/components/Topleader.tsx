@@ -1,27 +1,43 @@
 import React from "react";
-
-import {Link} from "react-router-dom";
+import profileImage from '../../../function/profileImage';
+import {useNavigate} from "react-router-dom";
 import Chartport from "../../portfolio/components/Chartport";
+import { AuthContext } from '../../../context/AuthProvider'
 
 interface ToprankProps {
+  id: string;
   rank: number;
-  username: string;
+  user: string;
   totalpl: number;
   image: string;
 }
 
 const Topleader: React.FC<ToprankProps> = ({
+  id,
   rank,
-  username,
+  user,
   totalpl,
   image,
 }) => {
+
+  const navigate = useNavigate();
+  const { username }  = React.useContext(AuthContext)
+
+  const viewPort = () => {
+    if (user === username) {
+      navigate(`/myport`);
+    }
+    else {
+      navigate(`/otherport/` + id);
+    }
+  }
+
   return (
-    <div className="cursor-pointer w-fit h-96 bg-[#A88DEB] rounded-2xl flex flex-col p-5 grow mx-3">
-      <Link to="/otherport" className=" flex flex-col items-center">
+    <div className="cursor-pointer w-fit h-96 bg-[#A88DEB] rounded-2xl flex flex-col p-5 grow mx-3" onClick={viewPort}>
+      <div className=" flex flex-col items-center">
         <div className="flex items-center">
           <img
-            src={image}
+            src={profileImage(image)}
             alt="profile-img"
             className="rounded-full w-48 h-48 mx-auto"
           />
@@ -32,7 +48,7 @@ const Topleader: React.FC<ToprankProps> = ({
         <div className="flex flex-row mx-auto items-center">
           <p className="font-bold text-9xl text-white mr-3">{rank}</p>
           <div className="mt-3">
-            <p className="font-semibold text-2xl text-white">@{username}</p>
+            <p className="font-semibold text-2xl text-white">@{user}</p>
             {totalpl > 0 ? (
               <p className="font-bold text-6xl text-green-600">+{totalpl}%</p>
             ) : (
@@ -40,7 +56,7 @@ const Topleader: React.FC<ToprankProps> = ({
             )}
           </div>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };

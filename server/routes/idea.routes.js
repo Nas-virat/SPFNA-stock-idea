@@ -21,7 +21,6 @@ router.route('/post/:id').get(verifyToken, getSingleIdea);
 // // Page: Profile Page
 router.route('/userpost/:id').get(verifyToken, getIdeasByUserId);
 
-
 // // Add a new idea
 // // Page: Writeidea Page
 router.route('/add').post(verifyToken, addIdea);

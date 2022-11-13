@@ -75,6 +75,7 @@ const Portfolio: React.FC = () => {
         const { labels, data } = chartFunction(res.data.stocklist,res.data.totalvalue);
         setLabels(labels);
         setDatachart(data);
+        setloading(false);
       })
       .catch(err => {
         console.log(err);
@@ -83,11 +84,6 @@ const Portfolio: React.FC = () => {
 
   useEffect(() => {
     getPortfolio();
-    console.log("set false");
-    
-    setTimeout(() => {
-      setloading(false);
-      }, 5000);
   }, []);
 
 

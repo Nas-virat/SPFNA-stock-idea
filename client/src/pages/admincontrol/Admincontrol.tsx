@@ -41,6 +41,7 @@ const Admincontrol = () => {
       html: `Do you want to change the competition state to <b>${competitionstate ? 'Close Competition' : 'Start new Competition'}</b>, <br>this action cannot be undone! This will reset all user balance, and Start new Competition.`,
       icon: 'warning',
       confirmButtonText: 'OK',
+      showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
         setCompetitionstate(!competitionstate);

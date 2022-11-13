@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
-import { AuthContext } from '../../context/AuthProvider'
+import { useParams } from 'react-router-dom'
 import Tableport from './components/Tableport'
 import Layout from '../../globalcomponents/Layout'
 import Chartport from './components/Chartport'
@@ -13,20 +12,34 @@ import profileImage from '../../function/profileImage'
 
 import { StockProperties } from '../../interface/StockProps'
 
-const OtherPortfolio : React.FC = () => {
-  const { username, img } = React.useContext(AuthContext)
+import config from '../../config/config.json'
 
+const OtherPortfolio : React.FC = () => {
+
+  const { id } = useParams();
+  const [user, setUser] = useState<any>();
   const [stockList, setStockList] = useState<StockProperties[]>([]);
+
+  const [balance, setBalance] = useState<number>(0);
+  const [totalValue, setTotalValue] = useState<number>(0);
+  const [pl, setPl] = useState<number>(0);
+  const [plPercent, setPlPercent] = useState<number>(0);
 
   const [datachart , setDatachart] = useState<number[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
 
   const getPortfolio = () => {
-    axios.get('http://localhost:5000/api/port/me', { withCredentials: true })
+    axios.get(config.API_URL + `/port/${id}`, { withCredentials: true })
     .then(res => {
+      console.log(res.data);
       console.log(res.data.stocklist);
+      setUser(res.data.user);
       setStockList(res.data.stocklist);
-      const {labels,data} = chartFunction(res.data.stocklist,res.data.totalValue);
+      setBalance(res.data.balance);
+      setTotalValue(res.data.totalvalue);
+      setPl(res.data.pl);
+      setPlPercent(res.data.plpercent);
+      const { labels, data } = chartFunction(res.data.stocklist,res.data.totalvalue);
       setLabels(labels);
       setDatachart(data);
     })
@@ -43,10 +56,10 @@ const OtherPortfolio : React.FC = () => {
     <Layout>
       <div className="flex items-center h-56">
         <div className="w-60 m-7">
-          <img className="rounded-full" src={profileImage(img)} alt='myphoto' width="150" height="200"></img>
+          <img className="rounded-full" src={profileImage(user?.image)} alt='myphoto' width="150" height="200"></img>
         </div>
         <div className="m-14">
-          <h1 className="mt-3 font-semibold text-3xl">@{username}</h1>
+          <h1 className="mt-3 font-semibold text-3xl">@{user?.username}</h1>
           <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
           <h3 className="mt-3 font-nomral text-xl">Total Balance: 3000 USD</h3>
           <div className="flex">
@@ -61,7 +74,7 @@ const OtherPortfolio : React.FC = () => {
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
         </div>
-        <Tableport data={stockList} totalvalue={0} pl={0} plpercent={0} />
+        <Tableport data={stockList} totalvalue={totalValue} pl={pl} plpercent={plPercent} />
       </div>
     </Layout>
   )

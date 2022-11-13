@@ -8,10 +8,16 @@ const Search = ({placeholder,options,link}:any) => {
   const [selectedOption, setSelectedOption] = useState(options);
   const navigate = useNavigate();
 
+  const handleKeypress = (e:any) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
+  };
+
   const handleSubmit = (e:any) => {
     e.preventDefault();
     if(selectedOption){
-      if(selectedOption.value === null){
+      if(selectedOption.value === undefined){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -32,7 +38,7 @@ const Search = ({placeholder,options,link}:any) => {
   }
 
   return (
-    <div className ="flex flex-row className='h-full w-full rounded-3xl pl-4'">
+    <div className ="flex flex-row className='h-full w-full rounded-3xl">
       <div className='w-full self-center'>
         <Select 
           placeholder={placeholder} 
@@ -40,10 +46,11 @@ const Search = ({placeholder,options,link}:any) => {
           options={options} 
           onChange={setSelectedOption}
           isClearable={true}
+          onKeyDown={handleKeypress}
         />
       </div>
       <button 
-        className='bg-[#856dab] hover:bg-[#4a366b] text-white font-bold w-1/5 rounded-3xl' 
+        className='bg-[#856dab] hover:bg-[#4a366b] text-white font-bold w-1/5 rounded-3xl ml-3' 
         type="submit" 
         onClick = {handleSubmit}
       >

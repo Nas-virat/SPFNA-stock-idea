@@ -40,6 +40,9 @@ const Ideapost  = ({ideas}:any) => {
               Swal.showLoading()
             },
           })
+          .then(() => {
+            window.location.reload();
+          })
         } else {
           Swal.fire({
             title: 'Error!',
@@ -62,10 +65,16 @@ const Ideapost  = ({ideas}:any) => {
   const viewPost = () => {
     navigate('/idea/post/' + ideas._id);
   }
+  
+  const handleKeypress = (e:any) => {
+    if (e.key === "Enter") {
+      handleComment();
+    }
+  };
 
   return (
-    <div className='shadow-lg p-3 rounded-xl border-2 my-4' /*onClick={viewPost}*/>
-      <div className='flex flex-row'>
+    <div className='shadow-lg p-3 rounded-xl border-2 my-4' >
+      <div className='flex flex-row cursor-pointer' onClick={viewPost}>
         <img className='w-12 h-12 mr-3 rounded-full' src={profileImage(ideas.user.image)} alt='profile-pic'></img>
         <p className='text-xl self-center font-semibold'>
           {ideas.user.username}
@@ -74,10 +83,10 @@ const Ideapost  = ({ideas}:any) => {
           {date.toLocaleString()}
         </p>
       </div>
-      <p className='text-l font-bold mt-2'>
+      <p className='text-l font-bold mt-2 cursor-pointer' onClick={viewPost}>
         {ideas.title}
       </p>
-      <p className='mt-2'>
+      <p className='mt-2 cursor-pointer' onClick={viewPost}>
         {ideas.details}
       </p>
       <div className='flex flex-row mt-2 '>
@@ -95,6 +104,7 @@ const Ideapost  = ({ideas}:any) => {
               className='self-center h-3/5 w-full rounded-3xl indent-6' 
               placeholder='Add a comment' 
               onChange={(e) => setNewComment(e.target.value)}
+              onKeyUp={handleKeypress}
               />
             </form>
             <button 
@@ -102,14 +112,6 @@ const Ideapost  = ({ideas}:any) => {
               onClick={handleComment}
             >
               Add Comment
-            </button>
-          </div>
-          <div className='mt-2 border-2 border-[#B0B0B0] rounded-3xl'>
-            <button 
-              className='text-black font-bold h-12 w-full rounded-3xl self-center'
-              onClick={viewPost}
-            >
-              View Post
             </button>
           </div>
         </div>

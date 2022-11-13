@@ -14,7 +14,7 @@ const Comment = ({comment}:any) => {
   const date = new Date(comment.commentDate);
 
   return(
-    <div className='h-14 flex flex-row mt-3 rounded-3xl'>
+    <div className='flex flex-row mt-3 rounded-3xl '>
       <img className='self-center w-10 h-10 mx-3 rounded-full' src={profileImage(comment.commentUser.image)} alt='profile-pic'></img>
       <div className='ml-3'>
         <div className='flex flex-row items-center'>
@@ -100,6 +100,9 @@ const Viewpost = () => {
               Swal.showLoading()
             },
           })
+          .then(() => {
+            window.location.reload();
+          })
         } else {
           Swal.fire({
             title: 'Error!',
@@ -116,7 +119,6 @@ const Viewpost = () => {
           text: 'Something went wrong!',
         })
       }
-      window.location.reload();
     }
   }
 
@@ -127,7 +129,6 @@ const Viewpost = () => {
       setLoading(false);
     }
     , 500);
-    
   }, []);
 
   const handleKeypress = (e:any) => {
@@ -138,7 +139,7 @@ const Viewpost = () => {
 
   return (
     <Layout>
-      <div className="w-11/12">
+      <div className="w-4/5">
       <p className='text-3xl font-bold pt-4 mb-4'>View Post</p>
       {loading ? <LoadingPage /> 
       :

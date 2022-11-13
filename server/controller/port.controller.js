@@ -70,14 +70,42 @@ const getPortByUserId = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         const stocks = user.port.stock;
+        const stocklist = [];
+        let balance = 0;
+        let totalvalue = 0;
+        let pl = 0;
+        let plpercent = 0;
+        let costTotal = 0;
         for (let i = 0; i < stocks.length; i++) {
             symbol = stocks[i].symbol;
+            cost_price = stocks[i].cost_price;
             country = stocks[i].country;
+            quantity = stocks[i].quantity;
+            currency = stocks[i].currency;
             const price = await stockdata(symbol + country);
-            stocks[i].price = price;
+
+            const rate = 1;
+
+            balance += price * quantity;
+            totalvalue += price * quantity;
+            pl += (price - cost_price) * quantity;
+            costTotal += cost_price * quantity;
+            stocklist.push({ symbol, price, cost_price, quantity, rate });
         }
-        console.log(user);
-        res.json(user);
+        user.port.cash.forEach(cash => {
+            balance += cash.amount;
+        });
+
+        //check is stocklist is empty or not
+        if (stocklist.length > 0) {
+            plpercent = pl / costTotal * 100;
+        }
+        else {
+            plpercent = 0;
+        }
+
+        console.log(stocklist, balance, totalvalue, pl);
+        res.json({ user, stocklist, balance, totalvalue, pl, plpercent });
     }
     catch (err) {
         res.status(500).json({ message: err.message });

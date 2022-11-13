@@ -29,8 +29,6 @@ const getAllIdeas = async (req, res) => {
 // // Page: Viewpost Page
 const getSingleIdea = async (req, res) => {
     try {
-        
-        console.log(req.params.id);
         const idea = await Idea.findById(req.params.id);
         const user = await User.findOne({ _id: idea.user });
         idea.user = user;
