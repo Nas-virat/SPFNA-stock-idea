@@ -17,13 +17,7 @@ import LoadingPage from '../../globalcomponents/waiting'
 
 import config from '../../config/config.json'
 
-interface stock {
-  symbol: string;
-  price: number;
-  cost_price: number;
-  quantity: number;
-  rate: number;
-}
+import { StockProperties } from '../../interface/StockProps'
 
 interface selectOption {
   value: {
@@ -54,7 +48,7 @@ const Portfolio: React.FC = () => {
   const [buy, setBuy] = useState(false);
   const [sell, setSell] = useState(false);
 
-  const [stockList, setStockList] = useState<stock[]>([]);
+  const [stockList, setStockList] = useState<StockProperties[]>([]);
   const [symbol, setSymbol] = useState<String>('');
   const [quantity, setQuantity] = useState<number>(0);
 
@@ -74,13 +68,13 @@ const Portfolio: React.FC = () => {
       .then(res => {
         console.log(res.data.stocklist);
         setStockList(res.data.stocklist);
-        const { labels, data } = chartFunction(res.data.stocklist);
-        setLabels(labels);
-        setDatachart(data);
         setBalance(res.data.balance);
         setTotalValue(res.data.totalvalue);
         setPl(res.data.pl);
         setPlPercent(res.data.plpercent);
+        const { labels, data } = chartFunction(res.data.stocklist,res.data.totalvalue);
+        setLabels(labels);
+        setDatachart(data);
       })
       .catch(err => {
         console.log(err);

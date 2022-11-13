@@ -1,4 +1,4 @@
-interface stock {
+export interface StockProperties {
     symbol: string;
     price : number;
     cost_price : number;
@@ -6,7 +6,7 @@ interface stock {
     rate : number;
   }
 export default interface StockProps{
-    data :stock[];
+    data :StockProperties[];
     totalvalue : number;
     pl : number;
     plpercent : number;

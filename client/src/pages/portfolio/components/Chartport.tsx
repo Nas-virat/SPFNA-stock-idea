@@ -2,11 +2,7 @@ import React from 'react'
 import 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 
-interface ChartProps {
-  labels : string[];
-  data:number[];
-  backgroundColor: string[];
-}
+import { ChartProps } from '../../../interface/ChartProps';
 
 const Chartport : React.FC<ChartProps>= ({labels,data,backgroundColor}) => {
   return (

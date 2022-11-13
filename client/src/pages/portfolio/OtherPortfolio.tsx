@@ -11,19 +11,12 @@ import chartFunction from '../../function/chartfunction'
 import backgroundColor from '../../config/chartconfig'
 import profileImage from '../../function/profileImage'
 
-interface stock{
-  symbol: string;
-  price : number;
-  cost_price : number;
-  quantity : number;
-  rate : number;
-}
-
+import { StockProperties } from '../../interface/StockProps'
 
 const OtherPortfolio : React.FC = () => {
   const { username, img } = React.useContext(AuthContext)
 
-  const [stockList, setStockList] = useState<stock[]>([]);
+  const [stockList, setStockList] = useState<StockProperties[]>([]);
 
   const [datachart , setDatachart] = useState<number[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
@@ -33,7 +26,7 @@ const OtherPortfolio : React.FC = () => {
     .then(res => {
       console.log(res.data.stocklist);
       setStockList(res.data.stocklist);
-      const {labels,data} = chartFunction(res.data.stocklist);
+      const {labels,data} = chartFunction(res.data.stocklist,res.data.totalValue);
       setLabels(labels);
       setDatachart(data);
     })
