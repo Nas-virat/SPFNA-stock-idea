@@ -45,6 +45,7 @@ const Leaderboard = () => {
                     rank={idx + 1}
                     user={item.username}
                     dataChart={item.port.stock}
+                    pl = {item.plpercent}
                     image={item.image}
                   />
                 ))
@@ -59,7 +60,7 @@ const Leaderboard = () => {
                     rank={idx + 4}
                     user={item.username}
                     dataChart={item.port.stock}
-                    totalpl={1}
+                    totalpl={item.plpercent}
                     image={item.image}
                   />
                 ))

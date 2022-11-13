@@ -12,6 +12,7 @@ interface ToprankProps {
   rank: number;
   user: string;
   dataChart: any;
+  pl : number;
   image: string;
 }
 
@@ -20,6 +21,7 @@ const Topleader: React.FC<ToprankProps> = ({
   rank,
   user,
   dataChart,
+  pl,
   image,
 }) => {
 
@@ -61,10 +63,10 @@ const Topleader: React.FC<ToprankProps> = ({
           <p className="font-bold text-9xl text-white mr-3">{rank}</p>
           <div className="mt-3">
             <p className="font-semibold text-2xl text-white">@{user}</p>
-            {10 > 0 ? (
-              <p className="font-bold text-6xl text-green-600">+{10}%</p>
+            {pl > 0 ? (
+              <p className="font-bold text-6xl text-green-600">+{pl.toFixed(2)}%</p>
             ) : (
-              <p className="font-bold text-6xl text-red-500">{10}%</p>
+              <p className="font-bold text-6xl text-red-500">{pl.toFixed(2)}%</p>
             )}
           </div>
         </div>

@@ -60,9 +60,9 @@ const Ranklist: React.FC<RanklistProps> = ({
           <Chartport labels={labels} data ={data} backgroundColor={backgroundColor}/>
         </div>
         {totalpl > 0 ? (
-          <p className="font-bold text-5xl text-green-600 px-12 w-[270px] overflow-hidden">+{totalpl}%</p>
+          <p className="font-bold text-5xl text-green-600 px-12 w-[270px] overflow-hidden">+{totalpl.toFixed(2)}%</p>
         ) : (
-          <p className="font-bold text-5xl text-red-500 px-12 w-[270px] overflow-hidden">{totalpl}%</p>
+          <p className="font-bold text-5xl text-red-500 px-12 w-[270px] overflow-hidden">{totalpl.toFixed(2)}%</p>
         )}
       </div>
     </div>
