@@ -1,16 +1,32 @@
 const User = require("../model/User");
 const ErrorHandler = require("../utils/errorHandler");
 const sendCookie = require("../utils/sendCookie");
+const stockdata = require('../utils/yahoofinance');
 
 // // GET all users 
 // // Page: LeaderBoard Page
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
+
+        let listuser = []
+
+        for (let i = 0; i < users.length; i++) {
+            _user = users[i].toObject();
+            listuser.push(_user);
+        }
+
+        for (let user of listuser) {
+            for (let stock of user.port.stock) {
+                let price = await stockdata(stock.symbol);
+                stock.price = price;
+                stock.rate = 1;
+            }
+        }
+
         res.status(200).json({
             success: true,
-            count: users.length,
-            users: users,
+            users: listuser,
         });
     } catch (error) {
         res.status(500).json({ message: error.message });

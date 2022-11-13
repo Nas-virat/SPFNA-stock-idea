@@ -19,7 +19,7 @@ router.route('/post/:id').get(verifyToken, getSingleIdea);
 
 // // GET all ideas by user id
 // // Page: Profile Page
-router.route('/userpost/:id').get(verifyToken, getIdeasByUserId);
+router.route('/userpost').get(verifyToken, getIdeasByUserId);
 
 // // Add a new idea
 // // Page: Writeidea Page

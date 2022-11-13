@@ -1,40 +1,81 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
-
-import Postprofile from './Postprofile'
-
-import myphoto from '../../assets/handsomeboy.jpg'
+import profileImage from '../../function/profileImage'
+import { AuthContext } from '../../context/AuthProvider'
+import LoadingPage from '../../globalcomponents/waiting';
+import Postprofile from './components/Postprofile';
 
 import Layout from '../../globalcomponents/Layout'
+import axios from 'axios'
+import config from '../../config/config.json';
 
 
 const Profile : React.FC = () => {
 
 	const navigate = useNavigate();
+	const { username, img } = useContext(AuthContext);
+	const [loading, setLoading] = React.useState(true);
+	const [ideas, setIdeas] = React.useState([
+		{
+			_id: '',
+			title: '',
+			details: '',
+			date: '',
+			status: '',
+		}
+	]);
+
+	const getIdeaByUser = async () => {
+		await axios.get(config.API_URL + `/idea/userpost`, { withCredentials: true })
+		.then(res => {
+			console.log(res.data);
+			setIdeas(res.data.ideas);
+			})
+			.catch(err => {
+			console.log(err);
+			})
+		}
+
+	useEffect(() => {
+		getIdeaByUser();
+
+		setTimeout(() => {
+			setLoading(false);
+		  }, 1000);
+	},[]);
 
 	return (
-		
 		<Layout>
 			<div className="flex items-center h-56">
-				<div className="w-60 m-7">
-					<img className="rounded-full" src={myphoto} alt='myphoto' width="150" height="200"></img>
+				<div className="w-auto mx-7 ml-20">
+					<img className="rounded-full" src={profileImage(img)} alt='myphoto' width="150" height="200"></img>
 				</div>
 				<div className="m-14">
-					<h1 className="mt-3 font-semibold text-3xl">Nasvirat</h1>
-					<h3 className="mt-3 font-normal text-xl">Rank #30</h3>
+					<h1 className="mt-3 font-bold text-3xl">@{username}</h1>
+					<h3 className="mt-3 text-xl">Meaw Sean</h3>
 					<div className="flex">
 						<button onClick={()=> navigate('/idea/post')} className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
 					</div>
 				</div>
 			</div>
-			<div className="post ml-14">
-				<Postprofile status="draft"/>
-				<Postprofile status="publish"/>
-				<Postprofile status="draft"/>
-				<Postprofile status="publish"/>
-				<Postprofile status="draft"/>
-				<Postprofile status="publish"/>
+			{loading ? <LoadingPage /> 
+			: 
+			<div>{
+				ideas && ideas.map((ideas, index: number) => {
+				return(
+					<Postprofile 
+						id={ideas._id} 
+						date={ideas.date}
+						status={ideas.status} 
+						title={ideas.title} 
+						details={ideas.details} 
+						key={index}
+					/>
+				)
+				})
+			}
 			</div>
+			}
 		</Layout>
 )
 }

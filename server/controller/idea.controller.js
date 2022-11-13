@@ -53,8 +53,12 @@ const getSingleIdea = async (req, res) => {
 // // Page: Profile Page
 const getIdeasByUserId = async (req, res) => {
     try {
-        const ideas = await Idea.find({ user: req.params.id });
-        res.json(ideas);
+        const ideas = await Idea.find({ user: req.user._id}).sort({ date: -1 });
+        res.json({
+            success: true,
+            count: ideas.length,
+            ideas: ideas,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

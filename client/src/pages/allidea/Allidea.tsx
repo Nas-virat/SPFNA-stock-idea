@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Ideapost from './components/Ideapost';
-import Searchicon from './components/Searchicon.png';
+import { BiSearchAlt } from "react-icons/bi";
 import BacktoTop from './components/BacktoTop.jpg';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -60,7 +60,9 @@ const Allidea = () => {
         <p className='text-3xl font-bold pt-4'>Idea Space</p>
         <div className='flex flex-row justify-between h-[3.25rem] my-4'>
           <div className='flex flex-row border-solid border-8 h-full w-4/5 rounded-3xl mr-4 bg-gray-200'>
-            <img className='m-1 ml-2' src={Searchicon} alt='search icon'></img> 
+            <div className='my-auto mx-2 '>
+              <BiSearchAlt size="24px" />
+            </div>
             <Search 
               placeholder='Enter your Keyword' 
               options={

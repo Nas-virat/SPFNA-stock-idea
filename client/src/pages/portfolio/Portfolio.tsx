@@ -72,7 +72,7 @@ const Portfolio: React.FC = () => {
         setTotalValue(res.data.totalvalue);
         setPl(res.data.pl);
         setPlPercent(res.data.plpercent);
-        const { labels, data } = chartFunction(res.data.stocklist,res.data.totalvalue);
+        const { labels, data } = chartFunction(res.data.stocklist);
         setLabels(labels);
         setDatachart(data);
         setloading(false);
@@ -337,7 +337,7 @@ const Portfolio: React.FC = () => {
           </div>
         }
         { loading ? <LoadingPage />
-        : 
+        :
         <Tableport data={stockList} totalvalue={totalValue} pl={pl} plpercent={plPercent} /> }
       </div>
     </Layout>

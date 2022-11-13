@@ -31,7 +31,7 @@ function App() {
         <Route path="/login" element={<Login/>}/> 
         <Route path="/myport" element={<ProtectRoute><Portfolio/></ProtectRoute>}/> 
         <Route path="/otherport/:id" element={<ProtectRoute><OtherPortfolio/></ProtectRoute>}/> 
-        <Route path="/profile" element={<ProtectRoute><Profile/></ProtectRoute>}/> 
+        <Route path="/profile" element={<Profile/>} />
         <Route path="/register" element={<Register/>}/>
         <Route path="/admincontrol" element={<ProtectRoute><Admincontrol/></ProtectRoute>}/>
       </Routes>

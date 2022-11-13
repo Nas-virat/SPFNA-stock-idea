@@ -1,13 +1,17 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import Chartport from "../../portfolio/components/Chartport";
 import { useNavigate } from "react-router-dom";
 import profileImage from "../../../function/profileImage";
 import { AuthContext } from '../../../context/AuthProvider'
 
+import backgroundColor from '../../../config/chartconfig';
+import chartFunction from '../../../function/chartfunction';
+
 interface RanklistProps {
   id: string;
   rank: number;
   user: string;
+  dataChart : any;
   totalpl: number;
   image: string;
 }
@@ -15,12 +19,23 @@ interface RanklistProps {
 const Ranklist: React.FC<RanklistProps> = ({
   id,
   rank,
+  dataChart,
   user,
   totalpl,
   image,
 }) => {
+
+  const [data, setData] = useState<number[]>([]);
+  const [labels, setLabels] = useState<string[]>([]);
+
   const navigate = useNavigate();
   const { username }  = React.useContext(AuthContext)
+
+  useEffect(() => {
+    const { labels, data} = chartFunction(dataChart);
+    setLabels(labels);
+    setData(data);
+  }, []);
 
   const viewPort = () => {
     if (user === username) {
@@ -42,7 +57,7 @@ const Ranklist: React.FC<RanklistProps> = ({
       </div>
       <div className="flex items-center">
         <div className="h-[128px] w-[248px] hidden 2xl:inline-block">
-          <Chartport labels={['red', 'blue','yellow']} data ={[300,50,100]} backgroundColor={['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)']}/>
+          <Chartport labels={labels} data ={data} backgroundColor={backgroundColor}/>
         </div>
         {totalpl > 0 ? (
           <p className="font-bold text-5xl text-green-600 px-12 w-[270px] overflow-hidden">+{totalpl}%</p>

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import Tableport from './components/Tableport'
 import Layout from '../../globalcomponents/Layout'
 import Chartport from './components/Chartport'
-
+import LoadingPage from '../../globalcomponents/waiting'
 import axios from 'axios';
 
 import chartFunction from '../../function/chartfunction'
@@ -24,7 +24,7 @@ const OtherPortfolio : React.FC = () => {
   const [totalValue, setTotalValue] = useState<number>(0);
   const [pl, setPl] = useState<number>(0);
   const [plPercent, setPlPercent] = useState<number>(0);
-
+  const [loading, setLoading] = useState<boolean>(true);
   const [datachart , setDatachart] = useState<number[]>([]);
   const [labels, setLabels] = useState<string[]>([]);
 
@@ -39,9 +39,10 @@ const OtherPortfolio : React.FC = () => {
       setTotalValue(res.data.totalvalue);
       setPl(res.data.pl);
       setPlPercent(res.data.plpercent);
-      const { labels, data } = chartFunction(res.data.stocklist,res.data.totalvalue);
+      const { labels, data } = chartFunction(res.data.stocklist);
       setLabels(labels);
       setDatachart(data);
+      setLoading(false);
     })
     .catch(err => {
       console.log(err);
@@ -49,11 +50,15 @@ const OtherPortfolio : React.FC = () => {
   }
   
   useEffect(() => {
+    setLoading(true);
     getPortfolio();
   },[]);
 
   return (
     <Layout>
+      { loading ? <LoadingPage /> 
+      :
+      <>
       <div className="flex items-center h-56">
         <div className="w-60 m-7">
           <img className="rounded-full" src={profileImage(user?.image)} alt='myphoto' width="150" height="200"></img>
@@ -76,6 +81,7 @@ const OtherPortfolio : React.FC = () => {
         </div>
         <Tableport data={stockList} totalvalue={totalValue} pl={pl} plpercent={plPercent} />
       </div>
+    </>}
     </Layout>
   )
 }
