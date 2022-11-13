@@ -243,7 +243,7 @@ const Portfolio: React.FC = () => {
           <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
           <h3 className="mt-3 font-nomral text-xl">Total Balance: {balance.toLocaleString(undefined, { maximumFractionDigits: 2 })} USD</h3>
         </div>
-        <div className="ml-36 h-56 w-56">
+        <div className="ml-36 h-56 w-56 mt-6">
          <Chartport labels={labels} data={datachart} backgroundColor={backgroundColor} /> 
         </div>
         

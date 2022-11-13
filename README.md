@@ -32,12 +32,12 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 - [x] Login (QA)
 - [ ] Logout
 ### portfolio
-- [ ] display portfolio
-- [ ] buy stock portfolio
-- [ ] sell stock portfolio
-- [ ] display leaderboard
+- [x] display portfolio
+- [x] buy stock portfolio
+- [x] sell stock portfolio
+- [x] display leaderboard
 ### leaderboard and P&L
-- [ ] LeaderBoard
+- [x] LeaderBoard
 - [ ] P&L
 
 ### Convert currency
@@ -45,12 +45,12 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 - [ ] convert currency from one currency to other currency
 
 ### idea space
-- [ ] display all idea
-- [ ] write idea
-- [ ] save draft idea
+- [x] display all idea
+- [x] write idea
+- [x] save draft idea
 - [ ] load draft idea
-- [ ] publish idea
-- [ ] comment on idea
+- [x] publish idea
+- [x] comment on idea
 
 ### Announcement
 - [ ] Admin write annoucement

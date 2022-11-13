@@ -20,8 +20,8 @@ const Chartport : React.FC<ChartProps>= ({labels,data,backgroundColor}) => {
         responsive: true,
         plugins: {
           legend: {
-            position: 'right',
-          },
+            display: false
+          }
         }
       }}
     />
