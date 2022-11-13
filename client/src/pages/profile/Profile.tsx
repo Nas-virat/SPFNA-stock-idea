@@ -52,7 +52,7 @@ const Profile : React.FC = () => {
 				</div>
 				<div className="m-14">
 					<h1 className="mt-3 font-bold text-3xl">@{username}</h1>
-					<h3 className="mt-3 text-xl">Meaw Sean</h3>
+					<h3 className="mt-3 text-xl">Rank #30</h3>
 					<div className="flex">
 						<button onClick={()=> navigate('/idea/post')} className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
 					</div>
@@ -60,20 +60,23 @@ const Profile : React.FC = () => {
 			</div>
 			{loading ? <LoadingPage /> 
 			: 
-			<div>{
-				ideas && ideas.map((ideas, index: number) => {
-				return(
-					<Postprofile 
-						id={ideas._id} 
-						date={ideas.date}
-						status={ideas.status} 
-						title={ideas.title} 
-						details={ideas.details} 
-						key={index}
-					/>
-				)
-				})
-			}
+			<div>
+				{ideas && 
+					ideas.map((ideas, index: number) => {
+					return(
+						<Postprofile 
+							id={ideas._id} 
+							date={ideas.date}
+							status={ideas.status} 
+							title={ideas.title} 
+							details={ideas.details} 
+							key={index}
+						/>
+					)})
+				}
+				{ideas.length === 0 && 
+					<div className="text-bold mt-24 ml-56 text-3xl text-slate-400">No Post Made</div>
+				}
 			</div>
 			}
 		</Layout>
