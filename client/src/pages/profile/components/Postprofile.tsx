@@ -1,5 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import config from '../../../config/config.json';
 
 interface PostProps{
     id: string;
@@ -23,6 +25,17 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
         }
     }
 
+    const handlePublish = () => {
+        axios.post(config.API_URL + `/idea/publishDraft`, {ideaId: id}, {withCredentials: true})
+        .then(res => {
+            console.log(res);
+            window.location.reload();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
 
     return (
         <div className="w-4/5 m-5 px-4 py-5 rounded-lg bg-white shadow-lg">
@@ -43,6 +56,17 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
             >
                 {status === 'draft' ? `Edit` : `Read More`}
             </button>
+            {
+                status === 'draft' ?
+                <button 
+                    className='bg-[#e4585d] hover:bg-[#c51c43] text-white font-medium h-9 w-36  rounded-3xl ml-3'
+                    onClick={handlePublish}
+                >
+                    Publish
+                </button>
+                : 
+                null
+            }
         </div>
     )
 }

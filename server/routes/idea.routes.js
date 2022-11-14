@@ -7,7 +7,8 @@ const {getAllIdeas,
        getSingleIdea,
        getIdeasByUserId,
        addIdea,
-       addComment} = require('../controller/idea.controller');
+       addComment,
+       publishDraft} = require('../controller/idea.controller');
 
 // // GET all ideas
 // // Page: Allideas Page
@@ -28,5 +29,9 @@ router.route('/add').post(verifyToken, addIdea);
 // // Add a new comment to the idea
 // // Page: AllIdea Page
 router.route('/addcomment').post(verifyToken, addComment);
+
+// // publish an draft idea
+// // Page: Profile Page
+router.route('/publishDraft').post(verifyToken, publishDraft);
 
 module.exports = router;
