@@ -69,6 +69,7 @@ const Viewpost = () => {
       console.log(res.data);
       setIdea(res.data.idea);
       setComments(res.data.idea.comment);
+      setLoading(false);
     })
     .catch(err => {
       console.log(err);
@@ -124,11 +125,6 @@ const Viewpost = () => {
 
   useEffect(() => {
     getSingleIdea();
-
-    setTimeout(() => {
-      setLoading(false);
-    }
-    , 500);
   }, []);
 
   const handleKeypress = (e:any) => {
