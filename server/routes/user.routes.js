@@ -15,7 +15,7 @@ const {
 // // GET all users 
 // // Page: LeaderBoard Page
 // // GET /api/users
-router.route('/').get(verifyToken, getAllUsers);
+router.route('/').get(getAllUsers);
 
 // // login users
 // // Page: Login Page

@@ -10,7 +10,7 @@ const {getAllPublishAnnounces,
 
 // // GET all Publish announces
 // // Page: Home Page
-router.route('/publish').get(verifyToken, getAllPublishAnnounces);
+router.route('/publish').get(getAllPublishAnnounces);
 
 // // GET all Draft announces
 // // Page: Admin control Page
