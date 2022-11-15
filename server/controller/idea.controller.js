@@ -2,7 +2,6 @@ const Idea = require("../model/Idea");
 const User = require("../model/User");
 const ErrorHandler = require("../utils/errorHandler");
 
-
 // // GET all ideas
 // // Page: Allideas Page
 const getAllIdeas = async (req, res) => {

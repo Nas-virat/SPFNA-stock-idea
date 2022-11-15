@@ -2,28 +2,9 @@ import React, { useState, useEffect } from 'react'
 import 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
 import Layout from '../../globalcomponents/Layout'
-
-const announceData = [{
-  title: 'Stock1',
-  content: 'This is the content, Lorem Meaw Maew',
-  date: '2021-10-10',
-},
-{
-  title: 'Stock2',
-  content: 'This is the content',
-  date: '2022-10-10',
-},
-{
-  title: 'Test on production',
-  content: 'Today is admin birthday, Chanon wants to give him a present',
-  date: '2022-10-10',
-},
-{
-  title: 'Stock4',
-  content: 'Petdanay Golden egg, Angry bird yeeha',
-  date: '2022-10-10',
-},
-]
+import axios from 'axios';
+import config from '../../config/config.json';
+import Announcement from './components/Announcement';
 
 const Homepage = () => {
   const [counter, setCounter] = useState(0)
@@ -42,7 +23,15 @@ const Homepage = () => {
   }
 
   const getAnnouncement = async () => {
-    await setAnnouncementData(announceData);
+    try {
+      const res = await axios.get(config.API_URL + '/admin/all', { withCredentials: true })
+      if (res.data.success) {
+        console.log(res.data)
+        setAnnouncementData(res.data.announces)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
@@ -56,10 +45,7 @@ const Homepage = () => {
         <div className='w-full rounded-lg border h-44 shadow-md p-6'>
           {
             announcementData.length > 0 ? (
-              <>
-                <p className='font-bold text-lg'>{announcementData[counter].title} <span className='text-sm font-normal'>[{announcementData[counter].date}]</span></p>
-                <p className='text-base mt-3'>{announcementData[counter].content}</p>
-              </>
+              <Announcement data={announcementData[counter]} />
             ) : (
               <p className='text-base'>No announcement</p>
             )

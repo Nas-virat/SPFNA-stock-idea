@@ -30,6 +30,7 @@ const Profile : React.FC = () => {
 		.then(res => {
 			console.log(res.data);
 			setIdeas(res.data.ideas);
+			setLoading(false);
 			})
 			.catch(err => {
 			console.log(err);
@@ -38,10 +39,6 @@ const Profile : React.FC = () => {
 
 	useEffect(() => {
 		getIdeaByUser();
-
-		setTimeout(() => {
-			setLoading(false);
-		  }, 1000);
 	},[]);
 
 	return (

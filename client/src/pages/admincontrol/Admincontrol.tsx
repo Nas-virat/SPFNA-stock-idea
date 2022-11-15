@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Layout from '../../globalcomponents/Layout'
+import axios from 'axios';
+import config from '../../config/config.json';
 
 const is_admin = true;
 
@@ -10,29 +12,54 @@ const Admincontrol = () => {
   const navigate = useNavigate();
   const [announment, setAnnounment] = useState({ 
     title: '', 
-    content: '',
+    details: '',
     date: Date.now(), 
   });
   const [competitionstate, setCompetitionstate] = useState(false);
 
-  const handleSubmit = () => {
-    console.log(announment);
-    Swal.fire({
-      title: 'Successfully Announce!',
-      html: `You have successfully announce the news!<br>TOPIC: <b>${announment.title}</b>`,
-      icon: 'success',
-      confirmButtonText: 'OK',
-    });
-  }
-
-  const handleDraft = () => {
-    console.log(announment);
-    Swal.fire({
-      title: 'Successfully Draft!',
-      html: `You have successfully draft the news!<br>TOPIC: <b>${announment.title}</b>`,
-      icon: 'success',
-      confirmButtonText: 'OK',
-    });
+  const handlePost = async (status : string) => {
+    if (announment.title === '' || announment.details === '') {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all the fields',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    } else {
+      try {
+        const res = await axios.post(config.API_URL +'/admin/add', {
+          title: announment.title,
+          details: announment.details,
+          status:  status
+        }, { withCredentials: true });
+        if (res.data.success) {
+          Swal.fire({
+            title: 'Success!',
+            text: `You have successfully ${status} Idea`,
+            icon: 'success',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+            },
+          })
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: res.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      } catch(err){
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      }
+    }
   }
 
   const handleCompetitionstate = () => {
@@ -75,19 +102,19 @@ const Admincontrol = () => {
             className='w-full h-28 rounded-lg border shadow-md p-4 mt-4 resize-none border-black'
             placeholder='Say something...'
             required
-            onChange={(e) => setAnnounment({ ...announment, content: e.target.value })}
+            onChange={(e) => setAnnounment({ ...announment, details: e.target.value })}
           />
         </div>
         <div className='mt-5 flex justify-end mb-16'>
           <button 
             className='bg-sky-600 hover:bg-sky-700 text-white font-bold w-28 h-10 rounded-full mr-3'
-            onClick={() => handleDraft()}
+            onClick={() => handlePost('draft')}
           >
             Draft
           </button>
           <button 
             className='bg-[#E56B6F] hover:bg-[#D75B5F] text-white font-bold w-28 h-10 rounded-full mr-3'
-            onClick={() => handleSubmit()}
+            onClick={() => handlePost('publish')}
           >
             Publish
           </button>
@@ -108,7 +135,7 @@ const Admincontrol = () => {
               <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-medium h-10 w-28 rounded-full mr-3'>Edit</button>
               <button 
                 className='bg-[#E56B6F] hover:bg-[#D75B5F] text-white font-bold w-28 h-10 rounded-full mr-3'
-                onClick={() => handleSubmit()}
+                onClick={() => handlePost('publish')}
               >
                 Publish
               </button>
