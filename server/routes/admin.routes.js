@@ -3,13 +3,18 @@ const router = express();
 
 const verifyToken = require('../middleware/auth');
 
-const {getAllAnnounces,
+const {getAllPublishAnnounces,
+        getAllDraftAnnounces,
         addAnnounce,
         updateStatus} = require('../controller/admin.controller');
 
-// // GET all announces
+// // GET all Publish announces
 // // Page: Home Page
-router.route('/all').get(verifyToken, getAllAnnounces);
+router.route('/publish').get(verifyToken, getAllPublishAnnounces);
+
+// // GET all Draft announces
+// // Page: Admin control Page
+router.route('/draft').get(verifyToken, getAllDraftAnnounces);
 
 // // Add a new announce
 // // Page: Admin control Page
@@ -17,6 +22,6 @@ router.route('/add').post(verifyToken, addAnnounce);
 
 // // update status announce
 // // Page: Admin control Page
-router.route('/updatestatus/:id').post(verifyToken, updateStatus);
+router.route('/updatestatus').post(verifyToken, updateStatus);
 
 module.exports = router;

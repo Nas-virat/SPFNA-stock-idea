@@ -1,15 +1,30 @@
 const Announce = require("../model/Announce");
 const ErrorHandler = require("../utils/errorHandler");
 
-// // GET all announces
+// // GET all Publish announces
 // // Page: Home Page
-const getAllAnnounces = async (req, res) => {
+const getAllPublishAnnounces = async (req, res) => {
     try {
         const announces = await Announce.find({ status: "publish" }).sort({ date: -1 });
         res.json({
             success: true,
             count: announces.length,
             announces: announces,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// // GET all Draft announces
+// // Page: Admin control Page
+const getAllDraftAnnounces = async (req, res) => {
+    try {
+        const draft = await Announce.find({ status: "draft" }).sort({ date: -1 });
+        res.json({
+            success: true,
+            count: draft.length,
+            draft: draft,
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -37,9 +52,9 @@ const addAnnounce = async (req, res) => {
 // // update status announce
 // // Page: Admin control Page
 const updateStatus = async (req, res) => {
-    const { status } = req.body;
-    const announce = await Announce.findById(req.params.id);
-    announce.status = status;
+    const { announceId } = req.body;
+    const announce = await Announce.findById(announceId);
+    announce.status = 'publish';
     announce.date = Date.now();
     await announce.save();
     res.json({ success: true, message: "Announce updated successfully" });
@@ -47,7 +62,8 @@ const updateStatus = async (req, res) => {
 
 
 module.exports = {
-    getAllAnnounces,
+    getAllPublishAnnounces,
+    getAllDraftAnnounces,
     addAnnounce,
     updateStatus
 };

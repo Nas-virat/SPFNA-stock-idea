@@ -5,17 +5,22 @@ import Swal from 'sweetalert2';
 import Layout from '../../globalcomponents/Layout'
 import axios from 'axios';
 import config from '../../config/config.json';
+import LoadingPage from '../../globalcomponents/waiting';
+import Draft from './components/Draft';
 
 const is_admin = true;
 
 const Admincontrol = () => {
   const navigate = useNavigate();
+  const [counter, setCounter] = useState(0)
   const [announment, setAnnounment] = useState({ 
     title: '', 
     details: '',
     date: Date.now(), 
   });
+  const [drafts, setDrafts] = useState([] as any);
   const [competitionstate, setCompetitionstate] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handlePost = async (status : string) => {
     if (announment.title === '' || announment.details === '') {
@@ -37,12 +42,13 @@ const Admincontrol = () => {
             title: 'Success!',
             text: `You have successfully ${status} Idea`,
             icon: 'success',
-            timer: 2000,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: () => {
               Swal.showLoading()
             },
           })
+          //window.location.reload();
         } else {
           Swal.fire({
             title: 'Error!',
@@ -59,6 +65,31 @@ const Admincontrol = () => {
           text: 'Something went wrong!',
         })
       }
+    }
+  }
+
+  const getDraft = async () => {
+    try {
+      const res = await axios.get(config.API_URL + '/admin/draft', { withCredentials: true })
+      if (res.data.success) {
+        console.log(res.data)
+        setDrafts(res.data.draft)
+        setLoading(false)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const previousClick = () => {
+    if (counter > 0) {
+      setCounter(counter - 1)
+    }
+  }
+
+  const nextClick = () => {
+    if (counter < drafts.length - 1) {
+      setCounter(counter + 1)
     }
   }
 
@@ -85,6 +116,7 @@ const Admincontrol = () => {
   useEffect(() => {
     if (!is_admin) navigate('/home', { replace: true });
     setCompetitionstate(true);
+    getDraft();
   }, [])
 
   return (
@@ -120,27 +152,35 @@ const Admincontrol = () => {
           </button>
         </div>
         <p className='font-bold text-3xl pb-7'>Draft</p>
-        <div className="w-full mb-8  px-4 py-5 rounded-lg bg-white shadow-lg">
-            <h3 className="font-bold">Topic</h3>
-            <p className="font-light">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit autem vel ipsum, temporibus 
-            similique quo non asperiores rerum? Architecto iste incidunt quisquam commodi esse mollitia nesciunt ex, 
-            excepturi itaque qui.
-            </p>
-            <div className="flex items-center">
-                <h1 className="font-normal m-3">Draft</h1>
-                <div className="rounded-full w-4 h-4 bg-[#FA9C1B]"></div>
-            </div>
-            <div className='mt-5 flex justify-end'>
-              <button className='bg-[#856dab] hover:bg-[#4a366b] text-white font-medium h-10 w-28 rounded-full mr-3'>Edit</button>
-              <button 
-                className='bg-[#E56B6F] hover:bg-[#D75B5F] text-white font-bold w-28 h-10 rounded-full mr-3'
-                onClick={() => handlePost('publish')}
-              >
-                Publish
-              </button>
-            </div>
-        </div>
+        {loading ? <LoadingPage /> 
+          :
+          <>
+          <div className='w-full rounded-lg border shadow-md p-6'>
+            {
+              drafts.length > 0 ? (
+                <Draft data={drafts[counter]} />
+              ) : (
+                <p className='h-40 text-base'>No Draft</p>
+              )
+            }
+            
+          </div>
+          <div className='mt-5 flex justify-center mb-16'>
+            <button 
+              className={`${counter === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
+              onClick={previousClick}
+            >
+              Previous
+            </button>
+            <button 
+              className={`${counter === drafts.length - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
+              onClick={nextClick}
+            >
+              Next
+            </button>
+          </div>
+          </>
+        }
 
         <p className='font-bold text-3xl pb-7'>Control</p>
         <div className='w-full rounded-lg border h-auto shadow-md p-6 mb-7 bg-[#FFE1E1] flex justify-between items-center'>
