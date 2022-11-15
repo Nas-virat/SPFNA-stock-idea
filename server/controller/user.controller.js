@@ -21,7 +21,7 @@ const getAllUsers = async (req, res) => {
             let costTotal = 0;
             let plpercent = 0;
             for (let stock of user.port.stock) {
-                let price = await stockdata(stock.symbol);
+                let price = await stockdata(stock.symbol + stock.country);
                 stock.price = price;
                 stock.rate = 1;
                 pl += (price - stock.cost_price) * stock.quantity;
