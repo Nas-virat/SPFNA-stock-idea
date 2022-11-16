@@ -51,7 +51,7 @@ const Allidea = () => {
   }
 
   const handlePostidea = () => {
-    navigate('/idea/post');
+    navigate('/idea/add');
   }
 
   return (

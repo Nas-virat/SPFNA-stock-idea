@@ -51,7 +51,7 @@ const Profile : React.FC = () => {
 					<h1 className="mt-3 font-bold text-3xl">@{username}</h1>
 					<h3 className="mt-3 text-xl">Rank #30</h3>
 					<div className="flex">
-						<button onClick={()=> navigate('/idea/post')} className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
+						<button onClick={()=> navigate('/idea/add')} className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
 					</div>
 				</div>
 			</div>

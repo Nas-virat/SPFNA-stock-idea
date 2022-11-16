@@ -38,7 +38,7 @@ const Login = () => {
             title: 'Success!',
             text: 'You have successfully logged in!',
             icon: 'success',
-            timer: 1500,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: () => {
               Swal.showLoading()

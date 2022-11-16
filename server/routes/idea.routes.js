@@ -8,7 +8,8 @@ const {getAllIdeas,
        getIdeasByUserId,
        addIdea,
        addComment,
-       publishDraft} = require('../controller/idea.controller');
+       publishDraft,
+       deleteIdea} = require('../controller/idea.controller');
 
 // // GET all ideas
 // // Page: Allideas Page
@@ -33,5 +34,9 @@ router.route('/addcomment').post(verifyToken, addComment);
 // // publish an draft idea
 // // Page: Profile Page
 router.route('/publishDraft').post(verifyToken, publishDraft);
+
+// // Delete an idea
+// // Page: Profile Page
+router.delete('/delete/:id', verifyToken, deleteIdea);
 
 module.exports = router;

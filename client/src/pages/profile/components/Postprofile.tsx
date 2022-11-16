@@ -23,7 +23,7 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
         if(status === 'publish'){
             navigate('/idea/post/' + id);
         } else {
-            navigate( '/idea/post');
+            navigate( '/idea/add/' + id);
         }
     }
 

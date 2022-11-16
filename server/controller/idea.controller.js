@@ -46,7 +46,7 @@ const getSingleIdea = async (req, res) => {
             error: "Server Error",
         });
     }
-};
+}
 
 // // GET all ideas by user id
 // // Page: Profile Page
@@ -114,11 +114,20 @@ const publishDraft = async (req, res) => {
     res.json({ success: true, message: "Idea published successfully" });
 }
 
+// // Delete an idea
+// // Page: Profile Page
+const deleteIdea = async (req, res) => {
+    console.log(req.params.id);
+    await Idea.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: "Idea deleted successfully" });   
+}
+
 module.exports = {
     getAllIdeas,
     getSingleIdea,
     getIdeasByUserId,
     addIdea,
     addComment,
-    publishDraft
+    publishDraft,
+    deleteIdea
 }
