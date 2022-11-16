@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Layout from '../../globalcomponents/Layout'
 import axios from 'axios';
@@ -12,6 +12,7 @@ const is_admin = true;
 
 const Admincontrol = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [counter, setCounter] = useState(0)
   const [announment, setAnnounment] = useState({ 
     title: '', 
@@ -21,6 +22,16 @@ const Admincontrol = () => {
   const [drafts, setDrafts] = useState([] as any);
   const [competitionstate, setCompetitionstate] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const handleDelete = async () => {
+    await axios.delete(config.API_URL + '/admin/delete/' + id, { withCredentials: true })
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
   const handlePost = async (status : string) => {
     if (announment.title === '' || announment.details === '') {
@@ -48,7 +59,9 @@ const Admincontrol = () => {
               Swal.showLoading()
             },
           })
-          //window.location.reload();
+          .then(() => {
+            navigate('/admincontrol');
+          })
         } else {
           Swal.fire({
             title: 'Error!',
@@ -65,6 +78,17 @@ const Admincontrol = () => {
           text: 'Something went wrong!',
         })
       }
+    }
+  }
+
+  const handleButton = (status : string) => {
+    if (id !== undefined) {
+      handleDelete().then(() => {
+        handlePost(status);
+      })
+    }
+    else {
+      handlePost(status);
     }
   }
 
@@ -113,40 +137,64 @@ const Admincontrol = () => {
     });
   }
 
+  const getOneDraft = async () => {
+    try {
+      const res = await axios.get(config.API_URL + '/admin/draft/' + id, { withCredentials: true })
+      if (res.data.success) {
+        console.log(res.data)
+        setAnnounment({
+          title: res.data.draft.title,
+          details: res.data.draft.details,
+          date: Date.now(),
+        })
+        setTimeout(() => {
+        }, 500);
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     if (!is_admin) navigate('/home', { replace: true });
     setCompetitionstate(true);
     getDraft();
+
+    if (id !== undefined) {
+      getOneDraft();
+    }
   }, [])
 
   return (
     <Layout>
       <div className='pt-4 pr-20'>
         <p className='font-bold text-3xl pb-7'>Announcement</p>
-        <div className='w-full rounded-lg border h-60 shadow-md p-6'>
+        <form className='w-full rounded-lg border h-60 shadow-md p-6'>
           <input 
             className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black'
             placeholder='Enter your Topic'
             required
+            value={announment.title}
             onChange={(e) => setAnnounment({ ...announment, title: e.target.value })}
           />
           <textarea 
             className='w-full h-28 rounded-lg border shadow-md p-4 mt-4 resize-none border-black'
             placeholder='Say something...'
             required
+            value={announment.details}
             onChange={(e) => setAnnounment({ ...announment, details: e.target.value })}
           />
-        </div>
+        </form>
         <div className='mt-5 flex justify-end mb-16'>
           <button 
             className='bg-sky-600 hover:bg-sky-700 text-white font-bold w-28 h-10 rounded-full mr-3'
-            onClick={() => handlePost('draft')}
+            onClick={() => handleButton('draft')}
           >
             Draft
           </button>
           <button 
             className='bg-[#E56B6F] hover:bg-[#D75B5F] text-white font-bold w-28 h-10 rounded-full mr-3'
-            onClick={() => handlePost('publish')}
+            onClick={() => handleButton('publish')}
           >
             Publish
           </button>

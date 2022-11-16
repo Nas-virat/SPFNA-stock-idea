@@ -15,7 +15,6 @@ const Ideapost  = ({ideas}:any) => {
   const [newComment, setNewComment] = useState('');
   const date = new Date(ideas.date);
   const [readMore, setReadMore] = useState(true);
-  const MAX_LENGTH = 250;
 
   const handleComment = async () => {
     if(newComment === ''){
@@ -95,9 +94,9 @@ const Ideapost  = ({ideas}:any) => {
       <p className='mt-2 cursor-pointer'>
       {readMore ?
         <div>
-          {ideas.details.length > MAX_LENGTH ?
+          {ideas.details.length > config.MAX_LENGTH ?
             <div>
-              {`${ideas.details.substring(0, MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
+              {`${ideas.details.substring(0, config.MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
             </div>
           :
             <p>{ideas.details}</p>

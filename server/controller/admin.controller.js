@@ -1,5 +1,4 @@
 const Announce = require("../model/Announce");
-const ErrorHandler = require("../utils/errorHandler");
 
 // // GET all Publish announces
 // // Page: Home Page
@@ -38,15 +37,16 @@ const addAnnounce = async (req, res) => {
     const announce = await Announce.findOne({ title })
     if (announce && announce.title === title) {
         res.json({success:false,message: "Title already exists"});
-        return next(new ErrorHandler("Title already exists", 401));
     }
-    const newAnnounce = await Announce.create({
-        title,
-        details,
-        status,
-        date: Date.now(),
-    });
-    res.json({ success: true, message: "Announce created successfully" });
+    else {
+        const newAnnounce = await Announce.create({
+            title,
+            details,
+            status,
+            date: Date.now(),
+        });
+        res.json({ success: true, message: "Announce created successfully" });
+    }
 }
 
 // // update status announce
@@ -60,10 +60,34 @@ const updateStatus = async (req, res) => {
     res.json({ success: true, message: "Announce updated successfully" });
 }
 
+// // get draft announce by id
+// // Page: Admin control Page
+const getDraftAnnounceById = async (req, res) => {
+    try {
+        const draft = await Announce.findById(req.params.id);
+        res.json({
+            success: true,
+            draft: draft,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+// // delete draft announce by id
+// // Page: Admin control Page
+const deleteDraftAnnounceById = async (req, res) => {
+    console.log(req.params.id);
+    await Announce.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: "Announce deleted successfully" });   
+}
+
 
 module.exports = {
     getAllPublishAnnounces,
     getAllDraftAnnounces,
     addAnnounce,
-    updateStatus
+    updateStatus,
+    getDraftAnnounceById,
+    deleteDraftAnnounceById
 };

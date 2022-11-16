@@ -52,9 +52,6 @@ const Writeidea = () => {
 
 
   const handlePost = async (status : string) => { 
-    if(id !== undefined){
-      handleDelete();
-    }
     if (postidea.title === '' || postidea.details === '') {
       Swal.fire({
         title: 'Error!',
@@ -64,6 +61,9 @@ const Writeidea = () => {
       })
     } else {
       try {
+        if(id !== undefined){
+          handleDelete();
+        }
         const res = await axios.post(config.API_URL +'/idea/add', {
           title: postidea.title,
           details: postidea.details,
@@ -106,7 +106,12 @@ const Writeidea = () => {
   }
 
   const handleCancel = () => {
+    if(id !== undefined){
+      navigate('/profile', { replace: true });;
+    }
+    else {
     navigate('/idea', { replace: true });
+    }
   }
 
   return (

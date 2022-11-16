@@ -16,7 +16,6 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
 
     const navigate = useNavigate();
     const postDate = new Date(date);
-    const MAX_LENGTH = 250;
     const [readMore, setReadMore] = useState(true);
  
     const handleButton = () => {
@@ -51,9 +50,9 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
             <p className='self-center'>
             {readMore ?
                 <div>
-                {details.length > MAX_LENGTH ?
+                {details.length > config.MAX_LENGTH ?
                     <div>
-                    {`${details.substring(0, MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
+                    {`${details.substring(0, config.MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
                     </div>
                 :
                     <p>{details}</p>

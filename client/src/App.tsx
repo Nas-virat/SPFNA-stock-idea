@@ -35,6 +35,7 @@ function App() {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/register" element={<Register/>}/>
         <Route path="/admincontrol" element={<ProtectRoute><Admincontrol/></ProtectRoute>}/>
+        <Route path="/admincontrol/:id" element={<Admincontrol/>}/>
       </Routes>
     </Router>
   );

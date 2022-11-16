@@ -1,9 +1,16 @@
 import React from 'react'
 import axios from 'axios';
 import config from '../../../config/config.json';
+import { useNavigate } from 'react-router-dom';
 
 const Draft = (data:any) => {
     const date = new Date(data.data.date);
+    const navigate = useNavigate();
+
+    const handleDraft = () => {
+        navigate('/admincontrol/' + data.data._id);
+        window.location.reload();
+    }
 
     const handlePublish = () => {
         axios.post(config.API_URL + `/admin/updatestatus`, {announceId: data.data._id}, {withCredentials: true})
@@ -29,6 +36,7 @@ const Draft = (data:any) => {
             <div className='flex items-center'>
                 <button 
                     className='bg-[#856dab] hover:bg-[#4a366b] text-white font-medium h-10 w-28 rounded-full mr-3'
+                    onClick={handleDraft}
                 >
                     Edit
                 </button>
