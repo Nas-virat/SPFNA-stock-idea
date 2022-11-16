@@ -14,6 +14,8 @@ const Ideapost  = ({ideas}:any) => {
   const [showcomment, setShowcomment] = useState(false);
   const [newComment, setNewComment] = useState('');
   const date = new Date(ideas.date);
+  const [readMore, setReadMore] = useState(true);
+  const MAX_LENGTH = 250;
 
   const handleComment = async () => {
     if(newComment === ''){
@@ -72,6 +74,10 @@ const Ideapost  = ({ideas}:any) => {
     }
   };
 
+  const handleReadMore = () => {
+    setReadMore(!readMore);
+  }
+
   return (
     <div className='shadow-lg p-3 rounded-xl border-2 my-4' >
       <div className='flex flex-row cursor-pointer' onClick={viewPost}>
@@ -86,8 +92,20 @@ const Ideapost  = ({ideas}:any) => {
       <p className='text-l font-bold mt-2 cursor-pointer' onClick={viewPost}>
         {ideas.title}
       </p>
-      <p className='mt-2 cursor-pointer' onClick={viewPost}>
-        {ideas.details}
+      <p className='mt-2 cursor-pointer'>
+      {readMore ?
+        <div>
+          {ideas.details.length > MAX_LENGTH ?
+            <div>
+              {`${ideas.details.substring(0, MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
+            </div>
+          :
+            <p>{ideas.details}</p>
+          }
+        </div>
+      :
+        <p>{`${ideas.details}  `}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a></p>
+      }
       </p>
       <div className='flex flex-row mt-2 '>
         <div onClick ={() => setShowcomment(!showcomment)}>
