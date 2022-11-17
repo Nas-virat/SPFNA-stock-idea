@@ -91,9 +91,8 @@ const Ideapost  = ({ideas}:any) => {
       <p className='text-l font-bold mt-2 cursor-pointer' onClick={viewPost}>
         {ideas.title}
       </p>
-      <p className='mt-2 cursor-pointer'>
       {readMore ?
-        <div>
+        <div className='mt-2 cursor-pointer'>
           {ideas.details.length > config.MAX_LENGTH ?
             <div>
               {`${ideas.details.substring(0, config.MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
@@ -103,9 +102,8 @@ const Ideapost  = ({ideas}:any) => {
           }
         </div>
       :
-        <p>{`${ideas.details}  `}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a></p>
+        <p className='mt-2 cursor-pointer'>{`${ideas.details}  `}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a></p>
       }
-      </p>
       <div className='flex flex-row mt-2 '>
         <div onClick ={() => setShowcomment(!showcomment)}>
           <img className='w-6 h-6 cursor-pointer' src={Commenticon} alt='profile-pic'></img>

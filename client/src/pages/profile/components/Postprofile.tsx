@@ -47,7 +47,6 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
                 <h3 className="self-center font-bold">{title}</h3>
                 <h5 className="ml-2 self-center text-slate-600">{postDate.toLocaleString()}</h5>
             </div>
-            <p className='self-center'>
             {readMore ?
                 <div>
                 {details.length > config.MAX_LENGTH ?
@@ -61,7 +60,6 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
             :
                 <p>{`${details}  `}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a></p>
             }
-            </p>
             <div className="flex items-center">
                 <h1 className="font-normal m-3">Status : {status}</h1>
                 <div className={`rounded-full w-4 h-4 ${status === 'draft'?`bg-[#FA9C1B]` : `bg-[#008631]`}`}></div>
