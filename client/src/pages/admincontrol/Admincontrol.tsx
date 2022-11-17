@@ -23,14 +23,53 @@ const Admincontrol = () => {
   const [competitionstate, setCompetitionstate] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const handleDelete = async () => {
-    await axios.delete(config.API_URL + '/admin/delete/' + id, { withCredentials: true })
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  const handleAnnounceUpdate = async (status : string) => {
+    if (announment.title === '' || announment.details === '') {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all the fields',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    } else {
+      try {
+        const res = await axios.put(config.API_URL +'/admin/update', {
+          title: announment.title,
+          details: announment.details,
+          status:  status,
+          announceID: id
+        }, { withCredentials: true });
+        if (res.data.success) {
+          Swal.fire({
+            title: 'Success!',
+            text: `You have successfully ${status} Idea`,
+            icon: 'success',
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+            },
+          })
+          .then(() => {
+            navigate('/admincontrol');
+          })
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: res.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      } catch(err){
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      }
+    }
   }
 
   const handlePost = async (status : string) => {
@@ -83,9 +122,7 @@ const Admincontrol = () => {
 
   const handleButton = (status : string) => {
     if (id !== undefined) {
-      handleDelete().then(() => {
-        handlePost(status);
-      })
+      handleAnnounceUpdate(status);
     }
     else {
       handlePost(status);

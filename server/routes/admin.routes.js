@@ -8,7 +8,7 @@ const {getAllPublishAnnounces,
         addAnnounce,
         updateStatus,
         getDraftAnnounceById,
-        deleteDraftAnnounceById} = require('../controller/admin.controller');
+        updateDraftAnnounceById} = require('../controller/admin.controller');
 
 // // GET all Publish announces
 // // Page: Home Page
@@ -29,9 +29,9 @@ router.route('/updatestatus').post(verifyToken, updateStatus);
 // // get draft announce by id
 // // Page: Admin control Page
 router.route('/draft/:id').get(verifyToken, getDraftAnnounceById);
-
-// // Delete an announce
+ 
+// // update draft announce by id
 // // Page: Admin control Page
-router.delete('/delete/:id', verifyToken, deleteDraftAnnounceById);
+router.route('/update').put(verifyToken, updateDraftAnnounceById);
 
 module.exports = router;

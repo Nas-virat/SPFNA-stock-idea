@@ -40,16 +40,58 @@ const Writeidea = () => {
     }
   }, []);
 
-  const handleDelete = () => {
-    axios.delete(config.API_URL + '/idea/delete/' + id, { withCredentials: true })
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  const handleIdeaUpdate = async (status : string) => {
+    if (postidea.title === '' || postidea.details === '') {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all the fields',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    } else {
+      try {
+        const res = await axios.put(config.API_URL + '/idea/update', {
+          title: postidea.title,
+          details: postidea.details,
+          status: status,
+          ideaId: id,
+        }, { withCredentials: true })
+        if (res.data.success) {
+          Swal.fire({
+            title: 'Success!',
+            text: `You have successfully ${status} Idea`,
+            icon: 'success',
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+            },
+          }).then(res => {
+            console.log(res);
+            if(status === 'publish'){
+              navigate('/idea');
+            } else {
+            navigate('/profile');
+            }
+          })
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: res.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      } catch (err) {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        })
+      }
+    }
   }
-
 
   const handlePost = async (status : string) => { 
     if (postidea.title === '' || postidea.details === '') {
@@ -61,9 +103,6 @@ const Writeidea = () => {
       })
     } else {
       try {
-        if(id !== undefined){
-          handleDelete();
-        }
         const res = await axios.post(config.API_URL +'/idea/add', {
           title: postidea.title,
           details: postidea.details,
@@ -105,6 +144,15 @@ const Writeidea = () => {
     }
   }
 
+  const handleButton = (status : string) => {
+    if(id !== undefined){
+      handleIdeaUpdate(status);
+    }
+    else {
+      handlePost(status);
+    }
+  }
+
   const handleCancel = () => {
     if(id !== undefined){
       navigate('/profile', { replace: true });;
@@ -141,13 +189,13 @@ const Writeidea = () => {
           <div>
             <button 
               className='bg-cyan-800 hover:bg-cyan-900 text-white text-xl font-bold w-32 h-12 rounded-full mr-3'
-              onClick={() => handlePost('publish')}
+              onClick={() => handleButton('publish')}
             >
               Post
             </button>
             <button 
               className='bg-sky-600 hover:bg-sky-700 text-white text-xl font-bold w-32 h-12 rounded-full mr-3'
-              onClick={() => handlePost('draft')}
+              onClick={() => handleButton('draft')}
             >
               Draft
             </button>

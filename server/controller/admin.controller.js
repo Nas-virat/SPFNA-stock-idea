@@ -74,12 +74,17 @@ const getDraftAnnounceById = async (req, res) => {
     }
 }
 
-// // delete draft announce by id
+// // Update an announce
 // // Page: Admin control Page
-const deleteDraftAnnounceById = async (req, res) => {
-    console.log(req.params.id);
-    await Announce.findByIdAndDelete(req.params.id);
-    res.json({ success: true, message: "Announce deleted successfully" });   
+const updateDraftAnnounceById = async (req, res) => {
+    const { title, details, status, announceID } = req.body;
+    const announce = await Announce.findById(announceID);
+    announce.title = title;
+    announce.details = details;
+    announce.status = status;
+    announce.date = Date.now();
+    await announce.save();
+    res.json({ success: true, message: "Announce updated successfully" });
 }
 
 
@@ -89,5 +94,5 @@ module.exports = {
     addAnnounce,
     updateStatus,
     getDraftAnnounceById,
-    deleteDraftAnnounceById
+    updateDraftAnnounceById
 };

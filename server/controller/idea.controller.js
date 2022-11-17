@@ -114,12 +114,17 @@ const publishDraft = async (req, res) => {
     res.json({ success: true, message: "Idea published successfully" });
 }
 
-// // Delete an idea
-// // Page: Profile Page
-const deleteIdea = async (req, res) => {
-    console.log(req.params.id);
-    await Idea.findByIdAndDelete(req.params.id);
-    res.json({ success: true, message: "Idea deleted successfully" });   
+// // Update an idea
+// // Page: Writeidea Page
+const updateIdea = async (req, res) => {
+    const { title, details, status, ideaId } = req.body;
+    const idea = await Idea.findById(ideaId);
+    idea.title = title;
+    idea.details = details;
+    idea.status = status;
+    idea.date = Date.now();
+    await idea.save();
+    res.json({ success: true, message: "Idea updated successfully" });
 }
 
 module.exports = {
@@ -129,5 +134,5 @@ module.exports = {
     addIdea,
     addComment,
     publishDraft,
-    deleteIdea
+    updateIdea
 }

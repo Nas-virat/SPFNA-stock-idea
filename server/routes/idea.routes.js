@@ -9,7 +9,7 @@ const {getAllIdeas,
        addIdea,
        addComment,
        publishDraft,
-       deleteIdea} = require('../controller/idea.controller');
+       updateIdea} = require('../controller/idea.controller');
 
 // // GET all ideas
 // // Page: Allideas Page
@@ -35,8 +35,8 @@ router.route('/addcomment').post(verifyToken, addComment);
 // // Page: Profile Page
 router.route('/publishDraft').post(verifyToken, publishDraft);
 
-// // Delete an idea
-// // Page: Profile Page
-router.delete('/delete/:id', verifyToken, deleteIdea);
+// // Update an idea
+// // Page: Writeidea Page
+router.route('/update').put(verifyToken, updateIdea);
 
 module.exports = router;
