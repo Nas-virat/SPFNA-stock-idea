@@ -49,17 +49,6 @@ const addAnnounce = async (req, res) => {
     }
 }
 
-// // update status announce
-// // Page: Admin control Page
-const updateStatus = async (req, res) => {
-    const { announceId } = req.body;
-    const announce = await Announce.findById(announceId);
-    announce.status = 'publish';
-    announce.date = Date.now();
-    await announce.save();
-    res.json({ success: true, message: "Announce updated successfully" });
-}
-
 // // get draft announce by id
 // // Page: Admin control Page
 const getDraftAnnounceById = async (req, res) => {
@@ -92,7 +81,6 @@ module.exports = {
     getAllPublishAnnounces,
     getAllDraftAnnounces,
     addAnnounce,
-    updateStatus,
     getDraftAnnounceById,
     updateDraftAnnounceById
 };

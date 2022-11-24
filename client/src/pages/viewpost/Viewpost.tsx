@@ -8,6 +8,7 @@ import config from '../../config/config.json';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LoadingPage from '../../globalcomponents/waiting';
+import TextViewer from '../../globalcomponents/RichtextComponents/TextViewer';
 
 const Comment = ({comment}:any) => {
 
@@ -25,9 +26,7 @@ const Comment = ({comment}:any) => {
             {date.toLocaleString()}
           </p>
         </div>
-        <p className='-mt-1'>
           {comment.commentBody}
-        </p>
       </div>
     </div>
   )
@@ -152,9 +151,7 @@ const Viewpost = () => {
           <p className='text-l font-bold mt-2'>
             {idea.title}
           </p>
-          <p className='mt-2'>
-            {idea.details}
-          </p>
+          <TextViewer value={idea.details} />
           <div className='flex flex-row mt-2 '>
             <img className='w-6 h-6 cursor-pointer' src={Commenticon} alt='profile-pic'></img>
             <p className='ml-3 self-center text-slate-600'>{idea.comment.length}</p>

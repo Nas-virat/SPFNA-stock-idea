@@ -11,7 +11,7 @@ const TextViewer = (prop: TextProps) => {
     
     return (
         <ReactQuill
-        className='h-64'
+        className='h-full'
         theme="bubble"
         value={value}
         readOnly={true}

@@ -26,7 +26,7 @@ const Homepage = () => {
 
   const getAnnouncement = async () => {
     try {
-      const res = await axios.get(config.API_URL + '/admin/publish', { withCredentials: true })
+      const res = await axios.get(config.API_URL + '/admin/allpublish', { withCredentials: true })
       if (res.data.success) {
         console.log(res.data)
         setAnnouncementData(res.data.announces)
@@ -35,6 +35,7 @@ const Homepage = () => {
     } catch (err) {
       console.log(err)
     }
+    
   }
 
   useEffect(() => {

@@ -87,7 +87,7 @@ const Sidebar = () => {
   return (
       <div className="bg-[#D6BBE8] h-screen w-56 flex flex-col justify-between">
         <div className='flex flex-col'>
-          <img src={SPFNAlogo} alt="SPFNAlogo" className="w-40 h-40 mx-auto"/>
+          <img src={SPFNAlogo} alt="SPFNAlogo" className="w-40 h-40 mx-auto" onClick={() => navigate('/home')}/>
           <img src={line} alt="line" className="w-28 h-4 mx-auto opacity-80"/>
           {!loggedIn ? <SectionLink name="Login" to='/login'/> : null} 
           {!loggedIn ? <SectionLink name="Register" to='/register'/> : null}
@@ -101,8 +101,8 @@ const Sidebar = () => {
         </div>
         {
           loggedIn ? (
-            <div className='flex flex-col mb-12'>
-              <div className='flex flex-col place-content-center mb-2'>
+            <div className='flex flex-col mb-12' >
+              <div className='flex flex-col place-content-center mb-2 cursor-pointer' onClick={() => navigate('/profile')}>
                 <img src={profileImage(img)} alt="handsomeboy" className="rounded-full h-20 w-20 mx-auto"/>
                 <div className='flex flex-col place-content-center'>
                   <p className="text-center font-bold self-center">@{username}</p>

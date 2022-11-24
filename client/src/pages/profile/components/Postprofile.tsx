@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../../config/config.json';
+import TextViewer from '../../../globalcomponents/RichtextComponents/TextViewer';
 
 interface PostProps{
     id: string;
@@ -42,23 +43,25 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
     }
 
     return (
-        <div className="w-4/5 m-5 px-4 py-5 rounded-lg bg-white shadow-lg">
+        <div className="w-4/5 m-5 px-4 py-5 rounded-xl bg-white shadow-lg border-2">
             <div className="flex flex-row">
                 <h3 className="self-center font-bold">{title}</h3>
                 <h5 className="ml-2 self-center text-slate-600">{postDate.toLocaleString()}</h5>
             </div>
             {readMore ?
-                <div>
+                <div className='cursor-pointer'>
                 {details.length > config.MAX_LENGTH ?
                     <div>
-                    {`${details.substring(0, config.MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
+                        <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details.substring(0, config.MAX_LENGTH)} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
                     </div>
                 :
-                    <p>{details}</p>
+                    <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details} /></div>
                 }
                 </div>
             :
-                <p>{`${details}  `}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a></p>
+                <div className='cursor-pointer'>
+                <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a>
+                </div>
             }
             <div className="flex items-center">
                 <h1 className="font-normal m-3">Status : {status}</h1>

@@ -131,7 +131,7 @@ const Admincontrol = () => {
 
   const getDraft = async () => {
     try {
-      const res = await axios.get(config.API_URL + '/admin/draft', { withCredentials: true })
+      const res = await axios.get(config.API_URL + '/admin/alldraft', { withCredentials: true })
       if (res.data.success) {
         console.log(res.data)
         setDrafts(res.data.draft)

@@ -13,7 +13,12 @@ const Draft = (data:any) => {
     }
 
     const handlePublish = () => {
-        axios.post(config.API_URL + `/admin/updatestatus`, {announceId: data.data._id}, {withCredentials: true})
+        axios.put(config.API_URL + `/admin/update`, {
+            title: data.data.title,
+            details: data.data.details,
+            status:  'publish',
+            announceID: data.data._id
+          }, {withCredentials: true})
         .then(res => {
             console.log(res);
             //window.location.reload();

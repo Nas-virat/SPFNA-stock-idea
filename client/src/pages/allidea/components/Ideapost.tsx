@@ -7,6 +7,7 @@ import profileImage from '../../../function/profileImage';
 
 import config from '../../../config/config.json';
 import { useNavigate } from 'react-router-dom';
+import TextViewer from '../../../globalcomponents/RichtextComponents/TextViewer';
 
 const Ideapost  = ({ideas}:any) => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Ideapost  = ({ideas}:any) => {
             title: 'Success!',
             text: 'You have successfully commented!',
             icon: 'success',
-            timer: 2000,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: () => {
               Swal.showLoading()
@@ -78,7 +79,7 @@ const Ideapost  = ({ideas}:any) => {
   }
 
   return (
-    <div className='shadow-lg p-3 rounded-xl border-2 my-4' >
+    <div className='shadow-lg px-4 py-5 rounded-xl border-2 my-4' >
       <div className='flex flex-row cursor-pointer' onClick={viewPost}>
         <img className='w-12 h-12 mr-3 rounded-full' src={profileImage(ideas.user.image)} alt='profile-pic'></img>
         <p className='text-xl self-center font-semibold'>
@@ -92,17 +93,19 @@ const Ideapost  = ({ideas}:any) => {
         {ideas.title}
       </p>
       {readMore ?
-        <div className='mt-2 cursor-pointer'>
+        <div className='cursor-pointer'>
           {ideas.details.length > config.MAX_LENGTH ?
             <div>
-              {`${ideas.details.substring(0, config.MAX_LENGTH)}...`}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
+                <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details.substring(0, config.MAX_LENGTH)} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
             </div>
           :
-            <p>{ideas.details}</p>
+            <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details} /></div>
           }
         </div>
       :
-        <p className='mt-2 cursor-pointer'>{`${ideas.details}  `}<a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a></p>
+        <div className='cursor-pointer'>
+          <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a>
+        </div>
       }
       <div className='flex flex-row mt-2 '>
         <div onClick ={() => setShowcomment(!showcomment)}>
