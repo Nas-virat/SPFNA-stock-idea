@@ -28,7 +28,12 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
     }
 
     const handlePublish = () => {
-        axios.post(config.API_URL + `/idea/publishDraft`, {ideaId: id}, {withCredentials: true})
+        axios.put(config.API_URL + '/idea/update', {
+            title: title,
+            details: details,
+            status: 'publish',
+            ideaId: id,
+          }, { withCredentials: true })
         .then(res => {
             console.log(res);
             window.location.reload();

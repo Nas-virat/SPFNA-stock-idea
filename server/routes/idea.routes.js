@@ -8,7 +8,6 @@ const {getAllIdeas,
        getIdeasByUserId,
        addIdea,
        addComment,
-       publishDraft,
        updateIdea} = require('../controller/idea.controller');
 
 // // GET all ideas
@@ -36,13 +35,8 @@ router.route('/add').post(verifyToken, addIdea);
 // // POST /api/idea/addcomment
 router.route('/addcomment').post(verifyToken, addComment);
 
-// // publish an draft idea
-// // Page: Profile Page
-// // PUT /api/idea/publishDraft
-router.route('/publishDraft').post(verifyToken, publishDraft);
-
 // // Update an idea
-// // Page: Writeidea Page
+// // Page: Writeidea Page , Profile Page
 // // PUT /api/idea/update
 router.route('/update').put(verifyToken, updateIdea);
 

@@ -103,17 +103,6 @@ const addComment = async (req, res) => {
     res.json({ success: true, message: "Comment added successfully" });
 }
 
-// // publish an draft idea
-// // Page: Profile Page
-const publishDraft = async (req, res) => {
-    const { ideaId } = req.body;
-    const idea = await Idea.findById(ideaId);
-    idea.status = "publish";
-    idea.date = Date.now();
-    await idea.save();
-    res.json({ success: true, message: "Idea published successfully" });
-}
-
 // // Update an idea
 // // Page: Writeidea Page
 const updateIdea = async (req, res) => {
@@ -133,6 +122,5 @@ module.exports = {
     getIdeasByUserId,
     addIdea,
     addComment,
-    publishDraft,
     updateIdea
 }
