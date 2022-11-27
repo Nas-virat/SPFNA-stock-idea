@@ -1,5 +1,4 @@
 const User = require("../model/User");
-const Stock = require('../model/Stock');
 const currencyconvert = require("../utils/convert");
 const stockdata = require('../utils/yahoofinance');
 const calculatePL = require('../utils/calculatePL');
