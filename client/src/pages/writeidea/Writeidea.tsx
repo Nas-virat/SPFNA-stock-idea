@@ -6,6 +6,7 @@ import Layout from '../../globalcomponents/Layout'
 import axios from 'axios'; 
 import LoadingPage from '../../globalcomponents/waiting';
 import config from '../../config/config.json';
+import TextEditor from '../../globalcomponents/RichtextComponents/TextEditor';
 
 const Writeidea = () => {
   const { id } = useParams();
@@ -168,21 +169,15 @@ const Writeidea = () => {
         <p className='font-bold text-3xl pb-7'>Write Your Idea</p>
         {loading ? <LoadingPage /> 
         :
-          <form className='w-full rounded-lg border h-auto shadow-md p-6'>
+          <form className='w-full h-[36rem] rounded-lg border shadow-md p-6'>
             <input 
-              className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black'
+              className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black mb-5'
               placeholder='What is your Topic'
               required
               value={postidea.title}
               onChange={(e) => setPostidea({ ...postidea, title: e.target.value })}
             />
-            <textarea 
-              className='w-full h-96 rounded-lg border shadow-md p-4 mt-4 resize-none border-black'
-              placeholder='Say something...'
-              required
-              value={postidea.details}
-              onChange={(e) => setPostidea({ ...postidea, details: e.target.value })}
-            />
+            <TextEditor placeholder='Say something...' value={postidea.details} onChange ={(e) => setPostidea({ ...postidea, details: e })} />
           </form>
         }
         <div className='mt-5 flex justify-between mb-16'>

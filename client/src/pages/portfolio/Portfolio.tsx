@@ -239,8 +239,7 @@ const Portfolio: React.FC = () => {
           <img className="rounded-full" src={profileImage(img)} alt='myphoto' width="150" height="200"></img>
         </div>
         <div className="m-14">
-          <h1 className="mt-3 font-semibold text-3xl">@{username}</h1>
-          <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
+          <h1 className="mt-3 font-semibold text-3xl">@{username}</h1> 
           <h3 className="mt-3 font-nomral text-xl">Total Balance: {balance.toLocaleString(undefined, { maximumFractionDigits: 2 })} USD</h3>
         </div>
         <div className="ml-36 h-56 w-56 mt-6">

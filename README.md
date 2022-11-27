@@ -48,7 +48,7 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 - [x] display all idea
 - [x] write idea
 - [x] save draft idea
-- [ ] load draft idea
+- [x] load draft idea
 - [x] publish idea
 - [x] comment on idea
 
@@ -56,6 +56,6 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 - [x] Admin write annoucement
 - [x] display all annoucement
 - [x] save draft annoucement 
-- [ ] load draft announcement
+- [x] load draft announcement
 - [x] publish announcement
 

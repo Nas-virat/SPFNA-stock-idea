@@ -75,11 +75,11 @@ const addIdea = async (req, res, next) => {
         return next(new ErrorHandler("Title already exists", 401));
     }
     else if(title.length < 6 && status == 'publish'){
-        res.json({sucecess:false,message:"Title must be at least 6 characters"});
+        res.json({success:false,message:"Title must be at least 6 characters"});
         return next(new ErrorHandler("Title must be at least 6 characters",401));
     }
     else if(details.length < 6 && status == 'publish'){
-        res.json({sucecess:false,message:"Details must be at least 6 characters"});
+        res.json({success:false,message:"Details must be at least 6 characters"});
         return next(new ErrorHandler("Details must be at least 6 characters",401));
     }
     const newIdea = await Idea.create({

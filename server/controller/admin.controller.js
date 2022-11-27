@@ -1,4 +1,5 @@
 const Announce = require("../model/Announce");
+const User = require("../model/User");
 
 // // GET all Publish announces
 // // Page: Home Page
@@ -76,11 +77,25 @@ const updateDraftAnnounceById = async (req, res) => {
     res.json({ success: true, message: "Announce updated successfully" });
 }
 
+// // Reset user port
+// // Page: Admin control Page
+const resetUserPort = async (req, res) => {
+    const user = await User.find();
+    console.log(user);
+    for(let i=0; i<user.length; i++){
+        user[i].port.stock = [];
+        user[i].port.cash[0].amount = 200000;
+        await user[i].save();
+    }
+    res.json({ success: true, message: "User port reset successfully" });
+}
+
 
 module.exports = {
     getAllPublishAnnounces,
     getAllDraftAnnounces,
     addAnnounce,
     getDraftAnnounceById,
-    updateDraftAnnounceById
+    updateDraftAnnounceById,
+    resetUserPort
 };

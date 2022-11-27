@@ -12,7 +12,7 @@ const TextEditor = (props: TextProps) => {
     const { placeholder, value, onChange } = props;
     return (
       <ReactQuill
-        className='h-64'
+        className='h-[27rem]'
         theme="snow"
         value={value}
         onChange={onChange}
@@ -24,7 +24,7 @@ const TextEditor = (props: TextProps) => {
               [{ 'list': 'ordered' }, { 'list': 'bullet' }],
               [{ 'indent': '-1' }, { 'indent': '+1' }],
               [{ 'align': [] }],
-              ['link', 'image'],
+              ['link'],
               ['clean']
           ],
         }}

@@ -106,7 +106,6 @@ const Sidebar = () => {
                 <img src={profileImage(img)} alt="handsomeboy" className="rounded-full h-20 w-20 mx-auto"/>
                 <div className='flex flex-col place-content-center'>
                   <p className="text-center font-bold self-center">@{username}</p>
-                  <p className="text-center text-sm self-center font-medium">Rank #30</p>
                 </div>
               </div>
               <button

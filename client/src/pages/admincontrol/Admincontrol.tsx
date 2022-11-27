@@ -20,7 +20,6 @@ const Admincontrol = () => {
     date: Date.now(), 
   });
   const [drafts, setDrafts] = useState([] as any);
-  const [competitionstate, setCompetitionstate] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const handleAnnounceUpdate = async (status : string) => {
@@ -154,24 +153,34 @@ const Admincontrol = () => {
     }
   }
 
-  const handleCompetitionstate = () => {
-    Swal.fire({
-      title: 'Change Competition State',
-      html: `Do you want to change the competition state to <b>${competitionstate ? 'Close Competition' : 'Start new Competition'}</b>, <br>this action cannot be undone! This will reset all user balance, and Start new Competition.`,
-      icon: 'warning',
-      confirmButtonText: 'OK',
-      showCancelButton: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setCompetitionstate(!competitionstate);
+  const handleUserReset = async () => {
+    try {
+      const res = await axios.get(config.API_URL + '/admin/reset', { withCredentials: true })
+      if (res.data.success) {
         Swal.fire({
-          title: 'Competition State Changed!',
-          html: `You have successfully change the competition state to <b>${competitionstate ? 'Close Competition' : 'Start new Competition'}</b>`,
+          title: 'Success!',
+          text: 'You have successfully reset the user',
           icon: 'success',
-          confirmButtonText: 'OK',
-        });
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading()
+          },
+        })
+        .then(() => {
+          navigate('/admincontrol');
+        })
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: res.data.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
       }
-    });
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const getOneDraft = async () => {
@@ -194,7 +203,6 @@ const Admincontrol = () => {
 
   useEffect(() => {
     if (!is_admin) navigate('/home', { replace: true });
-    setCompetitionstate(true);
     getDraft();
 
     if (id !== undefined) {
@@ -273,24 +281,12 @@ const Admincontrol = () => {
             <p className='text-2xl font-semibold'>Restart Competition</p>
             <p className='text-sm text-gray-400'>This will reset all user balance, and Start new Competition.</p>
           </div>
-          {
-            competitionstate ? (
-              <button 
-                className='text-sm text-center text-white font-bold bg-green-600 py-3 px-6 rounded-full mt-3'
-                onClick={() => handleCompetitionstate()}
-              >
-                ONGOING
-              </button>
-            ) : (
-              <button 
-                className='text-sm text-center text-white font-bold bg-red-600 py-3 px-6 rounded-full mt-3'
-                onClick={() => handleCompetitionstate()}
-              >
-                CLOSED NOW
-              </button>
-            )
-          }
-          
+          <button 
+            className='text-sm text-center text-white font-bold bg-red-600 py-3 px-6 rounded-full mt-3'
+            onClick={() => handleUserReset()}
+          >
+            Reset Now
+          </button>
         </div>
       </div> 
     </Layout>

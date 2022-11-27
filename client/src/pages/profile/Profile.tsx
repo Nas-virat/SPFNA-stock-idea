@@ -48,8 +48,7 @@ const Profile : React.FC = () => {
 					<img className="rounded-full" src={profileImage(img)} alt='myphoto' width="150" height="200"></img>
 				</div>
 				<div className="m-14">
-					<h1 className="mt-3 font-bold text-3xl">@{username}</h1>
-					<h3 className="mt-3 text-xl">Rank #30</h3>
+					<h1 className="mt-3 font-bold text-3xl">@{username}</h1> 
 					<div className="flex">
 						<button onClick={()=> navigate('/idea/add')} className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
 					</div>
