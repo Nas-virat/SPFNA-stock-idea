@@ -10,6 +10,9 @@ node_modules/
 
 # testing
 /coverage
+/Test/*.html
+/Test/*.xml
+
 
 # production
 /build

@@ -25,6 +25,7 @@ const SectionLink: React.FC<NavProp> = ({name,to}) => {
       <NavLink 
           to = {to}
           className = {({isActive}) => (isActive ? "py-3 flex justify-center duration-300 cursor-pointer bg-[#9375a5] text-black" : 'py-3 flex justify-center duration-300 cursor-pointer hover:bg-[#c2a0d6] text-black')}
+          id = {name}
       > 
           <p className="font-semibold">{name}</p>
       </NavLink>
