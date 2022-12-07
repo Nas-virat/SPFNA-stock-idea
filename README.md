@@ -1,5 +1,8 @@
 # SPFNA-stock-idea
 
+![](doc/portfolio.png)
+
+
 SPFNA is a stock simulation investment game platform, which allows the user to simulate their stock portfolio and compete with friends who can make the most return on investment and will be the winner of the game. The SPFNA is created as a web-based platform. The rule of the game is that all users have to select the stock they think is going to outperform at the beginning of the year.
 
 
@@ -62,7 +65,7 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 ## Page
 
 ### portfolio page
-![](doc/portfolio.png)
+![portfolio page](doc/portfolio.png)
 
 ### profile page
-![](doc/profile.png)
+![profile page](doc/profile.png)
