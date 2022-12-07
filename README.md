@@ -59,3 +59,10 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 - [x] load draft announcement
 - [x] publish announcement
 
+## Page
+
+### portfolio page
+![](doc/portfolio.png)
+
+### profile page
+![](doc/profile.png)
