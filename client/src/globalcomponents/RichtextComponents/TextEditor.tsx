@@ -1,12 +1,8 @@
 import React from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { TextProps } from '../../interface/TextProps';
 
-interface TextProps {
-    placeholder: string;
-    value: string;
-    onChange: (value: string) => void;
-}
 
 const TextEditor = (props: TextProps) => {
     const { placeholder, value, onChange } = props;

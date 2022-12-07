@@ -12,15 +12,9 @@ import { AuthContext } from '../context/AuthProvider';
 import profileImage from '../function/profileImage';
 
 import config from '../config/config.json'
+import { NavProps } from '../interface/NavProps';
 
-
-
-interface NavProp{
-  name: string;
-  to: string;
-}
-
-const SectionLink: React.FC<NavProp> = ({name,to}) => {
+const SectionLink: React.FC<NavProps> = ({name,to}) => {
   return(
       <NavLink 
           to = {to}

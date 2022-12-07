@@ -17,26 +17,23 @@ const getAllUsers = async (req, res) => {
         }
 
         for (let user of listuser) {
-            let pl = 0;
-            let costTotal = 0;
-            let plpercent = 0;
+            let balance = 0;
+            
             for (let stock of user.port.stock) {
                 let price = await stockdata(stock.symbol + stock.country);
                 stock.price = price;
                 stock.rate = 1;
-                pl += (price - stock.cost_price) * stock.quantity;
-                costTotal += stock.cost_price * stock.quantity;
+                balance += (price) * stock.quantity;
             }
-            if (costTotal != 0) {
-                plpercent = pl / costTotal * 100;
-            }
-            else {
-                plpercent = 0;
-            }
-            user.plpercent = plpercent;
-            
+
+            user.port.cash.forEach( item => {
+                balance += item.amount;
+            });
+
+            user.balance = balance;
+
             listuser.sort((a, b) => {
-                return b.plpercent - a.plpercent;
+                return b.balance - a.balance;
             })
         }
 
