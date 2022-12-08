@@ -10,6 +10,8 @@ const backgroundColor : string[] = [
     '#8D4BBB',
     '#665757',
     '#161823',
+    '#288BA8',
+    '#E389B9',
     ];
 
 
