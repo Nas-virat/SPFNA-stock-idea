@@ -4,7 +4,7 @@ const router = express();
 const verifyToken = require('../middleware/auth');
 
 const {
-    getAllUsers,
+    getLeaderboard,
     getUser,
     loginUser,
     logoutUser,
@@ -15,7 +15,7 @@ const {
 // // GET all users 
 // // Page: LeaderBoard Page
 // // GET /api/users
-router.route('/').get(getAllUsers);
+router.route('/').get(getLeaderboard);
 
 // // login users
 // // Page: Login Page

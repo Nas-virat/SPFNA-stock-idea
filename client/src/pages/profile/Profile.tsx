@@ -50,7 +50,7 @@ const Profile : React.FC = () => {
 				<div className="m-14">
 					<h1 className="mt-3 font-bold text-3xl">@{username}</h1> 
 					<div className="flex">
-						<button onClick={()=> navigate('/idea/add')} className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
+						<button id='create-post' onClick={()=> navigate('/idea/add')} className='mt-3 bg-[#355070] hover:bg-[#579ef5] text-white font-medium h-9 w-32  rounded-3xl'>Create Post</button>
 					</div>
 				</div>
 			</div>

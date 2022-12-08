@@ -5,13 +5,15 @@ const stockdata = require('../utils/yahoofinance');
 
 // // GET all users 
 // // Page: LeaderBoard Page
-const getAllUsers = async (req, res) => {
+const getLeaderboard = async (req, res) => {
     try {
         const users = await User.find();
 
         let listuser = []
 
         for (let i = 0; i < users.length; i++) {
+            if(users[i].port.stock.length == 0)
+                continue;
             _user = users[i].toObject();
             listuser.push(_user);
         }
@@ -144,7 +146,7 @@ const getUserById = async (req, res) => {
 }
 
 module.exports = {
-    getAllUsers,
+    getLeaderboard,
     getUser,
     loginUser,
     logoutUser,
