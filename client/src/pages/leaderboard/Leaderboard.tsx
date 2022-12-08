@@ -12,7 +12,7 @@ const Leaderboard = () => {
   const [rankList, setRankList] = useState([] as any)
 
   const getAllUser = () => {
-    axios.get(config.API_URL + '/users', { withCredentials: true })
+    axios.get(config.API_URL + '/users/leaderboard', { withCredentials: true })
     .then(res => {
       console.log(res.data);
       setTopRank(res.data.users.slice(0, 3));

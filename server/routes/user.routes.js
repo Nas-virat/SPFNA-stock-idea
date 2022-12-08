@@ -15,7 +15,7 @@ const {
 // // GET all users 
 // // Page: LeaderBoard Page
 // // GET /api/users
-router.route('/').get(getLeaderboard);
+router.route('/leaderboard').get(getLeaderboard);
 
 // // login users
 // // Page: Login Page
