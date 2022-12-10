@@ -67,9 +67,9 @@ const Topleader: React.FC<ToprankProps> = ({
             :
             <>
               {pl >= 200000 ? (
-                <p className="font-bold text-4xl text-green-600 px-12 w-[270px] overflow-hidden">+{((pl-200000)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
+                <p className="font-bold text-5xl text-green-600 w-[270px] overflow-hidden">+{((pl-200000)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
               ) : (
-                <p className="font-bold text-4xl text-red-500 px-12 w-[270px] overflow-hidden">-{((200000-pl)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
+                <p className="font-bold text-5xl text-red-500 w-[270px] overflow-hidden">-{((200000-pl)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
               )}
             </>
             }

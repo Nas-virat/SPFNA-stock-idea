@@ -63,9 +63,9 @@ const Ranklist: React.FC<RanklistProps> = ({
         :
         <>
           {totalpl >= 200000 ? (
-            <p className="font-bold text-4xl text-green-600 px-12 w-[270px] overflow-hidden">+{((totalpl-200000)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
+            <p className="font-bold text-4xl text-green-600 w-[270px] overflow-hidden">+{((totalpl-200000)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
           ) : (
-            <p className="font-bold text-4xl text-red-500 px-12 w-[270px] overflow-hidden">-{((200000-totalpl)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
+            <p className="font-bold text-4xl text-red-500 w-[270px] overflow-hidden">-{((200000-totalpl)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
           )}
         </>}
       </div>

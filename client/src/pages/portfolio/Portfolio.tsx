@@ -205,8 +205,7 @@ const Portfolio: React.FC = () => {
         const res = await axios.post(config.API_URL + '/port/price', {
           symbol: symbol.toLocaleUpperCase(),
           country: selectedOption?.value.prefix,
-        },
-          { withCredentials: true });
+        }, { withCredentials: true });
         const cost = res.data;
         Swal.fire({
           title: 'Are you sure?',
@@ -222,7 +221,7 @@ const Portfolio: React.FC = () => {
           }
         })
       }
-      }catch (err) {
+      } catch (err) {
         console.log(err);
         Swal.fire({
           icon: 'error',
