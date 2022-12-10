@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Ideapost from './components/Ideapost';
 import { BiSearchAlt } from "react-icons/bi";
@@ -9,26 +8,17 @@ import Layout from '../../globalcomponents/Layout';
 import Search from '../../globalcomponents/Search';
 import config from '../../config/config.json';
 import LoadingPage from '../../globalcomponents/waiting';
+import { useQuery } from '@tanstack/react-query';
 
 const Allidea = () => {
   const navigate = useNavigate();
   const [showbutton, setShowbutton] = useState(false)
-  const [ideas, setIdeas] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const getAllIdeas = () => {
-    axios.get(config.API_URL + '/idea/all', { withCredentials: true })
-    .then(res => {
-      setIdeas(res.data.ideas);
-    })
-    .catch(err => {
-      Swal.fire({
-        title: 'Error!',
-        text: err.response.data.message,
-        icon: 'error',
-      })
-    })
+    return axios.get(config.API_URL + '/idea/all', { withCredentials: true })
   }
+
+  const ideas:any = useQuery(['ideas'], getAllIdeas)
 
   useEffect(() => { 
     window.addEventListener("scroll", () => {
@@ -38,11 +28,6 @@ const Allidea = () => {
         setShowbutton(false);
       }
     });
-    getAllIdeas();
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   }, []);
 
   // This function will scroll the window to the top of the page
@@ -66,18 +51,22 @@ const Allidea = () => {
             <div className='my-auto mx-2 '>
               <BiSearchAlt size="24px" />
             </div>
-            <Search 
-              placeholder='Enter your Keyword' 
-              options= {
-                ideas.map((ideas:any) => 
-                  ({
-                      label: ideas.title,
-                      value: ideas._id
-                  })
-                )
-              }
-              link='/idea/post/'
-            />
+            {ideas.isLoading ? (
+              <Search placeholder='Enter your Keyword'  />
+            ) : (  
+              <Search 
+                placeholder='Enter your Keyword' 
+                options= {
+                  ideas.data.data.ideas.map((ideas:any) => 
+                    ({
+                        label: ideas.title,
+                        value: ideas._id
+                    })
+                  )
+                }
+                link='/idea/post/'
+              />
+            )}
           </div>
           <button 
             className='bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-full w-1/6 rounded-3xl border-8 ml-3'
@@ -86,12 +75,12 @@ const Allidea = () => {
             Create Post
           </button>
         </div>
-        { loading ? (
+        { ideas.isLoading ? (
           <LoadingPage />
           ) : ( 
           <div>
           {
-            ideas && ideas.map((ideas, index) => {
+            ideas.data.data.ideas && ideas.data.data.ideas.map((ideas:any, index:number) => {
               return(
                 <Ideapost ideas={ideas} key={index}/>
               )

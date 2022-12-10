@@ -1,5 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 
 // page
 import Allidea from './pages/allidea/Allidea';
@@ -17,27 +19,31 @@ import Admincontrol from './pages/admincontrol/Admincontrol';
 import ProtectRoute from './globalcomponents/ProtectRoute';
 // globalcomponent
 
+const queryClient = new QueryClient()
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Homepage/>}/> 
-        <Route path="/home" element={<Homepage/>}/> 
-        <Route path="/idea" element={<Allidea/>}/> 
-        <Route path="/idea/add" element={<ProtectRoute><Writeidea/></ProtectRoute>}/>
-        <Route path="/idea/add/:id" element={<ProtectRoute><Writeidea/></ProtectRoute>}/>  
-        <Route path="/idea/post/:id" element={<Viewpost/>}/>
-        <Route path="/convertcurrency" element={<ProtectRoute><ConvertCurrency/></ProtectRoute>}/> 
-        <Route path="/leaderboard" element={<Leaderboard/>}/> 
-        <Route path="/login" element={<Login/>}/> 
-        <Route path="/myport" element={<ProtectRoute><Portfolio/></ProtectRoute>}/> 
-        <Route path="/otherport/:id" element={<ProtectRoute><OtherPortfolio/></ProtectRoute>}/> 
-        <Route path="/profile" element={<Profile/>} />
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/admincontrol" element={<ProtectRoute><Admincontrol/></ProtectRoute>}/>
-        <Route path="/admincontrol/:id" element={<Admincontrol/>}/>
-      </Routes>
-    </Router>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Homepage/>}/> 
+            <Route path="/home" element={<Homepage/>}/> 
+            <Route path="/idea" element={<ProtectRoute><Allidea/></ProtectRoute>}/> 
+            <Route path="/idea/add" element={<ProtectRoute><Writeidea/></ProtectRoute>}/>
+            <Route path="/idea/add/:id" element={<ProtectRoute><Writeidea/></ProtectRoute>}/>  
+            <Route path="/idea/post/:id" element={<ProtectRoute><Viewpost/></ProtectRoute>}/>
+            <Route path="/convertcurrency" element={<ProtectRoute><ConvertCurrency/></ProtectRoute>}/> 
+            <Route path="/leaderboard" element={<Leaderboard/>}/> 
+            <Route path="/login" element={<Login/>}/> 
+            <Route path="/myport" element={<ProtectRoute><Portfolio/></ProtectRoute>}/> 
+            <Route path="/otherport/:id" element={<ProtectRoute><OtherPortfolio/></ProtectRoute>}/> 
+            <Route path="/profile" element={<ProtectRoute><Profile/></ProtectRoute>} />
+            <Route path="/register" element={<Register/>}/>
+            <Route path="/admincontrol" element={<ProtectRoute><Admincontrol/></ProtectRoute>}/>
+            <Route path="/admincontrol/:id" element={<ProtectRoute><Admincontrol/></ProtectRoute>}/>
+          </Routes>
+        </Router>
+      </QueryClientProvider>
   );
 }
 

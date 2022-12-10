@@ -5,40 +5,30 @@ import Topleader from './components/Topleader'
 import Ranklist from './components/Ranklist'
 import axios from 'axios'
 import config from '../../config/config.json';
-import Swal from 'sweetalert2'
+import { useQuery } from '@tanstack/react-query'
 
 const Leaderboard = () => {
-  const [loading, setLoading] = useState(true)
   const [topRank, setTopRank] = useState([] as any)
   const [rankList, setRankList] = useState([] as any)
 
   const getAllUser = () => {
-    axios.get(config.API_URL + '/users/leaderboard', { withCredentials: true })
-    .then(res => {
-      setTopRank(res.data.users.slice(0, 3));
-      setRankList(res.data.users.slice(3));
-      setLoading(false);
-    })
-    .catch(err => {
-      Swal.fire({
-        title: 'Error!',
-        text: err.response.data.message,
-        icon: 'error',
-      })
-    })
+    return axios.get(config.API_URL + '/users/leaderboard', { withCredentials: true })
   }
 
-  useEffect(() => {
-    setLoading(true);
-    getAllUser()
-  }, [])
+  const leaderboard:any = useQuery(['leaderboard'], getAllUser)
 
+  useEffect(() => {
+    if (leaderboard.data) {
+      setTopRank(leaderboard.data.data.users.slice(0, 3))
+      setRankList(leaderboard.data.data.users.slice(3))
+    }
+  }, [leaderboard.data])
 
   return (
     <Layout>
         <div className='pt-4 pr-20'>
           <p className='font-bold text-3xl pb-7'>Leaderboard</p>
-          { loading ? <LoadingPage /> : 
+          {leaderboard.isLoading ? <LoadingPage /> : 
           <>
             <div className='flex flex-row justify-between pb-7'>
               {
