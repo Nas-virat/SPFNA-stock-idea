@@ -74,7 +74,7 @@ const OtherPortfolio : React.FC = () => {
         </div>
 		  </div>
 
-      <div className="ml-16">
+      <div className="ml-16 mb-16">
         <div className="flex items-center">
           <h3 className="font-semibold text-2xl">Holding</h3>
         </div>
