@@ -5,11 +5,9 @@ import Topleader from './components/Topleader'
 import Ranklist from './components/Ranklist'
 import axios from 'axios'
 import config from '../../config/config.json';
-import Swal from 'sweetalert2'
 import { useQuery } from '@tanstack/react-query'
 
 const Leaderboard = () => {
-  const [loading, setLoading] = useState(true)
   const [topRank, setTopRank] = useState([] as any)
   const [rankList, setRankList] = useState([] as any)
 
@@ -23,7 +21,6 @@ const Leaderboard = () => {
     if (leaderboard.data) {
       setTopRank(leaderboard.data.data.users.slice(0, 3))
       setRankList(leaderboard.data.data.users.slice(3))
-      setLoading(false)
     }
   }, [leaderboard.data])
 
@@ -31,7 +28,7 @@ const Leaderboard = () => {
     <Layout>
         <div className='pt-4 pr-20'>
           <p className='font-bold text-3xl pb-7'>Leaderboard</p>
-          { loading ? <LoadingPage /> : 
+          {leaderboard.isLoading ? <LoadingPage /> : 
           <>
             <div className='flex flex-row justify-between pb-7'>
               {
