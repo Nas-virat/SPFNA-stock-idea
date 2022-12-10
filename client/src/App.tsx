@@ -28,10 +28,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage/>}/> 
             <Route path="/home" element={<Homepage/>}/> 
-            <Route path="/idea" element={<Allidea/>}/> 
+            <Route path="/idea" element={<ProtectRoute><Allidea/></ProtectRoute>}/> 
             <Route path="/idea/add" element={<ProtectRoute><Writeidea/></ProtectRoute>}/>
             <Route path="/idea/add/:id" element={<ProtectRoute><Writeidea/></ProtectRoute>}/>  
-            <Route path="/idea/post/:id" element={<Viewpost/>}/>
+            <Route path="/idea/post/:id" element={<ProtectRoute><Viewpost/></ProtectRoute>}/>
             <Route path="/convertcurrency" element={<ProtectRoute><ConvertCurrency/></ProtectRoute>}/> 
             <Route path="/leaderboard" element={<Leaderboard/>}/> 
             <Route path="/login" element={<Login/>}/> 
