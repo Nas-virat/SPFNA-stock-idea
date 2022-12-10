@@ -60,12 +60,11 @@ const Admincontrol = () => {
             confirmButtonText: 'OK'
           })
         }
-      } catch(err){
-        console.log(err);
+      } catch (err: any) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong!',
+          text: err.response.data.message,
         })
       }
     }
@@ -178,8 +177,12 @@ const Admincontrol = () => {
           confirmButtonText: 'OK'
         })
       }
-    } catch (err) {
-      console.log(err)
+    } catch (err: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: err.response.data.message,
+      })
     }
   }
 
@@ -187,7 +190,6 @@ const Admincontrol = () => {
     try {
       const res = await axios.get(config.API_URL + '/admin/draft/' + id, { withCredentials: true })
       if (res.data.success) {
-        console.log(res.data)
         setAnnounment({
           title: res.data.draft.title,
           details: res.data.draft.details,
@@ -196,8 +198,12 @@ const Admincontrol = () => {
         setTimeout(() => {
         }, 500);
       }
-    } catch (err) {
-      console.log(err)
+    } catch (err: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: err.response.data.message,
+      })
     }
   }
 
@@ -216,14 +222,14 @@ const Admincontrol = () => {
         <p className='font-bold text-3xl pb-7'>Announcement</p>
         <form className='w-full rounded-lg border h-60 shadow-md p-6'>
           <input 
-            className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black'
+            className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black outline-none'
             placeholder='Enter your Topic'
             required
             value={announment.title}
             onChange={(e) => setAnnounment({ ...announment, title: e.target.value })}
           />
           <textarea 
-            className='w-full h-28 rounded-lg border shadow-md p-4 mt-4 resize-none border-black'
+            className='w-full h-28 rounded-lg border shadow-md p-4 mt-4 resize-none border-black outline-none'
             placeholder='Say something...'
             required
             value={announment.details}
@@ -245,34 +251,35 @@ const Admincontrol = () => {
           </button>
         </div>
         <p className='font-bold text-3xl pb-7'>Draft</p>
-        {loading ? <LoadingPage /> 
-          :
-          <>
-          <div className='w-full rounded-lg border shadow-md p-6'>
-            {
-              drafts.length > 0 ? (
-                <Draft data={drafts[counter]} />
-              ) : (
-                <p className='h-40 text-base'>No Draft</p>
-              )
-            }
-            
-          </div>
-          <div className='mt-5 flex justify-center mb-16'>
-            <button 
-              className={`${counter === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
-              onClick={previousClick}
-            >
-              Previous
-            </button>
-            <button 
-              className={`${counter === drafts.length - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
-              onClick={nextClick}
-            >
-              Next
-            </button>
-          </div>
-          </>
+        { loading ? (
+          <LoadingPage /> 
+          ) : ( 
+            <>
+              <div className='w-full rounded-lg border shadow-md p-6'>
+              {
+                drafts.length > 0 ? (
+                  <Draft data={drafts[counter]} />
+                ) : (
+                  <p className='h-40 text-base'>No Draft</p>
+                )
+              } 
+              </div>
+              <div className='mt-5 flex justify-center mb-16'>
+                <button 
+                  className={`${counter === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
+                  onClick={previousClick}
+                >
+                  Previous
+                </button>
+                <button 
+                  className={`${counter === drafts.length - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
+                  onClick={nextClick}
+                >
+                  Next
+                </button>
+              </div>
+            </>
+          )
         }
 
         <p className='font-bold text-3xl pb-7'>Control</p>

@@ -65,13 +65,16 @@ const Viewpost = () => {
   const getSingleIdea = () => {
     axios.get(config.API_URL + '/idea/post/' + id, { withCredentials: true })
     .then(res => {
-      console.log(res.data);
       setIdea(res.data.idea);
       setComments(res.data.idea.comment);
       setLoading(false);
     })
     .catch(err => {
-      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: err.response.data.message,
+      })
     })
   }
 
@@ -111,12 +114,11 @@ const Viewpost = () => {
             confirmButtonText: 'OK'
           })
         }
-      } catch(err){
-        console.log(err);
+      } catch(err:any){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong!',
+          text: err.response.data.message,
         })
       }
     }
@@ -126,7 +128,7 @@ const Viewpost = () => {
     getSingleIdea();
   }, []);
 
-  const handleKeypress = (e:any) => {
+  const handleKeypress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleComment();
     }
@@ -161,11 +163,11 @@ const Viewpost = () => {
                 <img className='self-center w-10 h-10 mx-3 rounded-full' src={profileImage(img)} alt='profile-pic'></img>
                 <form className='flex flex-row w-full'>
                 <input 
-                  className='self-center h-3/5 w-full rounded-3xl indent-6' 
+                  className='self-center h-3/5 w-full rounded-3xl indent-6 outline-none' 
                   placeholder='Add a comment' 
                   onChange={(e) => setNewComment(e.target.value)}
-                  onKeyPress={handleKeypress}
-                  />
+                  onKeyUp={handleKeypress}
+                />
                 </form>
                 <button 
                   className='ml-5 mr-3 self-center bg-[#8236FD] hover:bg-blue-700 text-white font-bold h-3/5 w-1/6 rounded-3xl'
@@ -175,8 +177,8 @@ const Viewpost = () => {
                 </button>
               </div>
               {
-                comments && comments.map((comment: any, index: any) => {
-                  return(
+                comments && comments.map((comment: any, index: number) => {
+                  return (
                     <Comment comment={comment} key={index} />
                   )
                 })

@@ -39,17 +39,20 @@ const ConvertCurrency = () => {
   const [ListCash, setListCash] = useState<currencyProps[]>([]);
   
   useEffect(() => {
-  const getBalance = () => {
-    console.log('test');
-    axios.get(`http://localhost:5000/api/port/cash`, { withCredentials: true })
-      .then((res) => {
-        console.log(res.data);
-        setListCash(res.data);
-      })
-      .catch((err) => {
-        console.log(err)
-      }) 
-  }
+    const getBalance = () => {
+      console.log('test');
+      axios.get(`http://localhost:5000/api/port/cash`, { withCredentials: true })
+        .then((res) => {
+          setListCash(res.data);
+        })
+        .catch((err: any) => {
+          Swal.fire({
+            title: 'Error!',
+            text: err.response.data.message,
+            icon: 'error',
+          })
+        }) 
+    }
     getBalance();
   },[]);
 
@@ -78,15 +81,7 @@ const ConvertCurrency = () => {
     setCurrencyTo(currencyFrom);
   }
 
-  const [convert, setConvert] = useState({ 
-    amountFrom: '', 
-    currencyFrom: '',
-    amountTo: '', 
-    currencyTo: '',
-  });
-
   const handleSubmit = () => {
-    console.log(convert);
     Swal.fire({
       title: 'Successfully Convert!',
       html: `You have successfully announce the convert`,

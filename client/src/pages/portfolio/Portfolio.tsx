@@ -66,7 +66,6 @@ const Portfolio: React.FC = () => {
   const getPortfolio = () => {
     axios.get(config.API_URL + '/port/me', { withCredentials: true })
       .then(res => {
-        console.log(res.data.stocklist);
         setStockList(res.data.stocklist);
         setBalance(res.data.balance);
         setTotalValue(res.data.totalvalue);
@@ -78,7 +77,11 @@ const Portfolio: React.FC = () => {
         setloading(false);
       })
       .catch(err => {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: err.response.data.message,
+        })
       });
   }
 
@@ -88,7 +91,6 @@ const Portfolio: React.FC = () => {
 
 
   const BuyStock = (cost: number) => {
-    console.log("Buystock", symbol, cost, quantity,);
     axios.post(config.API_URL + '/port/buy', {
       symbol: symbol.toLocaleUpperCase(),
       cost: cost,
@@ -98,7 +100,6 @@ const Portfolio: React.FC = () => {
     },
       { withCredentials: true })
       .then(res => {
-        console.log(res.data);
         Swal.fire(
           'Buy',
           'Your stock has been bought.',
@@ -107,27 +108,23 @@ const Portfolio: React.FC = () => {
         getPortfolio();
       })
       .catch(err => {
-        console.log(err);
         Swal.fire({
           icon: 'error',
-          title: 'Oops...',
+          title: 'Error!',
           text: err.response.data.message,
         })
       });
   }
 
   const SellStock = (cost: number) => {
-    console.log("Buystock", symbol, cost, quantity,);
     axios.post(config.API_URL + '/port/sell', {
       symbol: symbol.toLocaleUpperCase(),
       cost: cost,
       quantity: quantity,
       country: selectedOption?.value.prefix,
       currency: selectedOption?.value.currency
-    },
-      { withCredentials: true })
+    }, { withCredentials: true })
       .then(res => {
-        console.log(res.data);
         Swal.fire(
           'Sell',
           'Your stock has been Sold',
@@ -136,10 +133,9 @@ const Portfolio: React.FC = () => {
         getPortfolio();
       })
       .catch(err => {
-        console.log(err);
         Swal.fire({
           icon: 'error',
-          title: 'Oops...',
+          title: 'Error!',
           html: err.response.data.message,
         })
       });
@@ -152,8 +148,7 @@ const Portfolio: React.FC = () => {
       const res = await axios.post(config.API_URL + '/port/price', {
         symbol: symbol,
         country: selectedOption?.value.prefix,
-      },
-        { withCredentials: true });
+      }, { withCredentials: true });
       const cost = res.data;
       Swal.fire({
         title: 'Are you sure?',
@@ -169,7 +164,6 @@ const Portfolio: React.FC = () => {
         }
       })
     } catch (err) {
-      console.log(err);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -222,7 +216,6 @@ const Portfolio: React.FC = () => {
         })
       }
       } catch (err) {
-        console.log(err);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',

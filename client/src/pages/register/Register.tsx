@@ -65,7 +65,7 @@ const Register = () => {
     return 'w-[80px] h-[80px] ml-5 rounded-full ease-in-out duration-200';
   };
 
-  const handleKeypress = (e:any) => {
+  const handleKeypress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleSubmit();
     }
@@ -108,7 +108,7 @@ const Register = () => {
             <label className = 'form-label inline-block font-medium text-2xl'>Username</label>
             <input
               id='username-form'
-              className = 'h-12 w-[50%] mt-3 rounded-3xl border-solid border-2 pl-3'
+              className = 'h-12 w-[50%] mt-3 rounded-3xl border-solid border-2 pl-3 outline-none'
               placeholder = 'Username'
               onChange={(e) => setData({ ...data, username: e.target.value })}
               required
@@ -116,21 +116,21 @@ const Register = () => {
             <label className = 'form-label inline-block font-medium text-2xl pt-3'>Password</label>
             <input
               id='password-form'
-              className = 'h-12 w-[50%] mt-3 rounded-3xl border-solid border-2 pl-3'
+              className = 'h-12 w-[50%] mt-3 rounded-3xl border-solid border-2 pl-3 outline-none'
               placeholder = 'Password'
               type='password'
               onChange={(e) => setData({ ...data, password: e.target.value })}
               required
               autoComplete='on'
             />
-            <label className = 'form-label inline-block font-medium text-2xl pt-3'>Email</label>
+            <label className = 'form-label inline-block font-medium text-2xl pt-3 outline-none'>Email</label>
             <input
               id='email-form'
               className = 'h-12 w-full mt-3 rounded-3xl border-solid border-2 pl-3'
               placeholder = 'Email'
               onChange={(e) => setData({ ...data, email: e.target.value })}
               required
-              onKeyPress={handleKeypress}
+              onKeyUp={handleKeypress}
             />
           </form>
         </div>

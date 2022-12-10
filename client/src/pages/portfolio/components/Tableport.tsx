@@ -1,10 +1,6 @@
 import React from 'react'
 import StockProps from "../../../interface/StockProps";
 
-
-
-
-
 const Tableport: React.FC<StockProps> = ({data,totalvalue,pl,plpercent}) => {
 
   return (

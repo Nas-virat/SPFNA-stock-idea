@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import Select, {components} from 'react-select';
+import Select from 'react-select';
 import Swal from 'sweetalert2';
 
 const Search = ({placeholder,options,link}:any) => {

@@ -1,16 +1,10 @@
 import React, { useState } from 'react'
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import config from '../../../config/config.json';
 import TextViewer from '../../../globalcomponents/RichtextComponents/TextViewer';
-
-interface PostProps{
-    id: string;
-    date: any;
-    status: string;
-    title: string;
-    details: string;
-}
+import { PostProps } from '../../../interface/PostProps'
 
 
 const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) => {
@@ -20,7 +14,7 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
     const [readMore, setReadMore] = useState(true);
  
     const handleButton = () => {
-        if(status === 'publish'){
+        if (status === 'publish') {
             navigate('/idea/post/' + id);
         } else {
             navigate( '/idea/add/' + id);
@@ -35,11 +29,14 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
             ideaId: id,
           }, { withCredentials: true })
         .then(res => {
-            console.log(res);
             window.location.reload();
         })
         .catch(err => {
-            console.log(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: err.response.data.message,
+            })
         })
     }
 
@@ -57,7 +54,7 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
                 <div className='cursor-pointer'>
                 {details.length > config.MAX_LENGTH ?
                     <div>
-                        <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details.substring(0, config.MAX_LENGTH)} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
+                        <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details.substring(0, config.MAX_LENGTH)} /></div><span className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</span>
                     </div>
                 :
                     <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details} /></div>
@@ -65,7 +62,7 @@ const Postprofile : React.FC<PostProps>= ({id, date, status, title, details}) =>
                 </div>
             :
                 <div className='cursor-pointer'>
-                <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a>
+                <div onClick={() => navigate('/idea/post/' + id)}><TextViewer value={details} /></div><span className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</span>
                 </div>
             }
             <div className="flex items-center">

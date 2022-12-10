@@ -4,7 +4,7 @@ import profileImage from '../../function/profileImage'
 import { AuthContext } from '../../context/AuthProvider'
 import LoadingPage from '../../globalcomponents/waiting';
 import Postprofile from './components/Postprofile';
-
+import Swal from 'sweetalert2';
 import Layout from '../../globalcomponents/Layout'
 import axios from 'axios'
 import config from '../../config/config.json';
@@ -28,14 +28,17 @@ const Profile : React.FC = () => {
 	const getIdeaByUser = async () => {
 		await axios.get(config.API_URL + `/idea/userpost`, { withCredentials: true })
 		.then(res => {
-			console.log(res.data);
 			setIdeas(res.data.ideas);
 			setLoading(false);
+		})
+		.catch(err => {
+			Swal.fire({
+				title: 'Error!',
+				text: err.response.data.message,
+				icon: 'error',
 			})
-			.catch(err => {
-			console.log(err);
-			})
-		}
+		})
+	}
 
 	useEffect(() => {
 		getIdeaByUser();
@@ -54,7 +57,7 @@ const Profile : React.FC = () => {
 					</div>
 				</div>
 			</div>
-			{loading ? <LoadingPage /> 
+			{ loading ? <LoadingPage /> 
 			: 
 			<div>
 				{ideas && 

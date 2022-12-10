@@ -30,7 +30,11 @@ const Writeidea = () => {
       }, 500);
     })
     .catch(err => {
-      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        html: err.response.data,
+      })
     })
   }
 
@@ -84,7 +88,6 @@ const Writeidea = () => {
           })
         }
       } catch (err) {
-        console.log(err);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -146,7 +149,7 @@ const Writeidea = () => {
   }
 
   const handleButton = (status : string) => {
-    if(id !== undefined){
+    if (id !== undefined){
       handleIdeaUpdate(status);
     }
     else {
@@ -171,7 +174,7 @@ const Writeidea = () => {
         :
           <form className='w-full h-[36rem] rounded-lg border shadow-md p-6'>
             <input 
-              className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black mb-5'
+              className='w-[50%] h-10 rounded-lg border shadow-md p-4 border-black mb-5 outline-none'
               placeholder='What is your Topic'
               required
               value={postidea.title}

@@ -5,6 +5,7 @@ export interface StockProperties {
     quantity : number;
     rate : number;
   }
+  
 export default interface StockProps{
     data :StockProperties[];
     totalvalue : number;

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Chartport from "../../portfolio/components/Chartport";
 import { useNavigate } from "react-router-dom";
 import profileImage from "../../../function/profileImage";
@@ -7,14 +7,7 @@ import { AuthContext } from '../../../context/AuthProvider'
 import backgroundColor from '../../../config/chartconfig';
 import chartFunction from '../../../function/chartfunction';
 
-interface RanklistProps {
-  id: string;
-  rank: number;
-  user: string;
-  dataChart : any;
-  totalpl: number;
-  image: string;
-}
+import { RanklistProps } from "../../../interface/Rank";
 
 const Ranklist: React.FC<RanklistProps> = ({
   id,
@@ -35,7 +28,7 @@ const Ranklist: React.FC<RanklistProps> = ({
     const { labels, data} = chartFunction(dataChart);
     setLabels(labels);
     setData(data);
-  }, []);
+  }, [dataChart]);
 
   const viewPort = () => {
     if (user === username) {

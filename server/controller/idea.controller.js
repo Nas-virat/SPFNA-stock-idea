@@ -94,26 +94,34 @@ const addIdea = async (req, res, next) => {
 // // Add a new comment to the idea
 // // Page: AllIdea Page
 const addComment = async (req, res) => {
-    const { commentBody, ideaId } = req.body;
-    const idea = await Idea.findById(ideaId);
-    const user = await User.findById(req.user._id);
-    const newComment = { commentBody, commentUser: user._id, commentDate: Date.now() };
-    idea.comment.push(newComment);
-    await idea.save();
-    res.json({ success: true, message: "Comment added successfully" });
+    try {
+        const { commentBody, ideaId } = req.body;
+        const idea = await Idea.findById(ideaId);
+        const user = await User.findById(req.user._id);
+        const newComment = { commentBody, commentUser: user._id, commentDate: Date.now() };
+        idea.comment.push(newComment);
+        await idea.save();
+        res.json({ success: true, message: "Comment added successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 // // Update an idea
 // // Page: Writeidea Page
 const updateIdea = async (req, res) => {
-    const { title, details, status, ideaId } = req.body;
-    const idea = await Idea.findById(ideaId);
-    idea.title = title;
-    idea.details = details;
-    idea.status = status;
-    idea.date = Date.now();
-    await idea.save();
-    res.json({ success: true, message: "Idea updated successfully" });
+    try{
+        const { title, details, status, ideaId } = req.body;
+        const idea = await Idea.findById(ideaId);
+        idea.title = title;
+        idea.details = details;
+        idea.status = status;
+        idea.date = Date.now();
+        await idea.save();
+        res.json({ success: true, message: "Idea updated successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 module.exports = {

@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import profileImage from '../../../function/profileImage';
 import {useNavigate} from "react-router-dom";
 import Chartport from "../../portfolio/components/Chartport";
@@ -7,14 +7,8 @@ import { AuthContext } from '../../../context/AuthProvider';
 import backgroundColor from '../../../config/chartconfig';
 import chartFunction from '../../../function/chartfunction';
 
-interface ToprankProps {
-  id: string;
-  rank: number;
-  user: string;
-  dataChart: any;
-  pl : number;
-  image: string;
-}
+import { ToprankProps } from "../../../interface/Rank";
+
 
 const Topleader: React.FC<ToprankProps> = ({
   id,
@@ -35,7 +29,7 @@ const Topleader: React.FC<ToprankProps> = ({
     const { labels, data} = chartFunction(dataChart);
     setLabels(labels);
     setData(data);
-  }, []);
+  }, [dataChart]);
 
   const viewPort = () => {
     if (user === username) {

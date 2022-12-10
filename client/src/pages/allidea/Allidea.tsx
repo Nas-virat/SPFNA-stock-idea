@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Ideapost from './components/Ideapost';
 import { BiSearchAlt } from "react-icons/bi";
 import BacktoTop from './components/BacktoTop.jpg';
-import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Layout from '../../globalcomponents/Layout';
 import Search from '../../globalcomponents/Search';
@@ -19,11 +19,14 @@ const Allidea = () => {
   const getAllIdeas = () => {
     axios.get(config.API_URL + '/idea/all', { withCredentials: true })
     .then(res => {
-      console.log(res.data);
       setIdeas(res.data.ideas);
     })
     .catch(err => {
-      console.log(err);
+      Swal.fire({
+        title: 'Error!',
+        text: err.response.data.message,
+        icon: 'error',
+      })
     })
   }
 
@@ -65,14 +68,14 @@ const Allidea = () => {
             </div>
             <Search 
               placeholder='Enter your Keyword' 
-              options={
-                        ideas.map((ideas:any) => 
-                          ({
-                            label: ideas.title,
-                            value: ideas._id
-                         })
-                      )
-                      }
+              options= {
+                ideas.map((ideas:any) => 
+                  ({
+                      label: ideas.title,
+                      value: ideas._id
+                  })
+                )
+              }
               link='/idea/post/'
             />
           </div>
@@ -83,9 +86,11 @@ const Allidea = () => {
             Create Post
           </button>
         </div>
-        {loading ? <LoadingPage /> 
-          : 
-          <div>{
+        { loading ? (
+          <LoadingPage />
+          ) : ( 
+          <div>
+          {
             ideas && ideas.map((ideas, index) => {
               return(
                 <Ideapost ideas={ideas} key={index}/>
@@ -93,10 +98,10 @@ const Allidea = () => {
             })
           }
           </div>
-        }
-        {showbutton && 
+        )}
+        { showbutton && 
           <div className='rounded-full fixed bottom-16 right-16 h-16 w-16' onClick={scrollToTop}>
-            <img src={BacktoTop} alt='back to top'></img>
+            <img src={BacktoTop} alt='back-to-top'></img>
           </div>
         }
       </div>

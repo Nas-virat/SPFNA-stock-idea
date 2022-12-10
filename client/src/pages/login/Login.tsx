@@ -18,7 +18,7 @@ const Login = () => {
     password: '',
   });
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (data.userId === '' || data.password === '') {
       Swal.fire({
@@ -44,7 +44,6 @@ const Login = () => {
               Swal.showLoading()
             },
           }).then(() => {
-            console.log(res.data.user);
             setAuth({
               loggedIn: true,
               role: res.data.user.role,
@@ -72,7 +71,7 @@ const Login = () => {
     }
   };
 
-  const handleKeypress = (e:any) => {
+  const handleKeypress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleSubmit(e);
     }

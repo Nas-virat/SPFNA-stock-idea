@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 interface CurrencyProps{
   currency: string;
   amount: number;

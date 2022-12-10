@@ -6,6 +6,7 @@ import axios from 'axios';
 import config from '../../config/config.json';
 import Announcement from './components/Announcement';
 import LoadingPage from '../../globalcomponents/waiting';
+import Swal from 'sweetalert2';
 
 const Homepage = () => {
   const [counter, setCounter] = useState(0)
@@ -28,14 +29,16 @@ const Homepage = () => {
     try {
       const res = await axios.get(config.API_URL + '/admin/allpublish', { withCredentials: true })
       if (res.data.success) {
-        console.log(res.data)
         setAnnouncementData(res.data.announces)
         setLoading(false)
       }
-    } catch (err) {
-      console.log(err)
+    } catch (err: any) {
+      Swal.fire({
+        title: 'Error!',
+        text: err.response.data.message,
+        icon: 'error',
+      })
     }
-    
   }
 
   useEffect(() => {
@@ -46,34 +49,35 @@ const Homepage = () => {
     <Layout>
       <div className='pt-4 pr-20'>
         <p className='font-bold text-3xl pb-7'>Admin Announcement</p>
-        {loading ? <LoadingPage /> 
-          :
+        {loading ? (
+          <LoadingPage />
+          ) : (
           <>
-          <div className='w-full rounded-lg border h-44 shadow-md p-6'>
-            {
-              announcementData.length > 0 ? (
-                <Announcement data={announcementData[counter]} />
-              ) : (
-                <p className='text-base'>No announcement</p>
-              )
-            }
-            
-          </div>
-          <div className='mt-5 flex justify-center mb-16'>
-            <button 
-              className={`${counter === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
-              onClick={previousClick}
-            >
-              Previous
-            </button>
-            <button 
-              className={`${counter === announcementData.length - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
-              onClick={nextClick}
-            >
-              Next
-            </button>
-          </div>
+            <div className='w-full rounded-lg border h-44 shadow-md p-6'>
+              {
+                announcementData.length > 0 ? (
+                  <Announcement data={announcementData[counter]} />
+                ) : (
+                  <p className='text-base'>No announcement</p>
+                )
+              }
+            </div>
+            <div className='mt-5 flex justify-center mb-16'>
+              <button 
+                className={`${counter === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
+                onClick={previousClick}
+              >
+                Previous
+              </button>
+              <button 
+                className={`${counter === announcementData.length - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#E56B6F] hover:bg-[#D75B5F]' } text-white font-bold w-24 h-10 rounded-full mr-3`}
+                onClick={nextClick}
+              >
+                Next
+              </button>
+            </div>
           </>
+          )
         }
         <p className='font-bold text-3xl pb-7'>P&L Distribution</p>
         <div className='w-full rounded-lg border h-auto shadow-md p-6 mb-7 bg-[#FFE1E1]'>

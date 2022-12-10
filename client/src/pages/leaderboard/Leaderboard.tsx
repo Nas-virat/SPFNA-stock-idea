@@ -5,6 +5,7 @@ import Topleader from './components/Topleader'
 import Ranklist from './components/Ranklist'
 import axios from 'axios'
 import config from '../../config/config.json';
+import Swal from 'sweetalert2'
 
 const Leaderboard = () => {
   const [loading, setLoading] = useState(true)
@@ -14,13 +15,16 @@ const Leaderboard = () => {
   const getAllUser = () => {
     axios.get(config.API_URL + '/users/leaderboard', { withCredentials: true })
     .then(res => {
-      console.log(res.data);
       setTopRank(res.data.users.slice(0, 3));
       setRankList(res.data.users.slice(3));
       setLoading(false);
     })
     .catch(err => {
-      console.log(err);
+      Swal.fire({
+        title: 'Error!',
+        text: err.response.data.message,
+        icon: 'error',
+      })
     })
   }
 
@@ -38,7 +42,7 @@ const Leaderboard = () => {
           <>
             <div className='flex flex-row justify-between pb-7'>
               {
-                topRank.map((item: any, idx: number) => (
+                topRank.map((item:any, idx: number) => (
                   <Topleader
                     key={`topRank-${item._id}`}
                     id={item._id}

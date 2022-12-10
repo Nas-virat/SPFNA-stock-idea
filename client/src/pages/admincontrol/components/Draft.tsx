@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import config from '../../../config/config.json';
 import { useNavigate } from 'react-router-dom';
@@ -18,10 +19,18 @@ const Draft = (data:any) => {
             details: data.data.details,
             status:  'publish',
             announceID: data.data._id
-          }, {withCredentials: true})
+          }, { withCredentials: true })
         .then(res => {
-            console.log(res);
-            //window.location.reload();
+            Swal.fire({
+                title: 'Success!',
+                text: 'You have successfully published the announcement!',
+                icon: 'success',
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+            })
         })
         .catch(err => {
             console.log(err);

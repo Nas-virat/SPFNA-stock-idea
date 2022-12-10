@@ -53,12 +53,11 @@ const Ideapost  = ({ideas}:any) => {
             confirmButtonText: 'OK'
           })
         }
-      } catch(err){
-        console.log(err);
+      } catch (err: any) {
         Swal.fire({
           icon: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!',
+          title: 'Error!',
+          text: err.response.data.message,
         })
       }
     }
@@ -68,7 +67,7 @@ const Ideapost  = ({ideas}:any) => {
     navigate('/idea/post/' + ideas._id);
   }
   
-  const handleKeypress = (e:any) => {
+  const handleKeypress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleComment();
     }
@@ -92,34 +91,34 @@ const Ideapost  = ({ideas}:any) => {
       <p className='text-l font-bold mt-2 cursor-pointer' onClick={viewPost}>
         {ideas.title}
       </p>
-      {readMore ?
+      { readMore ? (
         <div className='cursor-pointer'>
-          {ideas.details.length > config.MAX_LENGTH ?
+          { ideas.details.length > config.MAX_LENGTH ? (
             <div>
-                <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details.substring(0, config.MAX_LENGTH)} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</a>
+              <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details.substring(0, config.MAX_LENGTH)} /></div><p className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read more</p>
             </div>
-          :
+          ) : (
             <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details} /></div>
-          }
+          )}
         </div>
-      :
+      ) : (
         <div className='cursor-pointer'>
-          <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details} /></div><a className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</a>
+          <div onClick={() => navigate('/idea/post/' + ideas._id)}><TextViewer value={ideas.details} /></div><p className='text-blue-700 cursor-pointer' onClick={handleReadMore}>Read less</p>
         </div>
-      }
+      )}
       <div className='flex flex-row mt-2 '>
         <div onClick ={() => setShowcomment(!showcomment)}>
           <img className='w-6 h-6 cursor-pointer' src={Commenticon} alt='profile-pic'></img>
         </div>
         <p className='ml-3 self-center text-slate-600'>{ideas.comment.length}</p>
       </div>
-      {showcomment && 
+      { showcomment && 
         <div className='flex flex-col mt-2'>
           <div className='h-14 flex flex-row mt-3 bg-[#F2F2F2] rounded-3xl'>
             <img className='self-center w-10 h-10 mx-3 rounded-full' src={profileImage(img)} alt='profile-pic'></img>
             <form className='flex flex-row w-full'>
              <input 
-              className='self-center h-3/5 w-full rounded-3xl indent-6' 
+              className='self-center h-3/5 w-full rounded-3xl indent-6 outline-none' 
               placeholder='Add a comment' 
               onChange={(e) => setNewComment(e.target.value)}
               onKeyUp={handleKeypress}
