@@ -6,7 +6,7 @@ import { ChildProps } from '../interface/ChildProps';
 
 const ProtectRoute : React.FC<ChildProps> = ({ children }) => {
 
-    const loggedIn = localStorage.getItem('user') ? true : false;
+    const loggedIn = localStorage.getItem('user') !== null ? true : false;
 
     return (
         <>
