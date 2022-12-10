@@ -8,7 +8,7 @@ const stockdata = async (symbol) => {
         return price;
     } catch (err) {
         console.log(err);
-        return 0;
+        return -1;
     }
     };
 

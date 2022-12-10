@@ -57,6 +57,10 @@ const buyStock = async (req, res) => {
     try {
         const cost_price = await stockdata(symbol + country);
 
+        if(cost_price === -1){
+            return res.status(400).json({ message: "Invalid stock symbol" });
+        }
+
         //if user doesn't have enough money to buy the stock
         if (!user.port.cash.some(cash => cash.currency === currency && cash.amount >= cost_price * quantity)) {
             return res.status(400).json({ message: "You don't have enough money to buy this stock" });
