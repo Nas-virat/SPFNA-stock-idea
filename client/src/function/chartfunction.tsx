@@ -12,12 +12,8 @@ const chartFunction = (datachart : StockProperties[]) => {
 
     const data = datachart.map((item) => (item.price * item.quantity * rate)*100/totalValue);
 
-
-    console.log(labels,data);
-
     return { labels, data};
     
-    }
-
+}
 
 export default chartFunction;

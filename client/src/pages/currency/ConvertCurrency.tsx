@@ -40,7 +40,6 @@ const ConvertCurrency = () => {
   
   useEffect(() => {
     const getBalance = () => {
-      console.log('test');
       axios.get(`http://localhost:5000/api/port/cash`, { withCredentials: true })
         .then((res) => {
           setListCash(res.data);

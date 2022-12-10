@@ -20,7 +20,6 @@ const Writeidea = () => {
   const getDraft = () => {
     axios.get(config.API_URL + '/idea/post/' + id, { withCredentials: true })
     .then(res => {
-      console.log(res.data);
       setPostidea({
         title: res.data.idea.title,
         details: res.data.idea.details,
@@ -72,7 +71,6 @@ const Writeidea = () => {
               Swal.showLoading()
             },
           }).then(res => {
-            console.log(res);
             if(status === 'publish'){
               navigate('/idea');
             } else {
