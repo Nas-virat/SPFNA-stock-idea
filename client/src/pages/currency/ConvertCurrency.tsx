@@ -8,6 +8,8 @@ import updownarrow from './components/updownarrow.png';
 import CurrencyInput from './components/CurrencyInput';
 import profileImage from '../../function/profileImage';
 
+import config from '../../config/config.json'
+
 import axios from 'axios';
 
 interface currencyProps {
@@ -33,35 +35,57 @@ const ConvertCurrency = () => {
   const { username, img } = useContext(AuthContext);
   const [amountFrom, setAmountFrom] = useState(1);
   const [amountTo, setAmountTo] = useState(1);
-  const [currencyFrom, setCurrencyFrom] = useState("USA");
-  const [currencyTo, setCurrencyTo] = useState("USA");
+  const [currencyFrom, setCurrencyFrom] = useState("USD");
+  const [currencyTo, setCurrencyTo] = useState("THB");
 
-  const [ListCash, setListCash] = useState<currencyProps[]>([]);
+  const [ListCash, setListCash] = useState([] as any);
   
-  useEffect(() => {
-    const getBalance = () => {
-      axios.get(`http://localhost:5000/api/port/cash`, { withCredentials: true })
-        .then((res) => {
-          setListCash(res.data);
+  const getBalance = () => {
+    axios.get(config.API_URL + `/port/cash`, { withCredentials: true })
+      .then((res) => {
+        console.log(res.data);
+        setListCash(res.data);
+      })
+      .catch((err: any) => {
+        Swal.fire({
+          title: 'Error!',
+          text: err.response.data.message,
+          icon: 'error',
         })
-        .catch((err: any) => {
-          Swal.fire({
-            title: 'Error!',
-            text: err.response.data.message,
-            icon: 'error',
-          })
-        }) 
-    }
+      }) 
+  }
+
+  useEffect(() => {
     getBalance();
   },[]);
+  
+  useEffect(() => {
+    axios.post(config.API_URL + '/port/rate', {
+      "from": currencyFrom,
+      "to": currencyTo,
+      "amount": amountFrom
+    },
+      { withCredentials: true })
+      .then((res) => {
+        console.log(res.data);
+        setAmountTo(res.data.rate);
+      })
+      .catch((err: any) => {
+        Swal.fire({
+          title: 'Error!',
+          text: err.response.data.message,
+          icon: 'error',
+        })
+      })
+  },[amountFrom, currencyFrom, currencyTo]);
 
   const handleAmountChange1 = (amountFrom:number) => {
-    setAmountTo(amountFrom * 123);
+    setAmountTo(amountFrom);
     setAmountFrom(amountFrom);
   }
 
   const handleAmountChange2 = (amountTo:number) => {
-    setAmountFrom(amountTo * 0.007);
+    setAmountFrom(amountTo);
     setAmountTo(amountTo);
   }
 
@@ -78,6 +102,7 @@ const ConvertCurrency = () => {
     setCurrencyFrom(currencyTo);
     setAmountTo(amountFrom);
     setCurrencyTo(currencyFrom);
+    getBalance();
   }
 
   const handleSubmit = () => {
@@ -105,7 +130,7 @@ const ConvertCurrency = () => {
           <p className="my-3 font-semibold text-2xl">My Currency</p>
           <div className='flex flex-col w-11/12 overflow-y-auto h-80'>
 
-            {ListCash.map((cash,index) => (
+            {ListCash.map((cash:any,index:any) => (
               <OneCurrency
                 key={index}
                 currency={cash.currency}

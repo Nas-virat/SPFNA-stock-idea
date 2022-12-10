@@ -90,7 +90,7 @@ const Sidebar = () => {
           { loggedIn ? <SectionLink name="My Profile" to='/profile'/> : null}
           { loggedIn ? <SectionLink name="My Portfolio" to='/myport'/> :null}
           { loggedIn ? <SectionLink name="Idea Space" to='/idea'/> :null}
-          { /* loggedIn ? <SectionLink name="Convert Currency" to='/convertcurrency'/> :null */ }
+          { loggedIn ? <SectionLink name="Convert Currency" to='/convertcurrency'/> :null }
           <SectionLink name="Leaderboard" to='/leaderboard'/>
           { loggedIn && role === 'admin' ? <SectionLink name="Admin" to='/admincontrol'/> : null}
         </div>

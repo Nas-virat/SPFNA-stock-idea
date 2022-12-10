@@ -170,8 +170,11 @@ const getCashBalance = async (req, res) => {
         console.log(req.user._id);
         const user = await User.findById(req.user._id);
         const cash = user.port.cash;
-        console.log(cash);
-        res.json({ cash });
+        let cashlist = [];
+        for(let i=0; i<cash.length; i++){
+            cashlist.push({"currency" : cash[i].currency, "amount" : cash[i].amount});
+        }
+        res.json({cashlist});
     }
     catch (err) {
         res.status(500).json({ message: err.message });
@@ -228,8 +231,8 @@ const updateCurrency = async (req, res) => {
 // // Page: convert currency Page
 const getRate = async (req, res) => {
     try {
-        const { from, to } = req.body;
-        const rate = await currencyconvert(from, to, 1);
+        const { from, to , amount } = req.body;
+        const rate = await currencyconvert(from, to, amount);
         res.json({ rate });
     }
     catch (err) {
