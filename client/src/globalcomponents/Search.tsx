@@ -42,7 +42,6 @@ const Search = ({placeholder,options,link}:any) => {
       <div className='w-full self-center'>
         <Select 
           placeholder={placeholder} 
-          defaultValue={selectedOption} 
           options={options} 
           onChange={setSelectedOption}
           isClearable={true}

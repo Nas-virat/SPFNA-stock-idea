@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router,Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 
 // page
@@ -40,7 +40,7 @@ function App() {
             <Route path="/profile" element={<Profile/>} />
             <Route path="/register" element={<Register/>}/>
             <Route path="/admincontrol" element={<ProtectRoute><Admincontrol/></ProtectRoute>}/>
-            <Route path="/admincontrol/:id" element={<Admincontrol/>}/>
+            <Route path="/admincontrol/:id" element={<ProtectRoute><Admincontrol/></ProtectRoute>}/>
           </Routes>
         </Router>
       </QueryClientProvider>

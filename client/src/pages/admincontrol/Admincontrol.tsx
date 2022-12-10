@@ -97,7 +97,7 @@ const Admincontrol = () => {
             },
           })
           .then(() => {
-            navigate('/admincontrol');
+            window.location.reload();
           })
         } else {
           Swal.fire({

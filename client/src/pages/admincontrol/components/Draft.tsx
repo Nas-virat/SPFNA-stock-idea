@@ -31,6 +31,7 @@ const Draft = (data:any) => {
                     Swal.showLoading()
                 },
             })
+            window.location.reload();
         })
         .catch(err => {
             Swal.fire({
