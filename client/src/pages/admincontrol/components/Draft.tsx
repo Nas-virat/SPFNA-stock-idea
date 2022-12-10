@@ -33,7 +33,11 @@ const Draft = (data:any) => {
             })
         })
         .catch(err => {
-            console.log(err);
+            Swal.fire({
+                title: 'Error!',
+                text: err.response.data.message,
+                icon: 'error',
+            })
         })
     }
 

@@ -108,7 +108,6 @@ const Admincontrol = () => {
           })
         }
       } catch(err){
-        console.log(err);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -135,8 +134,12 @@ const Admincontrol = () => {
         setDrafts(res.data.draft)
         setLoading(false)
       }
-    } catch (err) {
-      console.log(err)
+    } catch (err: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: err.response.data.message,
+      })
     }
   }
 
