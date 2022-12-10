@@ -34,7 +34,7 @@ stock around the world including the US, Europe, Hong Kong, Shanghai, Canada, Au
 ### Authenication
 - [x] Register (QA)
 - [x] Login (QA)
-- [ ] Logout
+- [x] Logout
 ### portfolio
 - [x] display portfolio
 - [x] buy stock portfolio
