@@ -1,6 +1,8 @@
 
 const stockdata = require('../utils/yahoofinance');
 
+const currencyconvert = require('../utils/convert');
+
 const calculatePL = async (stocks,cash) => {
 
     const stocklist = [];
@@ -9,6 +11,7 @@ const calculatePL = async (stocks,cash) => {
     let pl = 0;
     let plpercent = 0;
     let costTotal = 0;
+    let rate = 1;
 
     for (let i = 0; i < stocks.length; i++) {
         symbol = stocks[i].symbol;
@@ -18,17 +21,30 @@ const calculatePL = async (stocks,cash) => {
         currency = stocks[i].currency;
         const price = await stockdata(symbol + country);
 
-        const rate = 1;
+        if(country !== ''){
+            rate = await currencyconvert(currency, 'USD', 1);
+        }
+        else{
+            rate = 1;
+        }
 
-        balance += price * quantity;
-        totalvalue += price * quantity;
-        pl += (price - cost_price) * quantity;
-        costTotal += cost_price * quantity;
-        stocklist.push({ symbol, price, cost_price, quantity, rate });
+        balance += price * quantity*rate;
+        totalvalue += price * quantity*rate;
+        pl += (price - cost_price) * quantity*rate;
+        costTotal += cost_price * quantity*rate;
+
+        stocklist.push({ symbol,country, price, cost_price, quantity, rate });
     }
-    cash.forEach( item => {
-        balance += item.amount;
-    });
+
+    for(let item of cash){
+        if(item.currency !== 'USD'){
+            rate = await currencyconvert(item.currency, 'USD', 1);
+        }
+        else{
+            rate = 1;
+        }
+        balance += item.amount*rate;
+    }
 
     //check is stocklist is empty or not
     if (stocklist.length > 0) {

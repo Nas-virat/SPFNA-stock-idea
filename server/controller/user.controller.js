@@ -2,12 +2,15 @@ const User = require("../model/User");
 const ErrorHandler = require("../utils/errorHandler");
 const sendCookie = require("../utils/sendCookie");
 const stockdata = require('../utils/yahoofinance');
+const currencyconvert = require('../utils/convert');
 
 // // GET all users 
 // // Page: LeaderBoard Page
 const getLeaderboard = async (req, res) => {
     try {
         const users = await User.find();
+
+        let rate = 1;
 
         let listuser = []
 
@@ -24,13 +27,20 @@ const getLeaderboard = async (req, res) => {
             for (let stock of user.port.stock) {
                 let price = await stockdata(stock.symbol + stock.country);
                 stock.price = price;
-                stock.rate = 1;
-                balance += (price) * stock.quantity;
+                if(stock.country !== ''){
+                    rate = await currencyconvert(currency, 'USD', 1);
+                }
+                else{
+                    rate = 1;
+                }
+                balance += (price) * stock.quantity * rate;
             }
 
-            user.port.cash.forEach( item => {
+            for(let item of user.port.cash){
+               
                 balance += item.amount;
-            });
+            }
+
 
             user.balance = balance;
 

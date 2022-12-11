@@ -31,6 +31,20 @@ const getPort = async (req, res) => {
     }
 }
 
+// // get cash balance of the user
+// // Page: convert currency Page
+const getCashBalance = async (req, res) => {
+    
+    try {
+        const user = await User.findById(req.user._id);
+        const cash = user.port.cash;
+        res.json({cash});
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 // // GET all stocks by user id
 // // Page: Otherport Page
 const getPortByUserId = async (req, res) => {
@@ -51,7 +65,6 @@ const getPortByUserId = async (req, res) => {
 const buyStock = async (req, res) => {
     const { symbol, country, quantity, currency } = req.body;
     const user = await User.findById(req.user._id);
-
     console.log(symbol, country, quantity, currency);
 
     try {
@@ -162,25 +175,6 @@ const sellStock = async (req, res) => {
     }
 }
 
-
-// // get cash balance of the user
-// // Page: convert currency Page
-const getCashBalance = async (req, res) => {
-    try {
-        console.log(req.user._id);
-        const user = await User.findById(req.user._id);
-        const cash = user.port.cash;
-        let cashlist = [];
-        for(let i=0; i<cash.length; i++){
-            cashlist.push({"currency" : cash[i].currency, "amount" : cash[i].amount});
-        }
-        res.json({cashlist});
-    }
-    catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-}
-
 // // convert currency
 // // Page: convert currency Page
 const updateCurrency = async (req, res) => {
@@ -188,7 +182,7 @@ const updateCurrency = async (req, res) => {
 
         const { from, to, amount } = req.body;
 
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.user._id);
         const convertamount = await currencyconvert(from, to, amount);
         //if the "from" currency is not in the user's portfolio
         if (!user.port.cash.some(cash => cash.currency === from)) {

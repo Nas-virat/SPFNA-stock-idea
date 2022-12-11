@@ -22,6 +22,11 @@ router.route('/price').post(verifyToken, getPrice);
 // // GET /api/port/me
 router.route('/me').get(verifyToken, getPort);
 
+// // Get cash balance
+// // Page: myPortfolio
+// // GET /api/port/cash
+router.route('/cash').get(verifyToken, getCashBalance);
+
 // // Get all stocks by user id
 // // Page: otherport
 // // GET /api/port/:userId
@@ -37,14 +42,9 @@ router.route('/buy').post(verifyToken, buyStock);
 // // DELTE /api/port/sell
 router.route('/sell').post(verifyToken, sellStock);
 
-// // Get cash balance
-// // Page: myPortfolio
-// // GET /api/port/cash
-router.route('/cash').get(verifyToken, getCashBalance);
-
 // // Update currency
 // // Page: ConvertCurrency
-// // PUT /api/port/currency
+// // PUT /api/port/updatecurrency
 router.route('/updatecurrency').post(verifyToken, updateCurrency);
 
 // // Get rate

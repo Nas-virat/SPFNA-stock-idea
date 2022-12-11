@@ -7,6 +7,7 @@ import OneCurrency from './components/OneCurrency';
 import updownarrow from './components/updownarrow.png';
 import CurrencyInput from './components/CurrencyInput';
 import profileImage from '../../function/profileImage';
+import LoadingPage from '../../globalcomponents/waiting';
 
 import config from '../../config/config.json'
 
@@ -39,12 +40,14 @@ const ConvertCurrency = () => {
   const [currencyTo, setCurrencyTo] = useState("THB");
 
   const [ListCash, setListCash] = useState([] as any);
+
+  const [loading, setLoading] = useState<boolean>(true);
   
   const getBalance = () => {
     axios.get(config.API_URL + `/port/cash`, { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
-        setListCash(res.data);
+        setListCash(res.data.cash);
+        setLoading(false);
       })
       .catch((err: any) => {
         Swal.fire({
@@ -56,6 +59,7 @@ const ConvertCurrency = () => {
   }
 
   useEffect(() => {
+    setLoading(true);
     getBalance();
   },[]);
   
@@ -102,16 +106,34 @@ const ConvertCurrency = () => {
     setCurrencyFrom(currencyTo);
     setAmountTo(amountFrom);
     setCurrencyTo(currencyFrom);
-    getBalance();
   }
 
   const handleSubmit = () => {
+    axios.post(config.API_URL + '/port/updatecurrency', {
+      "from": currencyFrom,
+      "to": currencyTo,
+      "amount": amountFrom
+    },
+      { withCredentials: true })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err: any) => {
+        Swal.fire({
+          title: 'Error!',
+          text: err.response.data.message,
+          icon: 'error',
+        })
+      })
     Swal.fire({
       title: 'Successfully Convert!',
       html: `You have successfully announce the convert`,
       icon: 'success',
       confirmButtonText: 'OK',
-    });
+    }).then((result) => {
+      window.location.reload();
+    }
+    )
   }
 
   return (
@@ -122,34 +144,28 @@ const ConvertCurrency = () => {
         </div>
         <div className="m-14">
           <h1 className="mt-3 font-semibold text-3xl">@{username}</h1>
-          <h3 className="mt-3 font-normal text-xl">Rank #30</h3>
         </div>
       </div>
       <div className="flex flex-row w-full">
         <div className='w-1/2'>
           <p className="my-3 font-semibold text-2xl">My Currency</p>
           <div className='flex flex-col w-11/12 overflow-y-auto h-80'>
-
-            {ListCash.map((cash:any,index:any) => (
+           {loading ? <LoadingPage/> :
+           ListCash.map((cash:any,index:any) => (
               <OneCurrency
                 key={index}
                 currency={cash.currency}
                 amount={cash.amount}
               />
-            ))}
-          <OneCurrency currency=" USD" amount={1000}/>
-          <OneCurrency currency=" CNY" amount={200}/>
-          <OneCurrency currency=" HKD" amount={300}/>
-          <OneCurrency currency=" EUR" amount={400}/>
-          <OneCurrency currency=" THB" amount={400}/>
-          <OneCurrency currency=" AUD" amount={400}/>
+           ))
+          }
           </div>
           <div className="flex flex-row w-11/12 mt-8 justify-between">
           <div>
             <p className='ml-8 text-xl font-semibold'>Total</p>
           </div>
           <div className='flex flex-row mr-[4.75rem]'>
-            <p className='mr-3'>3000</p>
+            <p className='mr-3'>0</p>
             <p className='font-semibold'>USD</p>
           </div>
           </div>
@@ -161,7 +177,7 @@ const ConvertCurrency = () => {
               <p className='mr-1'>1</p>
               <p className='font-semibold'>{currencyFrom}</p>
               <p className='mx-2'>=</p>
-              <p className='mr-1'>37.78</p>
+              <p className='mr-1'>{(amountTo/amountFrom).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
               <p className='font-semibold'>{currencyTo}</p>
             </div>
             <div className='flex flex-row my-6'>

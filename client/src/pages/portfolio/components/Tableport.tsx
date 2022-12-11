@@ -20,11 +20,11 @@ const Tableport: React.FC<StockProps> = ({data,totalvalue,pl,plpercent}) => {
       <tbody>  
         {data.map((item, index) => (
           <tr className="border-b-4 font-medium" key={index}>
-            <td className="px-6 py-4">{item.symbol}</td>
+            <td className="px-6 py-4">{item.symbol}{item.country}</td>
             <td className="px-6 py-4">{item.price.toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className="px-6 py-4">{item.cost_price.toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className="px-6 py-4">{item.quantity}</td>
-            <td className="px-6 py-4">{(item.price*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
+            <td className="px-6 py-4">{(item.price*item.quantity*item.rate).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className={`px-6 py-4 ${(item.price-item.cost_price) > 0 ? `text-green-700` : `text-rose-700`}`}>{((item.price-item.cost_price)*item.quantity).toLocaleString(undefined,{maximumFractionDigits:2})}</td>
             <td className={`px-6 py-4 ${(item.price-item.cost_price) > 0 ? `text-green-700` : `text-rose-700`}`}>{((item.price-item.cost_price)*100/item.cost_price).toLocaleString(undefined,{maximumFractionDigits:2})} %</td>
           </tr>
