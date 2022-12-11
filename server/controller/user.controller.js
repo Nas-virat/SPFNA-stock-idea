@@ -10,8 +10,6 @@ const getLeaderboard = async (req, res) => {
     try {
         const users = await User.find();
 
-        let rate = 1;
-
         let listuser = []
 
         for (let i = 0; i < users.length; i++) {
@@ -23,24 +21,37 @@ const getLeaderboard = async (req, res) => {
 
         for (let user of listuser) {
             let balance = 0;
+            let rate = 1;
             
             for (let stock of user.port.stock) {
                 let price = await stockdata(stock.symbol + stock.country);
                 stock.price = price;
-                if(stock.country !== ''){
-                    rate = await currencyconvert(currency, 'USD', 1);
+                if (stock.country !== '') {
+                    stock.rate = await currencyconvert(stock.currency, 'USD', 1);
+                }
+                else{
+                    stock.rate = 1;
+                }
+                balance += (price) * stock.quantity * stock.rate;
+            }
+
+            /*user.port.cash.forEach( item => {
+                if (item.currency !== 'USD') {
+                    balance += item.amount;
+                }
+                else{
+                    balance += item.amount;
+                }
+            });*/
+            for(let item of user.port.cash){
+                if(item.currency !== 'USD'){
+                    rate = await currencyconvert(item.currency, 'USD', 1);
                 }
                 else{
                     rate = 1;
                 }
-                balance += (price) * stock.quantity * rate;
+                balance += item.amount*rate;
             }
-
-            for(let item of user.port.cash){
-               
-                balance += item.amount;
-            }
-
 
             user.balance = balance;
 
