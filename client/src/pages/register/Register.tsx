@@ -39,8 +39,23 @@ const Register = () => {
             didOpen: () => {
               Swal.showLoading()
             },
-          }).then(() => {
-            navigate('/home');
+          }).then(async () => {
+            const res = await axios.post(config.API_URL +'/users/login', 
+            {
+              userId: data.username,
+              password: data.password
+            }, { withCredentials: true });
+            if (res.data.success) {
+              localStorage.setItem('user', JSON.stringify(res.data.user));
+              navigate('/home');
+            } else {
+              Swal.fire({
+                title: 'Error!',
+                text: res.data.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+              })
+            }
           })
         } else {
           Swal.fire({
