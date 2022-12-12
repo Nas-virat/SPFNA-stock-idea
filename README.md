@@ -7,6 +7,48 @@ SPFNA is a stock simulation investment game platform, which allows the user to s
 
 ![](doc/portfolio.png)
 
+## Run the web
+
+create .env file
+```
+NODE_ENV=
+JWT_SECRET= 
+JWT_EXPIRE=
+COOKIE_EXPIRE=
+PORT = 
+MONGO_DBNAME = 
+MONGO_URI = 
+MONGO_USERNAME = 
+```
+in client/src/config/config.json set
+```
+{
+    "API_URL": "http://localhost:5000/api",
+    "MAX_LENGTH": 250
+}
+```
+
+Install node modules
+```
+$ npm i 
+```
+
+Go to client folder and run npm i 
+
+```
+$ cd client
+$ npm i 
+```
+To run server 
+```
+npm start
+```
+
+To run server and client dev mode
+```
+npm run dev
+```
+
 ## SPFNA Features
 
 - Stock simulation platform -> allows the user to design their own stock portfolio with the initial money starting at 200,000 USD. Login users can  select any 
