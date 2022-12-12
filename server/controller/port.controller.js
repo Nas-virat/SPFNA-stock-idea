@@ -37,8 +37,22 @@ const getCashBalance = async (req, res) => {
     
     try {
         const user = await User.findById(req.user._id);
-        const cash = user.port.cash;
-        res.json({cash});
+        let cash = [];
+        let currencycash = 0
+        let cashBalance = 0;
+        for (let i = 0; i < user.port.cash.length; i++) {
+            if(user.port.cash[i].amount === 0)
+                continue;
+            else{
+                cash.push(user.port.cash[i]);
+            }
+            currencycash = await currencyconvert(user.port.cash[i].currency, 'USD', user.port.cash[i].amount);
+            cashBalance += currencycash;
+        }
+        res.json({
+            total: cashBalance, 
+            cash: cash
+        });
     }
     catch (err) {
         res.status(500).json({ message: err.message });

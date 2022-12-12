@@ -16,7 +16,10 @@ const CurrencyInput = (props:any) => {
             onChange={(e) => props.onCurrencyChange(e.target.value)}
         >
             {props.currencies.map((currency:string) => (
-                <option value={currency} className='bg-slate-100 h-56 overflow-y-auto'>
+                <option 
+                    key={currency}
+                    value={currency} 
+                    className='bg-slate-100 h-56 overflow-y-auto'>
                     {currency}
                 </option>
             ))}

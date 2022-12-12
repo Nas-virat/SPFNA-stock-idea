@@ -40,13 +40,16 @@ const ConvertCurrency = () => {
   const [currencyTo, setCurrencyTo] = useState("THB");
 
   const [ListCash, setListCash] = useState([] as any);
+  const [TotalCash, setTotalCash] = useState<number>(0);
 
   const [loading, setLoading] = useState<boolean>(true);
   
   const getBalance = () => {
     axios.get(config.API_URL + `/port/cash`, { withCredentials: true })
       .then((res) => {
+        console.log(res.data);
         setListCash(res.data.cash);
+        setTotalCash(res.data.total);
         setLoading(false);
       })
       .catch((err: any) => {
@@ -151,9 +154,9 @@ const ConvertCurrency = () => {
           <p className="my-3 font-semibold text-2xl">My Currency</p>
           <div className='flex flex-col w-11/12 overflow-y-auto h-80'>
            {loading ? <LoadingPage/> :
-           ListCash.map((cash:any,index:any) => (
+           ListCash.map((cash:any) => (
               <OneCurrency
-                key={index}
+                key={cash.currency}
                 currency={cash.currency}
                 amount={cash.amount}
               />
@@ -165,7 +168,7 @@ const ConvertCurrency = () => {
             <p className='ml-8 text-xl font-semibold'>Total</p>
           </div>
           <div className='flex flex-row mr-[4.75rem]'>
-            <p className='mr-3'>0</p>
+            <p className='mr-3'>{TotalCash.toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
             <p className='font-semibold'>USD</p>
           </div>
           </div>
