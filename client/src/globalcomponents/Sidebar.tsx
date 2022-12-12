@@ -51,22 +51,6 @@ const Sidebar = () => {
     }
   }
 
-  /*const fetchCurrentUser = async () => {
-    const user = await axios.get(config.API_URL + '/users/user', { withCredentials: true });
-    if (user.data) {
-      setAuth({
-        loggedIn: true,
-        role: user.data.role,
-        username: user.data.username,
-        img: user.data.image
-      });
-    }
-  }
-
-  useEffect(() => {
-    fetchCurrentUser();
-  }, [])*/
-
    useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (Object.keys(user).length !== 0) {

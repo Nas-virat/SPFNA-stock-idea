@@ -8,8 +8,6 @@ import config from '../../config/config.json';
 import LoadingPage from '../../globalcomponents/waiting';
 import Draft from './components/Draft';
 
-const is_admin = true;
-
 const Admincontrol = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -210,7 +208,8 @@ const Admincontrol = () => {
   }
 
   useEffect(() => {
-    if (!is_admin) navigate('/home', { replace: true });
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user.role !== 'admin') navigate('/home', { replace: true });
     getDraft();
 
     if (id !== undefined) {
