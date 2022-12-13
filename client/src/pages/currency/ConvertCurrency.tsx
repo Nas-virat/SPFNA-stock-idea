@@ -188,7 +188,6 @@ const ConvertCurrency = () => {
               <p className='font-semibold'>{currencyTo}</p>
             </div>
           }
-          {loadingRate ? <LoadingPage/> :
             <div className='flex flex-row my-6'>
               <CurrencyInput 
                 amount={amountFrom} 
@@ -198,9 +197,7 @@ const ConvertCurrency = () => {
                 currency={currencyFrom} 
               />
             </div>
-          }
             <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic' onClick={swapAmount}></img>
-          {loadingRate ? <LoadingPage/> :
             <div className='flex flex-row my-6'>
               <CurrencyInput 
                 amount={amountTo} 
@@ -210,7 +207,6 @@ const ConvertCurrency = () => {
                 currency={currencyTo} 
               />
             </div>
-          }
             <button 
               className='mt-6 bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-8 w-1/5 rounded-3xl'
               onClick={handleSubmit}
