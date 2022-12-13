@@ -75,6 +75,7 @@ const ConvertCurrency = () => {
       .then((res) => {
         console.log(res.data);
         setRate((res.data.rate)/amountFrom);
+        setAmountTo(res.data.rate);
       })
       .catch((err: any) => {
         Swal.fire({
