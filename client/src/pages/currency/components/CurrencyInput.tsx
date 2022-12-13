@@ -7,7 +7,8 @@ const CurrencyInput = (props:any) => {
         <input 
             className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl' 
             placeholder='Input amount' 
-            value={props.amount.toLocaleString(undefined,{maximumFractionDigits:2})}
+            value={Math.round(props.amount*100)/100}
+            type='number'
             onChange={(e) => props.onAmountChange(e.target.value)}
         />
         <select

@@ -34,8 +34,8 @@ const currency = [
 
 const ConvertCurrency = () => {
   const { username, img } = useContext(AuthContext);
-  const [amountFrom, setAmountFrom] = useState(1);
-  const [amountTo, setAmountTo] = useState(1);
+  const [amountFrom, setAmountFrom] = useState<number>(1);
+  const [amountTo, setAmountTo] = useState<number>(1);
   const [currencyFrom, setCurrencyFrom] = useState("USD");
   const [currencyTo, setCurrencyTo] = useState("THB");
 
@@ -43,6 +43,7 @@ const ConvertCurrency = () => {
   const [TotalCash, setTotalCash] = useState<number>(0);
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingRate, setLoadingRate] = useState<boolean>(true);
   
   const getBalance = () => {
     axios.get(config.API_URL + `/port/cash`, { withCredentials: true })
@@ -67,6 +68,7 @@ const ConvertCurrency = () => {
   },[]);
   
   useEffect(() => {
+    setLoadingRate(true);
     axios.post(config.API_URL + '/port/rate', {
       "from": currencyFrom,
       "to": currencyTo,
@@ -76,6 +78,7 @@ const ConvertCurrency = () => {
       .then((res) => {
         console.log(res.data);
         setAmountTo(res.data.rate);
+        setLoadingRate(false);
       })
       .catch((err: any) => {
         Swal.fire({
@@ -176,6 +179,7 @@ const ConvertCurrency = () => {
         <div className='w-1/2'>
           <p className="my-3 font-semibold text-2xl">Convery Currency</p>
           <div className='ml-3 w-11/12'>
+          {loadingRate ? <LoadingPage/> :
             <div className='flex flex-row my-6'>
               <p className='mr-1'>1</p>
               <p className='font-semibold'>{currencyFrom}</p>
@@ -183,6 +187,8 @@ const ConvertCurrency = () => {
               <p className='mr-1'>{(amountTo/amountFrom).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
               <p className='font-semibold'>{currencyTo}</p>
             </div>
+          }
+          {loadingRate ? <LoadingPage/> :
             <div className='flex flex-row my-6'>
               <CurrencyInput 
                 amount={amountFrom} 
@@ -192,7 +198,9 @@ const ConvertCurrency = () => {
                 currency={currencyFrom} 
               />
             </div>
+          }
             <img className='mx-auto w-10 h-12 ' src={updownarrow} alt='profile-pic' onClick={swapAmount}></img>
+          {loadingRate ? <LoadingPage/> :
             <div className='flex flex-row my-6'>
               <CurrencyInput 
                 amount={amountTo} 
@@ -202,6 +210,7 @@ const ConvertCurrency = () => {
                 currency={currencyTo} 
               />
             </div>
+          }
             <button 
               className='mt-6 bg-[#856dab] hover:bg-[#4a366b] text-white font-bold h-8 w-1/5 rounded-3xl'
               onClick={handleSubmit}
