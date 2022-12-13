@@ -1,18 +1,27 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import './CurrencyInput.css'
 
-const CurrencyInput = (props:any) => {
+interface currencyProps {
+    amount: number;
+    currency: string;
+    currencies: string[];
+    onAmountChange: Function;
+    onCurrencyChange: Function;
+}
+
+const CurrencyInput = (props:currencyProps) => {
   return (
     <div className='flex flex-row w-full'>
         <input 
-            className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl' 
+            className='h-10 bg-slate-50 pr-8 text-right shadow-lg w-3/5 rounded-2xl outline-none' 
             placeholder='Input amount' 
             value={Math.round(props.amount*100)/100}
+            min='1'
             type='number'
             onChange={(e) => props.onAmountChange(e.target.value)}
         />
         <select
-            className='h-10 bg-slate-50 text-right shadow-lg w-1/5 rounded-2xl ml-12 flex place-content-center'
+            className='h-10 bg-slate-50 text-right shadow-lg w-1/5 rounded-2xl ml-12 flex place-content-center outline-none'
             value={props.currency}
             onChange={(e) => props.onCurrencyChange(e.target.value)}
         >
@@ -28,13 +37,5 @@ const CurrencyInput = (props:any) => {
     </div>
   )
 }
-
-CurrencyInput.propTypes = {
-    amount: PropTypes.number,
-    currency: PropTypes.string,
-    currencies: PropTypes.array,
-    onAmountChange: PropTypes.func,
-    onCurrencyChange: PropTypes.func,
-};
 
 export default CurrencyInput
