@@ -52,7 +52,7 @@ const Ranklist: React.FC<RanklistProps> = ({
         <div className="h-[128px] w-[248px] hidden 2xl:inline-block">
           <Chartport labels={labels} data ={data} backgroundColor={backgroundColor}/>
         </div>
-        {totalpl === 200000 ? <p className="font-bold text-4xl text-white px-12 w-[270px] overflow-hidden">{((totalpl-200000)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
+        {totalpl === 200000 ? <p className="font-bold text-4xl text-slate-400 px-12 w-[270px] overflow-hidden">{((totalpl-200000)/200000*100).toLocaleString(undefined, { maximumFractionDigits: 2 })}%</p>
         :
         <>
           {totalpl >= 200000 ? (
