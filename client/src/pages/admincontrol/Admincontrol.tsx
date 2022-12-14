@@ -39,7 +39,7 @@ const Admincontrol = () => {
         if (res.data.success) {
           Swal.fire({
             title: 'Success!',
-            text: `You have successfully ${status} Idea`,
+            text: `You have successfully ${status} an announcement`,
             icon: 'success',
             timer: 1000,
             timerProgressBar: true,
@@ -86,7 +86,7 @@ const Admincontrol = () => {
         if (res.data.success) {
           Swal.fire({
             title: 'Success!',
-            text: `You have successfully ${status} Idea`,
+            text: `You have successfully ${status} announcement`,
             icon: 'success',
             timer: 1000,
             timerProgressBar: true,
@@ -154,29 +154,41 @@ const Admincontrol = () => {
 
   const handleUserReset = async () => {
     try {
-      const res = await axios.get(config.API_URL + '/admin/reset', { withCredentials: true })
-      if (res.data.success) {
-        Swal.fire({
-          title: 'Success!',
-          text: 'You have successfully reset the user',
-          icon: 'success',
-          timer: 1000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading()
-          },
-        })
-        .then(() => {
-          navigate('/admincontrol');
-        })
-      } else {
-        Swal.fire({
-          title: 'Error!',
-          text: res.data.message,
-          icon: 'error',
-          confirmButtonText: 'OK'
-        })
-      }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this action!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reset it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await axios.get(config.API_URL + '/admin/reset', { withCredentials: true })
+          if (res.data.success) {
+            Swal.fire({
+              title: 'Success!',
+              text: 'You have successfully reset the competition',
+              icon: 'success',
+              timer: 1000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading()
+              },
+            })
+            .then(() => {
+              navigate('/admincontrol');
+            })
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: res.data.message,
+              icon: 'error',
+              confirmButtonText: 'OK'
+            })
+          }
+        }
+      })
     } catch (err: any) {
       Swal.fire({
         icon: 'error',
