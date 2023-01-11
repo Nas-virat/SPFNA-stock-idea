@@ -49,6 +49,7 @@ To run server and client dev mode
 npm run dev
 ```
 
+
 ## SPFNA Features
 
 - Stock simulation platform -> allows the user to design their own stock portfolio with the initial money starting at 200,000 USD. Login users can  select any 
