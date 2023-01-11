@@ -1,5 +1,6 @@
 export interface StockProperties {
     symbol: string;
+    country : string;
     price : number;
     cost_price : number;
     quantity : number;
