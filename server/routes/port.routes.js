@@ -15,37 +15,37 @@ const {getPrice,
 // // Get stock price
 // // Page : Portfolio
 // // GET : /api/port/price
-router.route('/price').post(verifyToken, getPrice);
+router.route('/price').post(getPrice);
 
 // // Get all stocks by login user
 // // Page: Portfolio
 // // GET /api/port/me
-router.route('/me').get(verifyToken, getPort);
+router.route('/me').get(getPort);
 
 // // Get cash balance
 // // Page: myPortfolio
 // // GET /api/port/cash
-router.route('/cash').get(verifyToken, getCashBalance);
+router.route('/cash').get(getCashBalance);
 
 // // Get all stocks by user id
 // // Page: otherport
 // // GET /api/port/:userId
-router.route('/:id').get(verifyToken, getPortByUserId);
+router.route('/:id').get(getPortByUserId);
 
 // // Buy stock
 // // Page: myPortfolio
 // // POST /api/port/buy
-router.route('/buy').post(verifyToken, buyStock);
+router.route('/buy').post(buyStock);
 
 // // Sell stock
 // // Page: myPortfolio
 // // DELTE /api/port/sell
-router.route('/sell').post(verifyToken, sellStock);
+router.route('/sell').post(sellStock);
 
 // // Update currency
 // // Page: ConvertCurrency
 // // PUT /api/port/updatecurrency
-router.route('/updatecurrency').post(verifyToken, updateCurrency);
+router.route('/updatecurrency').post(updateCurrency);
 
 // // Get rate
 // // Page: ConvertCurrency
