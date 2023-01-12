@@ -50,7 +50,7 @@ router.route('/updatecurrency').post(updateCurrency);
 // // Get rate
 // // Page: ConvertCurrency
 // // GET /api/port/rate
-router.route('/rate').post(verifyToken, getRate);
+router.route('/rate').post(getRate);
 
 
 module.exports = router;

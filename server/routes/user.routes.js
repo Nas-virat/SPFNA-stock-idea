@@ -30,7 +30,7 @@ router.route('/logout').get(logoutUser);
 // // current user
 // // GLOBAL
 // // GET: /api/users/user
-router.route('/user').get(verifyToken, getUser);
+router.route('/user').get(getUser);
 
 // // Post a new user
 // // Page: Signup Page
