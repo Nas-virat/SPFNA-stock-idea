@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.37dbe6e4.css",
+    "main.js": "/static/js/main.3eaa2033.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/SPFNAlogo.png": "/static/media/SPFNAlogo.9806e13ec1c00040ab4e.png",
+    "static/media/BacktoTop.jpg": "/static/media/BacktoTop.36d6525e1136db3ef096.jpg",
+    "index.html": "/index.html",
+    "main.37dbe6e4.css.map": "/static/css/main.37dbe6e4.css.map",
+    "main.3eaa2033.js.map": "/static/js/main.3eaa2033.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.37dbe6e4.css",
+    "static/js/main.3eaa2033.js"
+  ]
+}
