@@ -1,5 +1,5 @@
 
 {
-    "API_URL": "http://localhost:5000/api",
+    "API_URL": "https://stock-paper-trade.onrender.com/api",
     "MAX_LENGTH": 250
 }
