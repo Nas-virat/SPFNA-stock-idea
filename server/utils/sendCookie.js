@@ -8,7 +8,7 @@ const sendCookie = (user = {}, statusCode, res) => {
         httpOnly: true,
         domain:'stock-paper-trade.onrender.com',
         secure:true,
-        samesite:'none'
+        sameSite:'none'
 
     }
 
