@@ -1,5 +1,5 @@
 
 {
-    "API_URL": "https://stock-paper-trade.onrender.com/api",
+    "API_URL": "https://spfna-stock-idea.vercel.app/api",
     "MAX_LENGTH": 250
 }
