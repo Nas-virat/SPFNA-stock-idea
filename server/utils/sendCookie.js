@@ -6,8 +6,9 @@ const sendCookie = (user = {}, statusCode, res) => {
             Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
         ),
         httpOnly: true,
-        domain: 'spfna-stock-idea.vercel.app',
-        secure: true
+        secure: true,
+        value: token,
+        domain:'.vercel.app'
     }
 
     res.status(statusCode).cookie('token', token, options).json({
