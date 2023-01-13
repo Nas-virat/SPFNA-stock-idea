@@ -6,7 +6,7 @@ const sendCookie = (user = {}, statusCode, res) => {
             Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
         ),
         httpOnly: true,
-        domain:'.onrender.com'
+        domain:'stock-paper-trade.onrender.com'
     }
 
     res.status(statusCode).cookie('token', token, options).json({
