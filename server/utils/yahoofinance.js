@@ -7,7 +7,7 @@ const stockdata = async (symbol) => {
         const price = data.regularMarketPrice;
         return price;
     } catch (err) {
-        console.log(err);
+        console.log("error get price from yahoo finance", err);
         return -1;
     }
     };

@@ -32,10 +32,10 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.6.5",
+    "mongoose": "^6.12.8",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.2",
-    "yahoo-finance2": "^2.3.6"
+    "yahoo-finance2": "^2.11.2"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",
